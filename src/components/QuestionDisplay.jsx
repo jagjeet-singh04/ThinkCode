@@ -26,7 +26,7 @@ const HintSection = ({ hint }) => {
   );
 };
 
-const QuestionDisplay = ({ question }) => {
+const QuestionDisplay = ({ question, hideTitle }) => {
   if (!question) {
     return (
       <div className="h-full flex items-center justify-center bg-muted/20">
@@ -54,6 +54,8 @@ const QuestionDisplay = ({ question }) => {
     }
   };
 
+  // Always show topics and difficulty badges, even if hideTitle is true
+  const topicList = question.topic.split(',').map(t => t.trim());
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -63,21 +65,21 @@ const QuestionDisplay = ({ question }) => {
     >
       <div className="p-6 space-y-6">
         {/* Question Header */}
-        <div className="space-y-4">
-          <div className="flex items-start justify-between">
-            <div className="flex-1">
-              <h1 className="text-2xl font-bold text-foreground mb-2">
-                {question.title}
-              </h1>
-              <div className="flex items-center space-x-3">
-                <Badge variant={getDifficultyVariant(question.difficulty)}>
-                  {question.difficulty}
-                </Badge>
-                <Badge variant="outline">
-                  {question.topic}
-                </Badge>
-              </div>
-            </div>
+        <div className="space-y-2">
+          {!hideTitle && (
+            <h1 className="text-2xl font-bold text-foreground mb-2">
+              {question.title}
+            </h1>
+          )}
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant={getDifficultyVariant(question.difficulty)}>
+              {question.difficulty}
+            </Badge>
+            {topicList.map((topic, idx) => (
+              <Badge key={topic + idx} variant="outline">
+                {topic}
+              </Badge>
+            ))}
           </div>
         </div>
 

@@ -25,7 +25,9 @@ const Home = () => {
   const [userCode, setUserCode] = useState('');
   const [solvedQuestions, setSolvedQuestions] = useLocalStorage('solvedQuestions', []);
 
-  const topics = [...new Set(questions.map(q => q.topic))];
+  // Support multi-topic questions: split by comma and trim
+  const allTopics = questions.flatMap(q => q.topic.split(',').map(t => t.trim()));
+  const topics = [...new Set(allTopics)].sort();
 
   // Auto-generate question when topic/difficulty changes
   useEffect(() => {
@@ -63,9 +65,11 @@ const Home = () => {
   const handleGenerateQuestion = () => {
     let filtered = questions;
     
-    // Filter by topic if selected
+    // Filter by topic if selected (support multi-topic)
     if (selectedTopic) {
-      filtered = filtered.filter(q => q.topic === selectedTopic);
+      filtered = filtered.filter(q =>
+        q.topic.split(',').map(t => t.trim().toLowerCase()).includes(selectedTopic.toLowerCase())
+      );
     }
     
     // Filter by difficulty if in topic-difficulty mode and difficulty is selected
@@ -114,6 +118,7 @@ const Home = () => {
 
   return (
     <div className="flex h-screen bg-background">
+  {/* Sidebar only visible before a question is generated */}
       {/* Sidebar only visible before a question is generated */}
       {!currentQuestion && (
         <Sidebar 
@@ -131,9 +136,21 @@ const Home = () => {
             transition={{ duration: 0.3 }}
             className="flex-1 flex overflow-hidden"
           >
-            {/* Question Panel */}
+            {/* Question Panel with Back Button in header */}
             <div className="w-1/2 border-r border-border">
-              <QuestionDisplay question={currentQuestion} />
+              <div className="flex items-center gap-2 px-6 pt-6 pb-2">
+                <button
+                  className="px-3 py-1.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white font-semibold rounded-lg shadow-md border-0 hover:from-blue-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-150"
+                  onClick={() => {
+                    setCurrentQuestion(null);
+                    setUserCode('');
+                  }}
+                >
+                  ← Back
+                </button>
+                <span className="text-xl font-bold text-foreground truncate">{currentQuestion.title}</span>
+              </div>
+              <QuestionDisplay question={currentQuestion} hideTitle />
             </div>
             
             {/* Code Editor Panel */}

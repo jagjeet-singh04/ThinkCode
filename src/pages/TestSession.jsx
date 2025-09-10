@@ -57,7 +57,7 @@ const TestSession = () => {
     };
     
     setTestHistory([...testHistory, newTest]);
-    navigate('/');
+  navigate(-1);
   };
 
   if (testQuestions.length === 0) {

@@ -2,24 +2,25 @@
   {
     "id": 1,
     "title": "Lily's Number Pair Hunt",
-    "topic": "Array",
+    "topic": "Array, Hash Table",
     "difficulty": "Easy",
-    "description": "Lily has a list of numbers and a magic number called 'target'. Help her find two numbers in the list that add up to the target. Return their positions in the list.",
+    "description": "Lily has embarked on a magical adventure through the Enchanted Forest of Numbers, where she carries a scroll containing a list of mystical numbers. She has been given a special 'target' magic number by the Forest Guardian. Your quest is to help Lily find two distinct numbers in her list that, when combined through ancient arithmetic magic, sum up to exactly the target value. Return the indices of these two numbers, as the Forest Guardian requires their positions to unlock the next stage of her journey.",
     "constraints": [
-      "The list has between 2 and 10,000 numbers",
-      "Numbers can be between -1,000,000,000 and 1,000,000,000",
-      "Only one correct pair exists"
+      "2 <= numbers.length <= 10^4",
+      "-10^9 <= numbers[i] <= 10^9",
+      "-10^9 <= target <= 10^9",
+      "Only one valid answer exists"
     ],
     "examples": [
       {
         "input": "numbers = [2,7,11,15], target = 9",
         "output": "[0,1]",
-        "explanation": "Numbers at position 0 (2) and 1 (7) add to 9"
+        "explanation": "Because numbers[0] + numbers[1] == 9, we return [0, 1]."
       },
       {
         "input": "numbers = [3,4,2], target = 6",
         "output": "[1,2]",
-        "explanation": "Numbers at position 1 (4) and 2 (2) add to 6"
+        "explanation": "Because numbers[1] + numbers[2] == 6, we return [1, 2]."
       }
     ],
     "hint": "Original: Two Sum"
@@ -29,18 +30,23 @@
     "title": "Number Reverser Machine",
     "topic": "Math",
     "difficulty": "Medium",
-    "description": "Tom has a magic machine that reverses digits of numbers. If the reversed number becomes too big for the machine (beyond 32-bit range), it returns 0. Help Tom use this machine correctly.",
+    "description": "Tom the Tinkerer has invented a marvelous machine that can reverse the digits of any integer. However, his machine has a peculiar limitation - if reversing the number causes the value to go outside the signed 32-bit integer range [-2^31, 2^31 - 1], the machine malfunctions and returns 0 instead. Tom needs your help to ensure his machine operates correctly. Given an integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range, return 0.",
     "constraints": [
-      "Input number must be between -2^31 and 2^31-1"
+      "-2^31 <= x <= 2^31 - 1"
     ],
     "examples": [
       {
-        "input": "number = 123",
+        "input": "x = 123",
         "output": "321"
       },
       {
-        "input": "number = -150",
+        "input": "x = -150",
         "output": "-51"
+      },
+      {
+        "input": "x = 1534236469",
+        "output": "0",
+        "explanation": "The reverse of 1534236469 is 9646324351, which is greater than 2^31 - 1 (2147483647), so we return 0."
       }
     ],
     "hint": "Original: Reverse Integer"
@@ -48,23 +54,24 @@
   {
     "id": 3,
     "title": "Water Container Challenge",
-    "topic": "Array",
+    "topic": "Array, Two Pointers, Greedy",
     "difficulty": "Medium",
-    "description": "There are vertical walls of different heights. Find two walls that can hold the most water between them when combined with the ground.",
+    "description": "You are an architect designing a revolutionary water containment system for a futuristic city. The city has n vertical walls of different heights arranged in a line. Each wall is represented by an integer array where each element represents the height of a wall. Your task is to find two walls that, together with the ground, can form a container that holds the maximum amount of water. Return the maximum amount of water that can be stored between any two walls in the system. Note: You may not slant the container.",
     "constraints": [
-      "2 to 100,000 walls",
-      "Wall heights between 0 and 10,000 units"
+      "n == heights.length",
+      "2 <= n <= 10^5",
+      "0 <= heights[i] <= 10^4"
     ],
     "examples": [
       {
         "input": "heights = [1,8,6,2,5,4,8,3,7]",
         "output": "49",
-        "explanation": "Walls at position 1 and 8 give maximum water"
+        "explanation": "The walls at positions 1 (height 8) and 8 (height 7) form the largest container. The area is calculated as min(8, 7) * (8-1) = 7 * 7 = 49."
       },
       {
         "input": "heights = [5,3,2,1,4]",
         "output": "16",
-        "explanation": "Walls at position 0 and 4 give maximum water"
+        "explanation": "The walls at positions 0 (height 5) and 4 (height 4) form the largest container. The area is calculated as min(5, 4) * (4-0) = 4 * 4 = 16."
       }
     ],
     "hint": "Original: Container With Most Water"
@@ -72,23 +79,27 @@
   {
     "id": 4,
     "title": "Middle Value Finder",
-    "topic": "Array",
+    "topic": "Array, Binary Search, Divide and Conquer",
     "difficulty": "Hard",
-    "description": "Combine two sorted number lists and find the middle value of the combined list. If the combined list has even length, average the two middle values.",
+    "description": "As a data analyst at a major research facility, you've been tasked with merging two sorted datasets and finding the median value of the combined dataset. The median is the middle value in an ordered integer list. If the size of the list is even, there is no single middle value, so the median is the mean of the two middle values. Implement a function that finds the median of the two sorted arrays with an overall runtime complexity of O(log (m+n)).",
     "constraints": [
-      "Each list can have up to 1000 numbers",
-      "Numbers between -1,000,000 and 1,000,000"
+      "nums1.length == m",
+      "nums2.length == n",
+      "0 <= m <= 1000",
+      "0 <= n <= 1000",
+      "1 <= m + n <= 2000",
+      "-10^6 <= nums1[i], nums2[i] <= 10^6"
     ],
     "examples": [
       {
-        "input": "list1 = [1,3], list2 = [2]",
-        "output": "2.0",
-        "explanation": "Combined list [1,2,3] has middle value 2"
+        "input": "nums1 = [1,3], nums2 = [2]",
+        "output": "2.00000",
+        "explanation": "The merged array is [1,2,3] and the median is 2."
       },
       {
-        "input": "list1 = [1,2], list2 = [3,4]",
-        "output": "2.5",
-        "explanation": "Combined list [1,2,3,4] has middle values 2 and 3"
+        "input": "nums1 = [1,2], nums2 = [3,4]",
+        "output": "2.50000",
+        "explanation": "The merged array is [1,2,3,4] and the median is (2 + 3) / 2 = 2.5."
       }
     ],
     "hint": "Original: Median of Two Sorted Arrays"
@@ -96,23 +107,23 @@
   {
     "id": 5,
     "title": "Palindrome Hunter",
-    "topic": "String",
+    "topic": "String, Dynamic Programming",
     "difficulty": "Medium",
-    "description": "Find the longest word within a word that reads the same forwards and backwards.",
+    "description": "You are an archaeologist deciphering ancient texts. In these texts, palindromic sequences hold special power. A palindrome is a word that reads the same forward and backward. Your mission is to find the longest palindromic substring in a given string of ancient script. This discovery could unlock secrets of a lost civilization and reveal powerful artifacts hidden for millennia.",
     "constraints": [
-      "Word length between 1 and 1000 letters",
-      "Contains only English letters and digits"
+      "1 <= s.length <= 1000",
+      "s consists of only digits (0-9), English letters (a-z, A-Z), and no other characters"
     ],
     "examples": [
       {
         "input": "s = \"babad\"",
         "output": "\"bab\"",
-        "explanation": "\"bab\" is a palindrome (\"aba\" is also valid)"
+        "explanation": "\"bab\" is a valid palindrome (\"aba\" is also a valid answer)."
       },
       {
         "input": "s = \"racecar\"",
         "output": "\"racecar\"",
-        "explanation": "The whole word is a palindrome"
+        "explanation": "The entire string is a palindrome."
       }
     ],
     "hint": "Original: Longest Palindromic Substring"
@@ -120,23 +131,25 @@
   {
     "id": 6,
     "title": "Light Grid Controller",
-    "topic": "Array",
+    "topic": "Array, Hash Table, Matrix",
     "difficulty": "Medium",
-    "description": "You have a grid of lights. If any light is off (0), turn off all lights in its row and column. Modify the grid in place.",
+    "description": "You are the chief engineer of a futuristic city's lighting grid system. The grid is represented by an m x n matrix. Each cell in the grid represents a smart light that can be either on (represented by 1) or off (represented by 0). Due to a newly discovered energy conservation protocol, if any light is found to be off, you must turn off all lights in its entire row and column to prevent power drainage. Your task is to modify the grid in place according to this new protocol while maintaining optimal energy efficiency.",
     "constraints": [
-      "Grid size between 1x1 and 200x200",
-      "Light values between -2^31 and 2^31-1"
+      "m == grid.length",
+      "n == grid[i].length",
+      "1 <= m, n <= 200",
+      "-2^31 <= grid[i][j] <= 2^31 - 1"
     ],
     "examples": [
       {
         "input": "grid = [[1,1,1],[1,0,1],[1,1,1]]",
         "output": "[[1,0,1],[0,0,0],[1,0,1]]",
-        "explanation": "The center light is off, so its row and column are turned off"
+        "explanation": "The center light is off, so its entire row and column are turned off."
       },
       {
         "input": "grid = [[0,1,2],[3,4,5]]",
         "output": "[[0,0,0],[0,4,5]]",
-        "explanation": "The top-left light is off, so first row and first column are turned off"
+        "explanation": "The top-left light is off, so the first row and first column are turned off."
       }
     ],
     "hint": "Original: Set Matrix Zeros"
@@ -144,22 +157,22 @@
   {
     "id": 7,
     "title": "Number Pyramid Builder",
-    "topic": "Array",
+    "topic": "Array, Dynamic Programming",
     "difficulty": "Easy",
-    "description": "Build a number pyramid where each row starts and ends with 1, and each number is the sum of the two numbers above it. Return the first numRows of the pyramid.",
+    "description": "You are a mathematician exploring the ancient numerical pyramid patterns discovered in an archaeological dig. This special pyramid, known as Pascal's Triangle, has each number being the sum of the two numbers directly above it. The pyramid starts with a single '1' at the apex, and each subsequent row begins and ends with '1'. Your task is to reconstruct the first numRows of this mystical numerical pyramid to unlock its mathematical secrets.",
     "constraints": [
-      "Number of rows between 1 and 30"
+      "1 <= numRows <= 30"
     ],
     "examples": [
       {
         "input": "numRows = 5",
         "output": "[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]",
-        "explanation": "The pyramid has 5 rows as shown"
+        "explanation": "The pyramid has 5 rows as constructed according to Pascal's Triangle rules."
       },
       {
         "input": "numRows = 3",
         "output": "[[1],[1,1],[1,2,1]]",
-        "explanation": "The pyramid has 3 rows"
+        "explanation": "The pyramid has 3 rows following the pattern."
       }
     ],
     "hint": "Original: Pascal's Triangle"
@@ -167,23 +180,23 @@
   {
     "id": 8,
     "title": "Next Number Sequence Finder",
-    "topic": "Array",
+    "topic": "Array, Two Pointers",
     "difficulty": "Medium",
-    "description": "Given a sequence of numbers, find the next sequence that is just larger than the current one. If no larger sequence exists, rearrange to the smallest sequence.",
+    "description": "As a cryptographer working with numerical codes, you've discovered that certain sequences have a natural ordering. Given a sequence of distinct integers, your task is to find the next permutation of numbers that is lexicographically greater than the given sequence. If no such permutation exists (meaning the sequence is already at the highest possible order), rearrange it to the lowest possible order (sorted in ascending order). You must modify the array in-place with O(1) extra memory.",
     "constraints": [
-      "Sequence length between 1 and 100 numbers",
-      "Numbers between 0 and 100"
+      "1 <= nums.length <= 100",
+      "0 <= nums[i] <= 100"
     ],
     "examples": [
       {
-        "input": "sequence = [1,2,3]",
+        "input": "nums = [1,2,3]",
         "output": "[1,3,2]",
-        "explanation": "The next larger sequence after [1,2,3] is [1,3,2]"
+        "explanation": "The next lexicographically greater permutation of [1,2,3] is [1,3,2]."
       },
       {
-        "input": "sequence = [3,2,1]",
+        "input": "nums = [3,2,1]",
         "output": "[1,2,3]",
-        "explanation": "No larger sequence, so return the smallest"
+        "explanation": "No greater permutation exists, so return the smallest permutation."
       }
     ],
     "hint": "Original: Next Permutation"
@@ -191,23 +204,23 @@
   {
     "id": 9,
     "title": "Maximum Sum Subarray Finder",
-    "topic": "Array",
+    "topic": "Array, Divide and Conquer, Dynamic Programming",
     "difficulty": "Easy",
-    "description": "Find a continuous part of a number list that has the highest total sum.",
+    "description": "As a financial analyst, you're analyzing daily profit/loss data to identify the most profitable continuous period for investment. Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum. This will help identify the optimal investment window for maximum returns.",
     "constraints": [
-      "List length between 1 and 100,000 numbers",
-      "Numbers between -10,000 and 10,000"
+      "1 <= nums.length <= 10^5",
+      "-10^4 <= nums[i] <= 10^4"
     ],
     "examples": [
       {
-        "input": "numbers = [-2,1,-3,4,-1,2,1,-5,4]",
+        "input": "nums = [-2,1,-3,4,-1,2,1,-5,4]",
         "output": "6",
-        "explanation": "The subarray [4,-1,2,1] has sum 6"
+        "explanation": "The subarray [4,-1,2,1] has the largest sum of 6."
       },
       {
-        "input": "numbers = [1,2,3,-2,5]",
+        "input": "nums = [1,2,3,-2,5]",
         "output": "9",
-        "explanation": "The subarray [1,2,3,-2,5] has sum 9"
+        "explanation": "The entire array has the largest sum of 9."
       }
     ],
     "hint": "Original: Kadane's Algorithm"
@@ -215,23 +228,24 @@
   {
     "id": 10,
     "title": "Color Sorter",
-    "topic": "Array",
+    "topic": "Array, Two Pointers, Sorting",
     "difficulty": "Medium",
-    "description": "Arrange colored balls (red=0, white=1, blue=2) in order without using extra space. The order should be red, then white, then blue.",
+    "description": "You're working in a factory that produces colored balls (red=0, white=1, blue=2). The balls come off the production line in random order, but they need to be sorted so that all red balls come first, followed by white balls, and then blue balls. Due to space constraints, you must sort the balls in-place without using extra space. This is a variation of the famous Dutch National Flag problem.",
     "constraints": [
-      "Number of balls between 1 and 300",
-      "Each ball is either red, white, or blue"
+      "n == nums.length",
+      "1 <= n <= 300",
+      "nums[i] is 0, 1, or 2"
     ],
     "examples": [
       {
-        "input": "balls = [2,0,2,1,1,0]",
+        "input": "nums = [2,0,2,1,1,0]",
         "output": "[0,0,1,1,2,2]",
-        "explanation": "Balls sorted to red, red, white, white, blue, blue"
+        "explanation": "Sorted order: red, red, white, white, blue, blue."
       },
       {
-        "input": "balls = [1,0,2]",
+        "input": "nums = [1,0,2]",
         "output": "[0,1,2]",
-        "explanation": "Balls sorted to red, white, blue"
+        "explanation": "Sorted order: red, white, blue."
       }
     ],
     "hint": "Original: Sort an array of 0's, 1's and 2's"
@@ -239,23 +253,23 @@
   {
     "id": 11,
     "title": "Stock Market Profit Finder",
-    "topic": "Array",
+    "topic": "Array, Dynamic Programming",
     "difficulty": "Easy",
-    "description": "Given daily prices of a stock, find the best day to buy and then sell to make the most money. You can only buy one share and sell one share.",
+    "description": "As a stock market analyst, you're given historical prices of a stock where prices[i] is the price on the i-th day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock. Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.",
     "constraints": [
-      "Number of days between 1 and 100,000",
-      "Prices between 0 and 10,000"
+      "1 <= prices.length <= 10^5",
+      "0 <= prices[i] <= 10^4"
     ],
     "examples": [
       {
         "input": "prices = [7,1,5,3,6,4]",
         "output": "5",
-        "explanation": "Buy at day 2 (price 1) and sell at day 5 (price 6), profit 5"
+        "explanation": "Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5."
       },
       {
         "input": "prices = [10,20,30]",
         "output": "20",
-        "explanation": "Buy at day 1 (price 10) and sell at day 3 (price 30), profit 20"
+        "explanation": "Buy on day 1 (price = 10) and sell on day 3 (price = 30), profit = 20."
       }
     ],
     "hint": "Original: Stock Buy and Sell"
@@ -263,23 +277,24 @@
   {
     "id": 12,
     "title": "Grid Rotator",
-    "topic": "Array",
+    "topic": "Array, Math, Matrix",
     "difficulty": "Medium",
-    "description": "Turn a grid of numbers by 90 degrees to the right. Modify the grid in place.",
+    "description": "You are developing image processing software that needs to rotate images by 90 degrees clockwise. The image is represented by an n × n 2D matrix where each element represents a pixel. Your task is to rotate the image in-place, which means you have to modify the input 2D matrix directly without allocating another 2D matrix.",
     "constraints": [
-      "Grid is square with size between 1 and 20",
-      "Numbers between -1000 and 1000"
+      "n == matrix.length == matrix[i].length",
+      "1 <= n <= 20",
+      "-1000 <= matrix[i][j] <= 1000"
     ],
     "examples": [
       {
-        "input": "grid = [[1,2,3],[4,5,6],[7,8,9]]",
+        "input": "matrix = [[1,2,3],[4,5,6],[7,8,9]]",
         "output": "[[7,4,1],[8,5,2],[9,6,3]]",
-        "explanation": "Grid rotated 90 degrees clockwise"
+        "explanation": "The matrix rotated 90 degrees clockwise."
       },
       {
-        "input": "grid = [[1,2],[3,4]]",
+        "input": "matrix = [[1,2],[3,4]]",
         "output": "[[3,1],[4,2]]",
-        "explanation": "Grid rotated 90 degrees clockwise"
+        "explanation": "The matrix rotated 90 degrees clockwise."
       }
     ],
     "hint": "Original: Rotate Matrix"
@@ -287,23 +302,24 @@
   {
     "id": 13,
     "title": "Interval Merger",
-    "topic": "Array",
+    "topic": "Array, Sorting",
     "difficulty": "Medium",
-    "description": "Combine overlapping time periods into continuous periods. Return the non-overlapping periods that cover all time.",
+    "description": "As a scheduling coordinator for a large conference center, you're given an array of intervals where intervals[i] = [start_i, end_i] represents meeting times. Your task is to merge all overlapping intervals and return an array of the non-overlapping intervals that cover all meetings in the input. This will help optimize room utilization and prevent scheduling conflicts.",
     "constraints": [
-      "Number of periods between 1 and 10,000",
-      "Each period has start and end between 0 and 100,000"
+      "1 <= intervals.length <= 10^4",
+      "intervals[i].length == 2",
+      "0 <= start_i <= end_i <= 10^4"
     ],
     "examples": [
       {
         "input": "intervals = [[1,3],[2,6],[8,10],[15,18]]",
         "output": "[[1,6],[8,10],[15,18]]",
-        "explanation": "Periods [1,3] and [2,6] overlap, so merged to [1,6]"
+        "explanation": "Intervals [1,3] and [2,6] overlap, so they are merged into [1,6]."
       },
       {
         "input": "intervals = [[1,4],[4,5]]",
         "output": "[[1,5]]",
-        "explanation": "Periods [1,4] and [4,5] overlap, so merged to [1,5]"
+        "explanation": "Intervals [1,4] and [4,5] are considered overlapping and are merged."
       }
     ],
     "hint": "Original: Merge Overlapping Subintervals"
@@ -311,23 +327,26 @@
   {
     "id": 14,
     "title": "Sorted List Merger",
-    "topic": "Array",
+    "topic": "Array, Two Pointers, Sorting",
     "difficulty": "Medium",
-    "description": "Combine two sorted lists into one sorted list, but store the first part in the first list and the second part in the second list. Do not use extra space.",
+    "description": "You're working with memory-constrained embedded systems that need to merge two sorted arrays. Given two sorted integer arrays nums1 and nums2, and integers m and n representing the number of elements in nums1 and nums2 respectively, merge nums2 into nums1 as one sorted array without using extra space. nums1 has a length of m + n, where the first m elements are the actual elements and the last n elements are set to 0 and should be ignored.",
     "constraints": [
-      "First list size n, second list size m, both between 1 and 100,000",
-      "Numbers between -1,000,000,000 and 1,000,000,000"
+      "nums1.length == m + n",
+      "nums2.length == n",
+      "0 <= m, n <= 10^5",
+      "1 <= m + n <= 10^5",
+      "-10^9 <= nums1[i], nums2[i] <= 10^9"
     ],
     "examples": [
       {
-        "input": "list1 = [1,3,5], list2 = [2,4,6]",
-        "output": "list1 = [1,2,3], list2 = [4,5,6]",
-        "explanation": "Merged sorted list split into first 3 in list1, last 3 in list2"
+        "input": "nums1 = [1,3,5,0,0,0], m = 3, nums2 = [2,4,6], n = 3",
+        "output": "[1,2,3,4,5,6]",
+        "explanation": "The arrays are merged into nums1 as a sorted array."
       },
       {
-        "input": "list1 = [1,2], list2 = [3,4]",
-        "output": "list1 = [1,2], list2 = [3,4]",
-        "explanation": "Already sorted, no change needed"
+        "input": "nums1 = [1,2,0,0], m = 2, nums2 = [3,4], n = 2",
+        "output": "[1,2,3,4]",
+        "explanation": "The arrays are merged into nums1."
       }
     ],
     "hint": "Original: Merge two sorted arrays without extra space"
@@ -335,23 +354,24 @@
   {
     "id": 15,
     "title": "Duplicate Number Finder",
-    "topic": "Array",
+    "topic": "Array, Two Pointers, Binary Search",
     "difficulty": "Medium",
-    "description": "In a list of numbers from 1 to n, one number is repeated. Find the repeated number without changing the list and using constant extra space.",
+    "description": "You're a detective investigating a case where an array of n + 1 integers contains numbers in the range [1, n] inclusive. There is exactly one repeated number, but you don't know how many times it appears. Your challenge is to find this duplicate number without modifying the array and using only constant extra space O(1), as the evidence must remain untouched for the court case.",
     "constraints": [
-      "List length n+1, with n between 1 and 100,000",
-      "Numbers between 1 and n"
+      "1 <= n <= 10^5",
+      "nums.length == n + 1",
+      "1 <= nums[i] <= n"
     ],
     "examples": [
       {
-        "input": "numbers = [1,3,4,2,2]",
+        "input": "nums = [1,3,4,2,2]",
         "output": "2",
-        "explanation": "The number 2 is repeated"
+        "explanation": "2 is the duplicate number in the array."
       },
       {
-        "input": "numbers = [3,1,3,4,2]",
+        "input": "nums = [3,1,3,4,2]",
         "output": "3",
-        "explanation": "The number 3 is repeated"
+        "explanation": "3 is the duplicate number in the array."
       }
     ],
     "hint": "Original: Find the duplicate in an array of N+1 integers"
@@ -359,22 +379,23 @@
   {
     "id": 16,
     "title": "Missing and Repeated Number Finder",
-    "topic": "Array",
+    "topic": "Array, Hash Table, Math",
     "difficulty": "Medium",
-    "description": "In a list of numbers from 1 to n, one number is missing and one number is repeated. Find both numbers.",
+    "description": "As a quality control inspector at a number factory, you've discovered that in an array of size n containing integers from 1 to n, one number is missing and another number is duplicated. Your task is to find both the missing number and the duplicated number efficiently to correct the production error and maintain quality standards.",
     "constraints": [
-      "List length n, with n between 1 and 100,000"
+      "2 <= nums.length <= 10^4",
+      "1 <= nums[i] <= nums.length"
     ],
     "examples": [
       {
-        "input": "numbers = [3,1,2,5,3]",
+        "input": "nums = [3,1,2,5,3]",
         "output": "[3,4]",
-        "explanation": "3 is repeated, 4 is missing"
+        "explanation": "3 is repeated and 4 is missing."
       },
       {
-        "input": "numbers = [1,2,2,4]",
+        "input": "nums = [1,2,2,4]",
         "output": "[2,3]",
-        "explanation": "2 is repeated, 3 is missing"
+        "explanation": "2 is repeated and 3 is missing."
       }
     ],
     "hint": "Original: Repeat and Missing Number"
@@ -382,23 +403,23 @@
   {
     "id": 17,
     "title": "Out-of-Order Pair Counter",
-    "topic": "Array",
+    "topic": "Array, Binary Search, Divide and Conquer, Sorting",
     "difficulty": "Medium",
-    "description": "Count how many pairs of numbers are out of order where the first number is larger than the second but comes first in the list.",
+    "description": "As a data quality analyst, you need to measure how unsorted an array is by counting inversion pairs. Given an array of integers, count the number of inversions where an inversion is defined as a pair of indices (i, j) such that i < j and nums[i] > nums[j]. This measurement helps quantify how much work would be needed to sort the array completely.",
     "constraints": [
-      "List length between 1 and 100,000",
-      "Numbers between -1,000,000,000 and 1,000,000,000"
+      "1 <= nums.length <= 5 * 10^4",
+      "-10^9 <= nums[i] <= 10^9"
     ],
     "examples": [
       {
-        "input": "numbers = [2,4,1,3,5]",
+        "input": "nums = [2,4,1,3,5]",
         "output": "3",
-        "explanation": "Pairs (2,1), (4,1), (4,3) are out of order"
+        "explanation": "The inversion pairs are (2,1), (4,1), and (4,3)."
       },
       {
-        "input": "numbers = [5,4,3,2,1]",
+        "input": "nums = [5,4,3,2,1]",
         "output": "10",
-        "explanation": "All pairs are out of order"
+        "explanation": "Every pair is an inversion: total pairs = n(n-1)/2 = 10."
       }
     ],
     "hint": "Original: Inversion of Array"
@@ -406,23 +427,25 @@
   {
     "id": 18,
     "title": "Grid Number Searcher",
-    "topic": "Array",
+    "topic": "Array, Binary Search, Matrix",
     "difficulty": "Medium",
-    "description": "Find a number in a grid where each row is sorted and the first number of each row is greater than the last number of the previous row.",
+    "description": "You're developing a search algorithm for a special sorted matrix where each row is sorted in non-decreasing order, and the first integer of each row is greater than the last integer of the previous row. Given a target integer, return true if target is in the matrix or false otherwise. Your solution must run in O(log(m * n)) time complexity to efficiently handle large datasets.",
     "constraints": [
-      "Grid size between 1x1 and 100x100",
-      "Numbers between -1,000,000,000 and 1,000,000,000"
+      "m == matrix.length",
+      "n == matrix[i].length",
+      "1 <= m, n <= 100",
+      "-10^9 <= matrix[i][j], target <= 10^9"
     ],
     "examples": [
       {
-        "input": "grid = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3",
+        "input": "matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3",
         "output": "true",
-        "explanation": "Number 3 is found in the grid"
+        "explanation": "3 exists in the matrix."
       },
       {
-        "input": "grid = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13",
+        "input": "matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13",
         "output": "false",
-        "explanation": "Number 13 is not found"
+        "explanation": "13 does not exist in the matrix."
       }
     ],
     "hint": "Original: Search in a 2D matrix"
@@ -430,23 +453,31 @@
   {
     "id": 19,
     "title": "Power Calculator",
-    "topic": "Array",
+    "topic": "Math, Recursion",
     "difficulty": "Medium",
-    "description": "Compute x multiplied by itself n times quickly. Handle large n efficiently.",
+    "description": "You're building a scientific calculator that needs to efficiently compute x raised to the power n (x^n). Implement a fast power function that handles both positive and negative exponents efficiently using logarithmic time complexity. This is crucial for your calculator to perform well with very large exponents.",
     "constraints": [
-      "x between -100.0 and 100.0",
-      "n between -2^31 and 2^31-1"
+      "-100.0 < x < 100.0",
+      "-2^31 <= n <= 2^31-1",
+      "n is an integer",
+      "Either x is not zero or n > 0",
+      "-10^4 <= x^n <= 10^4"
     ],
     "examples": [
       {
-        "input": "x = 2.0, n = 10",
-        "output": "1024.0",
-        "explanation": "2 raised to 10 is 1024"
+        "input": "x = 2.00000, n = 10",
+        "output": "1024.00000",
+        "explanation": "2^10 = 1024."
       },
       {
-        "input": "x = 3.0, n = 3",
-        "output": "27.0",
-        "explanation": "3 raised to 3 is 27"
+        "input": "x = 3.00000, n = 3",
+        "output": "27.00000",
+        "explanation": "3^3 = 27."
+      },
+      {
+        "input": "x = 2.00000, n = -2",
+        "output": "0.25000",
+        "explanation": "2^-2 = 1/4 = 0.25."
       }
     ],
     "hint": "Original: Pow(x, n)"
@@ -454,23 +485,24 @@
   {
     "id": 20,
     "title": "Majority Element Finder",
-    "topic": "Array",
+    "topic": "Array, Hash Table, Divide and Conquer",
     "difficulty": "Easy",
-    "description": "Find the number that appears more than half the time in a list.",
+    "description": "As an election analyst, you need to determine if any candidate has received the majority of votes (more than n/2 votes). Given an array nums of size n, return the majority element that appears more than ⌊n/2⌋ times. You may assume that the majority element always exists in the array, making your analysis straightforward.",
     "constraints": [
-      "List length between 1 and 50,000",
-      "Numbers between -1,000,000,000 and 1,000,000,000"
+      "n == nums.length",
+      "1 <= n <= 5 * 10^4",
+      "-10^9 <= nums[i] <= 10^9"
     ],
     "examples": [
       {
-        "input": "numbers = [3,2,3]",
+        "input": "nums = [3,2,3]",
         "output": "3",
-        "explanation": "3 appears 2 out of 3 times, which is more than half"
+        "explanation": "3 appears 2 out of 3 times, which is more than n/2."
       },
       {
-        "input": "numbers = [1,1,2]",
+        "input": "nums = [1,1,2]",
         "output": "1",
-        "explanation": "1 appears 2 out of 3 times, which is more than half"
+        "explanation": "1 appears 2 out of 3 times, which is more than n/2."
       }
     ],
     "hint": "Original: Majority Element (>n/2 times)"
@@ -478,23 +510,23 @@
   {
     "id": 21,
     "title": "Frequent Element Finder",
-    "topic": "Array",
+    "topic": "Array, Hash Table",
     "difficulty": "Medium",
-    "description": "Find all numbers that appear more than one-third of the time in a list.",
+    "description": "In a political analysis scenario, you need to identify all elements that appear more than ⌊n/3⌋ times in an array. These represent significant minority positions that could form coalitions. Given an integer array of size n, find all elements that appear more than ⌊n/3⌋ times, as these could be potential coalition builders in a multi-party system.",
     "constraints": [
-      "List length between 1 and 50,000",
-      "Numbers between -1,000,000,000 and 1,000,000,000"
+      "1 <= nums.length <= 5 * 10^4",
+      "-10^9 <= nums[i] <= 10^9"
     ],
     "examples": [
       {
-        "input": "numbers = [3,2,3]",
+        "input": "nums = [3,2,3]",
         "output": "[3]",
-        "explanation": "3 appears 2 out of 3 times, which is more than one-third"
+        "explanation": "3 appears 2 out of 3 times, which is more than ⌊3/3⌋ = 1."
       },
       {
-        "input": "numbers = [1,2,3,1,2]",
+        "input": "nums = [1,2,3,1,2]",
         "output": "[1,2]",
-        "explanation": "1 and 2 each appear 2 out of 5 times, which is more than one-third (1.67)"
+        "explanation": "1 and 2 each appear 2 out of 5 times, which is more than ⌊5/3⌋ ≈ 1.67."
       }
     ],
     "hint": "Original: Majority Element (n/3 times)"
@@ -502,22 +534,22 @@
   {
     "id": 22,
     "title": "Robot Path Counter",
-    "topic": "Array",
+    "topic": "Math, Dynamic Programming, Combinatorics",
     "difficulty": "Medium",
-    "description": "A robot can only move down or right. How many unique paths can it take from the top-left corner to the bottom-right corner of a grid?",
+    "description": "You're programming a robot that starts in the top-left corner of an m x n grid. The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid. How many possible unique paths are there? This problem helps in pathfinding algorithms for autonomous robots in constrained environments.",
     "constraints": [
-      "Grid dimensions between 1x1 and 100x100"
+      "1 <= m, n <= 100"
     ],
     "examples": [
       {
         "input": "m = 3, n = 7",
         "output": "28",
-        "explanation": "There are 28 unique paths"
+        "explanation": "There are 28 possible unique paths from top-left to bottom-right."
       },
       {
         "input": "m = 2, n = 2",
         "output": "2",
-        "explanation": "Two paths: right-down or down-right"
+        "explanation": "Two possible paths: right-down or down-right."
       }
     ],
     "hint": "Original: Grid Unique Paths"
@@ -525,23 +557,23 @@
   {
     "id": 23,
     "title": "Double Reverse Pair Counter",
-    "topic": "Array",
+    "topic": "Array, Binary Search, Divide and Conquer",
     "difficulty": "Hard",
-    "description": "Count pairs where the first number is more than twice the second number and comes before it in the list.",
+    "description": "In a financial analysis system, you need to identify significant price discrepancies. Given an array nums, return the number of reverse pairs where a reverse pair is a pair (i, j) where i < j and nums[i] > 2 * nums[j]. This helps identify extreme market anomalies that could indicate trading opportunities or market manipulation.",
     "constraints": [
-      "List length between 1 and 50,000",
-      "Numbers between -2^31 and 2^31-1"
+      "1 <= nums.length <= 5 * 10^4",
+      "-2^31 <= nums[i] <= 2^31 - 1"
     ],
     "examples": [
       {
-        "input": "numbers = [1,3,2,3,1]",
+        "input": "nums = [1,3,2,3,1]",
         "output": "2",
-        "explanation": "Pairs (3,1) and (3,1) where 3 > 2*1"
+        "explanation": "The reverse pairs are (3,1) and (3,1) where 3 > 2*1."
       },
       {
-        "input": "numbers = [5,2,3]",
+        "input": "nums = [5,2,3]",
         "output": "1",
-        "explanation": "Pair (5,2) where 5 > 2*2"
+        "explanation": "The reverse pair is (5,2) where 5 > 2*2."
       }
     ],
     "hint": "Original: Reverse Pairs"
@@ -549,24 +581,25 @@
   {
     "id": 24,
     "title": "Number Pair Sum Hunter",
-    "topic": "Array",
+    "topic": "Array, Hash Table",
     "difficulty": "Easy",
-    "description": "Find two numbers in a list that add up to a target sum. Return their positions.",
+    "description": "In a treasure hunting game, you're given a list of numbers and a target sum. Your quest is to find two different numbers in the list that add up to the target sum. Return the indices of these two numbers. You may assume that each input would have exactly one solution, and you may not use the same element twice, as each treasure can only be used once in the combination.",
     "constraints": [
-      "List length between 2 and 10,000",
-      "Numbers and target between -1,000,000,000 and 1,000,000,000",
-      "Only one correct pair"
+      "2 <= nums.length <= 10^4",
+      "-10^9 <= nums[i] <= 10^9",
+      "-10^9 <= target <= 10^9",
+      "Only one valid answer exists"
     ],
     "examples": [
       {
-        "input": "numbers = [2,7,11,15], target = 9",
+        "input": "nums = [2,7,11,15], target = 9",
         "output": "[0,1]",
-        "explanation": "Numbers at 0 and 1 add to 9"
+        "explanation": "Because nums[0] + nums[1] == 9, we return [0, 1]."
       },
       {
-        "input": "numbers = [3,3], target = 6",
+        "input": "nums = [3,3], target = 6",
         "output": "[0,1]",
-        "explanation": "Numbers at 0 and 1 add to 6"
+        "explanation": "Because nums[0] + nums[1] == 6, we return [0, 1]."
       }
     ],
     "hint": "Original: 2Sum Problem"
@@ -574,23 +607,24 @@
   {
     "id": 25,
     "title": "Four Number Sum Finder",
-    "topic": "Array",
+    "topic": "Array, Two Pointers, Sorting",
     "difficulty": "Medium",
-    "description": "Find four different numbers in a list that add up to a target sum. Return all unique sets of four numbers.",
+    "description": "As a cryptanalyst, you're trying to break a four-number combination lock. Given an array nums of n integers and a target value, find all unique quadruplets in the array which gives the sum of target. Each quadruplet must contain distinct elements from the array, and the solution set must not contain duplicate quadruplets.",
     "constraints": [
-      "List length between 1 and 200",
-      "Numbers and target between -1,000,000,000 and 1,000,000,000"
+      "1 <= nums.length <= 200",
+      "-10^9 <= nums[i] <= 10^9",
+      "-10^9 <= target <= 10^9"
     ],
     "examples": [
       {
-        "input": "numbers = [1,0,-1,0,-2,2], target = 0",
+        "input": "nums = [1,0,-1,0,-2,2], target = 0",
         "output": "[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]",
-        "explanation": "These quadruplets sum to 0"
+        "explanation": "These are the unique quadruplets that sum to 0."
       },
       {
-        "input": "numbers = [1,2,3,4], target = 10",
+        "input": "nums = [1,2,3,4], target = 10",
         "output": "[[1,2,3,4]]",
-        "explanation": "The only quadruplet that sums to 10"
+        "explanation": "The only quadruplet that sums to 10."
       }
     ],
     "hint": "Original: 4-Sum Problem"
@@ -598,23 +632,23 @@
   {
     "id": 26,
     "title": "Longest Number Chain Finder",
-    "topic": "Array",
+    "topic": "Array, Hash Table, Union Find",
     "difficulty": "Medium",
-    "description": "Find the longest chain of numbers that are consecutive in value (like 1,2,3,4). Return the length of the chain.",
+    "description": "As a genealogist studying numerical family trees, you want to find the longest sequence of consecutive numbers in an unsorted array of integers. For example, in the array [100, 4, 200, 1, 3, 2], the longest consecutive elements sequence is [1, 2, 3, 4]. Return the length of this sequence. Your algorithm should run in O(n) time complexity to handle large family trees efficiently.",
     "constraints": [
-      "List length between 0 and 100,000",
-      "Numbers between -1,000,000,000 and 1,000,000,000"
+      "0 <= nums.length <= 10^5",
+      "-10^9 <= nums[i] <= 10^9"
     ],
     "examples": [
       {
-        "input": "numbers = [100,4,200,1,3,2]",
+        "input": "nums = [100,4,200,1,3,2]",
         "output": "4",
-        "explanation": "The chain [1,2,3,4] has length 4"
+        "explanation": "The longest consecutive sequence is [1, 2, 3, 4] with length 4."
       },
       {
-        "input": "numbers = [5,1,3]",
+        "input": "nums = [5,1,3]",
         "output": "1",
-        "explanation": "No consecutive chain longer than 1"
+        "explanation": "There are no consecutive sequences longer than 1."
       }
     ],
     "hint": "Original: Longest Consecutive Sequence"
@@ -622,24 +656,24 @@
   {
     "id": 27,
     "title": "Subarray Sum Finder",
-    "topic": "Array",
+    "topic": "Array, Hash Table",
     "difficulty": "Medium",
-    "description": "Find the longest continuous part of a list that adds up to exactly K. Return its length.",
+    "description": "As a data analyst, you're looking for the longest contiguous subarray that sums to exactly k. Given an integer array nums and an integer k, return the maximum length of a contiguous subarray that sums to k. If there is no such subarray, return 0. This helps identify significant patterns in time-series data.",
     "constraints": [
-      "List length between 1 and 100,000",
-      "Numbers between -10,000 and 10,000",
-      "K between -1,000,000,000 and 1,000,000,000"
+      "1 <= nums.length <= 2 * 10^4",
+      "-10^4 <= nums[i] <= 10^4",
+      "-10^7 <= k <= 10^7"
     ],
     "examples": [
       {
-        "input": "numbers = [1,-1,5,-2,3], K = 3",
+        "input": "nums = [1,-1,5,-2,3], k = 3",
         "output": "4",
-        "explanation": "Subarray [1,-1,5,-2] sums to 3"
+        "explanation": "The subarray [1,-1,5,-2] sums to 3 and has length 4."
       },
       {
-        "input": "numbers = [1,2,3], K = 6",
+        "input": "nums = [1,2,3], k = 6",
         "output": "3",
-        "explanation": "The whole list sums to 6"
+        "explanation": "The entire array sums to 6."
       }
     ],
     "hint": "Original: Largest Subarray with K sum"
@@ -647,24 +681,24 @@
   {
     "id": 28,
     "title": "XOR Subarray Counter",
-    "topic": "Array",
+    "topic": "Array, Hash Table, Bit Manipulation",
     "difficulty": "Medium",
-    "description": "Count how many continuous parts of the list have a XOR value equal to K.",
+    "description": "In a cryptographic analysis task, you need to count the number of contiguous subarrays where the XOR of all elements equals k. Given an array of integers nums and an integer k, return the number of contiguous subarrays where the XOR of all the elements in the subarray is k. This helps identify patterns in encrypted data streams.",
     "constraints": [
-      "List length between 1 and 100,000",
-      "Numbers between 0 and 1,000,000,000",
-      "K between 0 and 1,000,000,000"
+      "1 <= nums.length <= 10^5",
+      "0 <= nums[i] <= 10^6",
+      "0 <= k <= 10^6"
     ],
     "examples": [
       {
-        "input": "numbers = [4,2,2,6,4], K = 6",
+        "input": "nums = [4,2,2,6,4], k = 6",
         "output": "4",
-        "explanation": "Four subarrays have XOR 6"
+        "explanation": "The subarrays with XOR 6 are [4,2], [4,2,2,6], [2,2,6], [6]."
       },
       {
-        "input": "numbers = [1,2,3], K = 3",
+        "input": "nums = [1,2,3], k = 3",
         "output": "2",
-        "explanation": "Subarrays [3] and [1,2] have XOR 3"
+        "explanation": "The subarrays with XOR 3 are [3] and [1,2]."
       }
     ],
     "hint": "Original: Count number of subarrays with given xor K"
@@ -672,23 +706,28 @@
   {
     "id": 29,
     "title": "Longest Unique Substring Finder",
-    "topic": "Array",
+    "topic": "Hash Table, String, Sliding Window",
     "difficulty": "Medium",
-    "description": "Find the longest part of a string without any repeating letters. Return its length.",
+    "description": "As a linguist studying ancient texts, you want to find the longest substring without repeating characters. Given a string s, find the length of the longest substring without repeating characters. This helps identify unique patterns in ancient languages that could reveal hidden meanings or grammatical structures.",
     "constraints": [
-      "String length between 0 and 100,000",
-      "String contains English letters, digits, symbols, and spaces"
+      "0 <= s.length <= 5 * 10^4",
+      "s consists of English letters, digits, symbols, and spaces."
     ],
     "examples": [
       {
         "input": "s = \"abcabcbb\"",
         "output": "3",
-        "explanation": "\"abc\" has no repeating letters"
+        "explanation": "The answer is \"abc\", with the length of 3."
       },
       {
         "input": "s = \"bbbbb\"",
         "output": "1",
-        "explanation": "\"b\" is the longest without repeat"
+        "explanation": "The answer is \"b\", with the length of 1."
+      },
+      {
+        "input": "s = \"pwwkew\"",
+        "output": "3",
+        "explanation": "The answer is \"wke\", with the length of 3."
       }
     ],
     "hint": "Original: Longest Substring without repeat"
