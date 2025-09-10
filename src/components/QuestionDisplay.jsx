@@ -111,9 +111,9 @@ const QuestionDisplay = ({ question }) => {
                   </div>
                   
                   {example.explanation && (
-                    <div className="bg-blue-50 dark:bg-blue-950/20 rounded p-3 border border-blue-200 dark:border-blue-800">
-                      <span className="text-xs font-medium text-blue-700 dark:text-blue-300">EXPLANATION:</span>
-                      <p className="text-sm text-blue-800 dark:text-blue-200 mt-1">
+                    <div className="bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900/60 dark:to-blue-950/40 rounded-lg p-4 border border-blue-300 dark:border-blue-700 shadow-sm">
+                      <span className="text-xs font-bold text-blue-800 dark:text-blue-200 tracking-wide uppercase">Explanation:</span>
+                      <p className="text-base font-medium text-blue-900 dark:text-blue-100 mt-1 leading-relaxed">
                         {example.explanation}
                       </p>
                     </div>

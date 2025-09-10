@@ -3,13 +3,33 @@ import { motion } from 'framer-motion';
 import { Button } from './ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 import { Badge } from './ui/Badge';
-import { evaluateCodeWithGemini } from '../services/geminiApi';
+import { evaluateCodeWithGemini } from '../Services/geminiApi';
 import { Send, CheckCircle, XCircle, Clock, Zap } from 'lucide-react';
 
 const FeedbackPanel = ({ question, userCode, onSubmissionResult }) => {
   const [feedback, setFeedback] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState(null);
+  const [structured, setStructured] = useState(null); // parsed JSON result
+
+  const parseStructured = (text) => {
+    if (!text) return null;
+    // Capture first fenced code block with optional json after opening backticks
+    const fenceRegex = /```(?:json)?\s*([\s\S]*?)```/i;
+    const match = text.match(fenceRegex);
+    if (!match) return null;
+    const jsonCandidate = match[1].trim();
+    try {
+      const obj = JSON.parse(jsonCandidate);
+      return {
+        data: obj,
+        remainder: text.slice(match.index + match[0].length).trim() || ''
+      };
+    } catch (e) {
+      console.warn('Failed to parse Gemini JSON block:', e);
+      return null;
+    }
+  };
 
   const handleSubmit = async () => {
     if (!question || !userCode.trim()) {
@@ -22,12 +42,23 @@ const FeedbackPanel = ({ question, userCode, onSubmissionResult }) => {
     
     try {
       const result = await evaluateCodeWithGemini(question, userCode);
-      setFeedback(result);
-      
-      // Check if the response indicates a correct solution
-      const isCorrect = result.includes('✅') || result.toLowerCase().includes('correct');
-      setSubmissionStatus(isCorrect ? 'success' : 'error');
-      onSubmissionResult(isCorrect);
+      // Attempt to parse structured JSON first
+      const parsed = parseStructured(result);
+      if (parsed && parsed.data) {
+        setStructured(parsed.data);
+        // We'll show the human readable feedback (remainder) or keep full if empty
+        setFeedback(parsed.remainder || result);
+        const accepted = !!parsed.data.accepted;
+        setSubmissionStatus(accepted ? 'success' : 'error');
+        onSubmissionResult(accepted);
+      } else {
+        // Fallback to legacy heuristic
+        setStructured(null);
+        setFeedback(result);
+        const isCorrect = result.includes('✅') || result.toLowerCase().includes('accepted');
+        setSubmissionStatus(isCorrect ? 'success' : 'error');
+        onSubmissionResult(isCorrect);
+      }
     } catch (error) {
       setFeedback('❌ Error evaluating your code. Please check your internet connection and try again.');
       setSubmissionStatus('error');
@@ -58,9 +89,14 @@ const FeedbackPanel = ({ question, userCode, onSubmissionResult }) => {
             {getStatusIcon()}
             <span>AI Feedback</span>
             {submissionStatus && (
-              <Badge variant={getStatusColor()} className="ml-2">
-                {submissionStatus === 'success' ? 'Accepted' : 'Needs Work'}
-              </Badge>
+              <div className="flex items-center gap-2 ml-2">
+                <Badge variant={getStatusColor()}>
+                  {submissionStatus === 'success' ? 'Accepted' : 'Needs Work'}
+                </Badge>
+                {structured?.score != null && (
+                  <Badge variant="secondary">Score: {structured.score}</Badge>
+                )}
+              </div>
             )}
           </CardTitle>
           
@@ -111,13 +147,56 @@ const FeedbackPanel = ({ question, userCode, onSubmissionResult }) => {
               transition={{ duration: 0.3 }}
               className="p-6"
             >
-              <div className={`prose prose-sm max-w-none ${
-                submissionStatus === 'success' 
-                  ? 'prose-green' 
-                  : submissionStatus === 'error' 
-                    ? 'prose-red' 
-                    : 'prose-neutral'
-              }`}>
+              {structured && (
+                <div className="mb-4 space-y-3">
+                  <div className="flex flex-wrap gap-3 text-xs">
+                    {structured.time_complexity && (
+                      <Badge variant="outline">Time: {structured.time_complexity}</Badge>
+                    )}
+                    {structured.space_complexity && (
+                      <Badge variant="outline">Space: {structured.space_complexity}</Badge>
+                    )}
+                  </div>
+                  {Array.isArray(structured.errors) && structured.errors.length > 0 && (
+                    <div className="bg-red-50 border border-red-200 rounded-md p-3 text-xs text-red-700 max-h-28 overflow-auto">
+                      <strong className="block mb-1">Issues Detected:</strong>
+                      <ul className="list-disc pl-4 space-y-0.5">
+                        {structured.errors.map((e, i) => (
+                          <li key={i}>{e.line != null ? `L${e.line}: ` : ''}{e.message} ({e.severity})</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {Array.isArray(structured.test_results) && structured.test_results.length > 0 && (
+                    <div className="bg-gray-50 border border-border rounded-md p-3 text-xs max-h-32 overflow-auto">
+                      <strong className="block mb-1">Test Results:</strong>
+                      <table className="w-full text-[11px]">
+                        <thead>
+                          <tr className="text-left text-gray-500">
+                            <th className="pr-2">#</th>
+                            <th className="pr-2">Input</th>
+                            <th className="pr-2">Expected</th>
+                            <th className="pr-2">Actual</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {structured.test_results.slice(0,5).map((t, i) => (
+                            <tr key={i} className="odd:bg-white even:bg-gray-100/40">
+                              <td className="pr-2 align-top">{i+1}</td>
+                              <td className="pr-2 max-w-[120px] truncate" title={t.input}>{t.input}</td>
+                              <td className="pr-2 max-w-[120px] truncate" title={t.expected}>{t.expected}</td>
+                              <td className="pr-2 max-w-[120px] truncate" title={t.actual}>{t.actual}</td>
+                              <td>{t.passed ? '✅' : '❌'}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              )}
+              <div className={`prose prose-sm max-w-none ${submissionStatus === 'success' ? 'prose-green' : submissionStatus === 'error' ? 'prose-red' : 'prose-neutral'}`}>
                 <pre className="whitespace-pre-wrap text-sm leading-relaxed bg-muted/30 p-4 rounded-lg border">
                   {feedback}
                 </pre>

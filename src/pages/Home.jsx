@@ -9,6 +9,7 @@ import questionsData from '../data/questions.json';
 import useLocalStorage from '../hooks/useLocalStorage';
 import PracticeOptions from './PracticeOptions';
 import { Badge } from '../components/ui/Badge';
+import { Button } from '../components/ui/Button';
 
 const Home = () => {
   const [questions] = useState(questionsData);
@@ -20,6 +21,7 @@ const Home = () => {
   const [currentMode, setCurrentMode] = useState(location.state?.mode || null);
   const [showPracticeOptions, setShowPracticeOptions] = useState(currentMode === null);
   const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [previousQuestionId, setPreviousQuestionId] = useState(null);
   const [userCode, setUserCode] = useState('');
   const [solvedQuestions, setSolvedQuestions] = useLocalStorage('solvedQuestions', []);
 
@@ -72,9 +74,18 @@ const Home = () => {
     }
     
     if (filtered.length > 0) {
-      const randomIndex = Math.floor(Math.random() * filtered.length);
-      setCurrentQuestion(filtered[randomIndex]);
-      setUserCode(''); // Reset code when new question is generated
+      // Avoid repeating the same question consecutively when possible
+      let randomIndex;
+      let attempts = 0;
+      do {
+        randomIndex = Math.floor(Math.random() * filtered.length);
+        attempts++;
+      } while (filtered.length > 1 && filtered[randomIndex].id === previousQuestionId && attempts < 10);
+
+      const nextQ = filtered[randomIndex];
+      setCurrentQuestion(nextQ);
+      setPreviousQuestionId(nextQ.id);
+      setUserCode('');
     }
   };
 
@@ -103,75 +114,17 @@ const Home = () => {
 
   return (
     <div className="flex h-screen bg-background">
-      {/* Sidebar only for mode switching */}
-      <Sidebar 
-        onModeSelect={handleModeSelect}
-        currentMode={currentMode}
-      />
+      {/* Sidebar only visible before a question is generated */}
+      {!currentQuestion && (
+        <Sidebar 
+          onModeSelect={handleModeSelect}
+          currentMode={currentMode}
+        />
+      )}
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Main selection UI for topic/difficulty/random */}
-        {(currentMode === 'topic-difficulty' || currentMode === 'random-topic') && (
-          <div className="p-6 border-b border-border bg-white/80">
-            <div className="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
-              {/* Topic selection */}
-              <div className="flex-1">
-                <div className="mb-2 font-semibold text-gray-700">Select Topic:</div>
-                <div className="flex flex-wrap gap-2">
-                  {topics.map((topic) => (
-                    <Badge
-                      key={topic}
-                      variant={selectedTopic === topic ? "default" : "secondary"}
-                      className={`px-3 py-1 rounded-md cursor-pointer transition-all ${
-                        selectedTopic === topic 
-                          ? 'bg-blue-500 text-white hover:bg-blue-600' 
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
-                      onClick={() => handleTopicSelect(topic)}
-                    >
-                      {topic}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Difficulty selection for topic-difficulty mode */}
-              {currentMode === 'topic-difficulty' && (
-                <div>
-                  <div className="mb-2 font-semibold text-gray-700">Select Difficulty:</div>
-                  <div className="flex gap-2">
-                    {['Easy', 'Medium', 'Hard'].map((difficulty) => (
-                      <Badge
-                        key={difficulty}
-                        variant={getDifficultyVariant(difficulty)}
-                        className={`px-3 py-1 rounded-md cursor-pointer ${
-                          selectedDifficulty === difficulty ? 'opacity-100' : 'opacity-70 hover:opacity-100'
-                        }`}
-                        onClick={() => handleDifficultySelect(difficulty)}
-                      >
-                        {difficulty}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              )}
-              
-              {/* Generate Question Button */}
-              <Button 
-                onClick={handleGenerateQuestion}
-                disabled={
-                  (currentMode === 'topic-difficulty' && (!selectedTopic || !selectedDifficulty)) ||
-                  (currentMode === 'random-topic' && !selectedTopic)
-                }
-              >
-                Generate Question
-              </Button>
-            </div>
-          </div>
-        )}
-
         {/* Main content area */}
-        {currentQuestion ? (
+  {currentQuestion ? (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -193,12 +146,76 @@ const Home = () => {
             </div>
           </motion.div>
         ) : (
-          <div className="flex-1 flex items-center justify-center text-lg text-muted-foreground">
-            {currentMode === 'topic-difficulty' && (!selectedTopic || !selectedDifficulty)
-              ? 'Please select a topic and difficulty to get started.'
-              : currentMode === 'random-topic' && !selectedTopic
-              ? 'Please select a topic to get started.'
-              : 'No question available. Try changing your selection.'}
+          <div className="flex-1 flex items-start justify-center p-10 overflow-auto">
+            {(currentMode === 'topic-difficulty' || currentMode === 'random-topic') && (
+              <div className="w-full max-w-4xl mx-auto">
+                <div className="bg-white/80 backdrop-blur shadow-sm rounded-xl border border-border p-8">
+                  <h2 className="text-2xl font-semibold mb-6 text-gray-800 tracking-tight">
+                    {currentMode === 'topic-difficulty' ? 'Choose Topic & Difficulty' : 'Choose a Topic'}
+                  </h2>
+                  <div className="space-y-8">
+                    {/* Topic Selection */}
+                    <div>
+                      <div className="mb-3 font-medium text-gray-700">Select Topic</div>
+                      <div className="flex flex-wrap gap-3">
+                        {topics.map((topic) => (
+                          <Badge
+                            key={topic}
+                            variant={selectedTopic === topic ? 'default' : 'secondary'}
+                            className={`px-4 py-2 rounded-md cursor-pointer text-sm transition-all ${
+                              selectedTopic === topic
+                                ? 'bg-blue-600 text-white hover:bg-blue-700 shadow'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                            onClick={() => handleTopicSelect(topic)}
+                          >
+                            {topic}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Difficulty Selection (only for topic-difficulty mode) */}
+                    {currentMode === 'topic-difficulty' && (
+                      <div>
+                        <div className="mb-3 font-medium text-gray-700">Select Difficulty</div>
+                        <div className="flex gap-3">
+                          {['Easy', 'Medium', 'Hard'].map((difficulty) => (
+                            <Badge
+                              key={difficulty}
+                              variant={getDifficultyVariant(difficulty)}
+                              className={`px-4 py-2 rounded-md cursor-pointer text-sm transition ${
+                                selectedDifficulty === difficulty ? 'ring-2 ring-offset-1 ring-blue-500' : 'opacity-80 hover:opacity-100'
+                              }`}
+                              onClick={() => handleDifficultySelect(difficulty)}
+                            >
+                              {difficulty}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Actions */}
+                    <div className="flex gap-4">
+                      <Button
+                        onClick={handleGenerateQuestion}
+                        disabled={
+                          (currentMode === 'topic-difficulty' && (!selectedTopic || !selectedDifficulty)) ||
+                          (currentMode === 'random-topic' && !selectedTopic)
+                        }
+                        className="disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Generate Question
+                      </Button>
+                      {selectedTopic && currentMode === 'topic-difficulty' && !selectedDifficulty && (
+                        <span className="text-sm text-gray-500 self-center">Pick a difficulty to enable generation.</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
         
