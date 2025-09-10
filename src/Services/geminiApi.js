@@ -28,8 +28,8 @@ function extractText(resp) {
 export const evaluateCodeWithGemini = async (problem, userCode) => {
   try {
     const structuredInstruction = `
-You are an expert C++ code reviewer and judge (like a strict LeetCode evaluator).
-When given a candidate C++ solution, perform a two-part response in this exact order:
+You are an expert code reviewer and judge (like a strict LeetCode evaluator).
+When given a candidate solution in any programming language, perform a two-part response in this exact order:
 
 A. First output a single JSON object inside a fenced code block (\`\`\`json).
 This JSON must be strictly valid and parseable. Use the exact schema below:
@@ -57,6 +57,8 @@ Rules:
 - Output ONLY the JSON block first, no comments or extra text before it.
 - JSON must be strictly valid and parseable, no trailing commas.
 - After the JSON, you may provide additional human-readable review if you wish.
+- Detect the programming language automatically and adapt your review accordingly.
+- Check syntax, correctness, edge cases, and language-specific best practices.
 
 CONTEXT PROBLEM:
 Title: ${problem.title}

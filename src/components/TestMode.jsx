@@ -1,3 +1,25 @@
+import { Lightbulb } from 'lucide-react';
+// Inline HintSection (copied from QuestionDisplay)
+const HintSection = ({ hint }) => {
+  const [show, setShow] = React.useState(false);
+  return (
+    <div className="mt-4">
+      {!show ? (
+        <button
+          className="px-4 py-1 rounded bg-sky-100 hover:bg-sky-200 text-sky-800 font-semibold text-sm border border-sky-200 transition"
+          onClick={() => setShow(true)}
+        >
+          <Lightbulb className="inline w-4 h-4 mr-1" /> Show Hint
+        </button>
+      ) : (
+        <div className="mt-2 bg-gradient-to-br from-sky-100 to-blue-200 dark:from-blue-900/80 dark:to-blue-950/60 border border-sky-400 dark:border-blue-700 rounded-xl p-4 text-blue-900 dark:text-blue-100 shadow-lg animate-fade-in">
+          <span className="block text-xs font-extrabold uppercase tracking-wider text-sky-800 dark:text-blue-200 mb-1">Hint</span>
+          <span className="text-base font-medium leading-relaxed text-blue-900 dark:text-blue-100">{hint}</span>
+        </div>
+      )}
+    </div>
+  );
+};
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from './ui/Button';
@@ -146,12 +168,17 @@ const TestMode = ({ questions, onTestComplete }) => {
               <Badge variant="outline">{currentQuestion.topic}</Badge>
             </div>
 
-            {/* Question Description */}
+
+            {/* Question Description + Hint */}
             <Card>
               <CardContent className="pt-6">
                 <p className="text-foreground leading-relaxed">
                   {currentQuestion.description}
                 </p>
+                {/* Hint Button and Reveal */}
+                {currentQuestion.hint && (
+                  <HintSection hint={currentQuestion.hint} />
+                )}
               </CardContent>
             </Card>
 

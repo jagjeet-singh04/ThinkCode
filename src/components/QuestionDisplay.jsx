@@ -1,8 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Badge } from './ui/Badge';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 import { FileText, List, Lightbulb } from 'lucide-react';
+
+// HintSection component (must be top-level)
+const HintSection = ({ hint }) => {
+  const [show, setShow] = useState(false);
+  return (
+    <div className="mt-4">
+      {!show ? (
+        <button
+          className="px-4 py-1 rounded bg-sky-100 hover:bg-sky-200 text-sky-800 font-semibold text-sm border border-sky-200 transition"
+          onClick={() => setShow(true)}
+        >
+          Show Hint
+        </button>
+      ) : (
+        <div className="mt-2 bg-gradient-to-br from-sky-100 to-blue-200 dark:from-blue-900/80 dark:to-blue-950/60 border border-sky-400 dark:border-blue-700 rounded-xl p-4 text-blue-900 dark:text-blue-100 shadow-lg animate-fade-in">
+          <span className="block text-xs font-extrabold uppercase tracking-wider text-sky-800 dark:text-blue-200 mb-1">Hint</span>
+          <span className="text-base font-medium leading-relaxed text-blue-900 dark:text-blue-100">{hint}</span>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const QuestionDisplay = ({ question }) => {
   if (!question) {
@@ -71,6 +93,10 @@ const QuestionDisplay = ({ question }) => {
             <p className="text-foreground leading-relaxed">
               {question.description}
             </p>
+            {/* Hint Button and Reveal */}
+            {question.hint && (
+              <HintSection hint={question.hint} />
+            )}
           </CardContent>
         </Card>
 
