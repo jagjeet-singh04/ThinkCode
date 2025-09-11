@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Editor from '@monaco-editor/react';
 import { Button } from './ui/Button';
@@ -13,7 +13,7 @@ const LANGUAGE_OPTIONS = [
   { label: 'Java', value: 'java', icon: '☕' },
 ];
 
-const DEFAULT_TEMPLATES = {
+export const DEFAULT_TEMPLATES = {
   javascript: `function solve(input) {
     // Your solution here
     
@@ -66,54 +66,71 @@ public class Solution {
 }`
 };
 
-const CodeEditor = ({ code, onCodeChange, language: initialLanguage = 'javascript' }) => {
-  const [language, setLanguage] = useState(initialLanguage);
+const CodeEditor = ({ code, onCodeChange, language = 'javascript', setLanguage }) => {
+  // Prop validation
+  if (typeof setLanguage !== 'function') {
+    console.error('setLanguage must be a function');
+    return <div className="p-4 text-red-500">Error: setLanguage prop must be a function</div>;
+  }
+
+  if (typeof onCodeChange !== 'function') {
+    console.error('onCodeChange must be a function');
+    return <div className="p-4 text-red-500">Error: onCodeChange prop must be a function</div>;
+  }
+
   const [theme, setTheme] = useState('vs-light');
-  const [codeByLang, setCodeByLang] = useState({
-    javascript: code || DEFAULT_TEMPLATES.javascript,
-    python: DEFAULT_TEMPLATES.python,
-    cpp: DEFAULT_TEMPLATES.cpp,
-    java: DEFAULT_TEMPLATES.java,
-  });
 
   const handleEditorChange = (value) => {
-    setCodeByLang(prev => ({ ...prev, [language]: value }));
-    onCodeChange(value);
+    try {
+      onCodeChange(value || '');
+    } catch (error) {
+      console.error('Error updating code:', error);
+    }
   };
 
   const handleLanguageChange = (newLang) => {
-    setLanguage(newLang);
-    const newCode = codeByLang[newLang] || DEFAULT_TEMPLATES[newLang];
-    onCodeChange(newCode);
+    try {
+      if (typeof setLanguage === 'function') {
+        setLanguage(newLang);
+      }
+    } catch (error) {
+      console.error('Error changing language:', error);
+    }
   };
 
   const resetCode = () => {
-    const defaultCode = DEFAULT_TEMPLATES[language];
-    setCodeByLang(prev => ({ ...prev, [language]: defaultCode }));
-    onCodeChange(defaultCode);
+    try {
+      const defaultCode = DEFAULT_TEMPLATES[language] || DEFAULT_TEMPLATES.javascript;
+      onCodeChange(defaultCode);
+    } catch (error) {
+      console.error('Error resetting code:', error);
+    }
   };
 
   const selectedLang = LANGUAGE_OPTIONS.find(opt => opt.value === language);
+  const currentCode = code || DEFAULT_TEMPLATES[language] || DEFAULT_TEMPLATES.javascript;
 
   return (
-    <div className="h-full flex flex-col bg-background">
-      {/* Editor Header */}
-      <Card className="rounded-none border-b border-t-0 border-l-0 border-r-0">
-        <CardHeader className="px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
+    <div className="h-full flex flex-col bg-background w-full max-w-full min-h-[300px]">
+      <Card className="rounded-none border-b border-t-0 border-l-0 border-r-0 bg-white shadow-sm w-full max-w-full">
+        <CardHeader className="px-2 py-2 sm:px-4 sm:py-3">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 w-full">
+            <div className="flex flex-col xs:flex-row xs:items-center xs:space-x-2 gap-2 w-full">
+              <div className="flex items-center space-x-2 min-w-max">
                 <Code className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm font-medium">Code Editor</span>
+                <span className="text-xs sm:text-sm font-medium">Code Editor</span>
               </div>
-              
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide w-full max-w-full pb-1">
                 {LANGUAGE_OPTIONS.map((option) => (
-                  <motion.div key={option.value} whileScale={{ scale: 0.95 }}>
+                  <motion.div key={option.value} whileTap={{ scale: 0.95 }}>
                     <Button
-                      variant={language === option.value ? "default" : "ghost"}
+                      variant={language === option.value ? "default" : "outline"}
                       size="sm"
-                      className="h-8 px-3"
+                      className={`h-8 px-2 sm:px-3 whitespace-nowrap rounded-full transition-all text-xs sm:text-sm ${
+                        language === option.value
+                          ? "bg-blue-600 text-white shadow-md"
+                          : "bg-white text-gray-700 border hover:bg-gray-100"
+                      }`}
                       onClick={() => handleLanguageChange(option.value)}
                     >
                       <span className="mr-1">{option.icon}</span>
@@ -123,26 +140,23 @@ const CodeEditor = ({ code, onCodeChange, language: initialLanguage = 'javascrip
                 ))}
               </div>
             </div>
-
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1 sm:space-x-2 mt-2 md:mt-0">
               <Badge variant="outline" className="text-xs">
-                {selectedLang?.label}
+                {selectedLang?.label || 'JavaScript'}
               </Badge>
-              
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setTheme(theme === 'vs-light' ? 'vs-dark' : 'vs-light')}
-                className="h-8 w-8 p-0"
+                className="h-8 w-8 p-0 rounded-full hover:bg-gray-100"
               >
                 <Settings className="w-4 h-4" />
               </Button>
-              
               <Button
                 variant="outline"
                 size="sm"
                 onClick={resetCode}
-                className="h-8"
+                className="h-8 rounded-full"
               >
                 Reset
               </Button>
@@ -151,23 +165,23 @@ const CodeEditor = ({ code, onCodeChange, language: initialLanguage = 'javascrip
         </CardHeader>
       </Card>
 
-      {/* Monaco Editor */}
-      <div className="flex-1 relative">
+      <div className="flex-1 relative min-h-[180px] w-full max-w-full">
         <Editor
           height="100%"
+          width="100%"
           language={language}
-          value={codeByLang[language]}
+          value={currentCode}
           onChange={handleEditorChange}
           theme={theme}
           options={{
             minimap: { enabled: false },
             scrollBeyondLastLine: false,
-            fontSize: 14,
+            fontSize: window.innerWidth < 640 ? 12 : 14,
             fontFamily: "'JetBrains Mono', 'Fira Code', 'Consolas', monospace",
             wordWrap: 'on',
             automaticLayout: true,
-            padding: { top: 16, bottom: 16 },
-            lineNumbers: 'on',
+            padding: { top: window.innerWidth < 640 ? 8 : 16, bottom: window.innerWidth < 640 ? 8 : 16 },
+            lineNumbers: window.innerWidth < 640 ? 'off' : 'on',
             renderLineHighlight: 'all',
             selectOnLineNumbers: true,
             scrollbar: {
@@ -180,23 +194,23 @@ const CodeEditor = ({ code, onCodeChange, language: initialLanguage = 'javascrip
             overviewRulerLanes: 0,
             hideCursorInOverviewRuler: true,
             renderWhitespace: 'selection',
-            bracketPairColorization: { enabled: true }
+            bracketPairColorization: { enabled: true },
+            fixedOverflowWidgets: true,
           }}
         />
       </div>
 
-      {/* Editor Footer */}
-      <div className="border-t bg-muted/20 px-4 py-2">
-        <div className="flex items-center justify-between text-xs text-muted-foreground">
-          <div className="flex items-center space-x-4">
-            <span>Ready to code</span>
+      <div className="border-t bg-white px-2 py-2 sm:px-4 sm:py-2 shadow-sm w-full max-w-full">
+        <div className="flex flex-col xs:flex-row items-center justify-between text-xs text-muted-foreground gap-2 w-full">
+          <div className="flex items-center space-x-2 sm:space-x-4 w-full">
+            <span className="truncate">Ready to code</span>
             <Badge variant="outline" className="text-xs">
               {theme === 'vs-light' ? 'Light' : 'Dark'} Theme
             </Badge>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 mt-1 xs:mt-0">
             <Play className="w-3 h-3" />
-            <span>Press Ctrl+Enter to run</span>
+            <span className="truncate">{window.innerWidth < 640 ? 'Tap to run' : 'Press Ctrl+Enter to run'}</span>
           </div>
         </div>
       </div>
