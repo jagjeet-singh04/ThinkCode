@@ -9,9 +9,12 @@ const LandingPage = () => {
   const navigate = useNavigate();
   const [showModeSelect, setShowModeSelect] = useState(false);
 
-  const handleStart = () => setShowModeSelect(true);
+  const handleStart = () => {
+    navigate('/choose-path');
+  };
   const handleBack = () => setShowModeSelect(false);
 
+  // (Optional: If you want to keep mode selection in LandingPage, you can keep this handler. Otherwise, navigation now goes to ChooseSection first.)
   const handleModeSelect = (mode) => {
     if (mode === "test") {
       navigate("/test");
@@ -101,7 +104,7 @@ const LandingPage = () => {
         {/* Content Area with Animated Transition */}
         <div className="w-full max-w-6xl min-h-[400px] flex items-center justify-center">
           <AnimatePresence mode="wait">
-            {!showModeSelect ? (
+            {!showModeSelect && (
               <motion.div
                 key="features"
                 initial={{ opacity: 0, y: 20 }}
@@ -114,10 +117,9 @@ const LandingPage = () => {
                   <motion.div
                     key={index}
                     whileHover={{ y: -6 }}
-                    transition={{ type: "spring", stiffness: 200 }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    transition={{ duration: 0.4, delay: index * 0.1, type: "spring", stiffness: 200 }}
                   >
                     <Card className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:border-purple-400/40 transition-all duration-300 h-full">
                       <CardContent className="p-6 text-center">
@@ -133,98 +135,6 @@ const LandingPage = () => {
                     </Card>
                   </motion.div>
                 ))}
-              </motion.div>
-            ) : (
-              <motion.div
-                key="mode-select"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.4 }}
-                className="w-full max-w-md"
-              >
-                <motion.div 
-                  className="flex justify-end mb-2"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  <Button
-                    onClick={handleBack}
-                    variant="ghost"
-                    size="sm"
-                    className="text-white/70 hover:text-white hover:bg-white/10 rounded-full"
-                  >
-                    <X className="w-4 h-4" />
-                  </Button>
-                </motion.div>
-                
-                <Card className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden relative">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500"></div>
-                  <CardHeader className="text-center pb-3">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: "spring", delay: 0.1 }}
-                      className="mx-auto mb-3 w-14 h-14 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center"
-                    >
-                      <Sparkles className="w-7 h-7 text-purple-300" />
-                    </motion.div>
-                    <CardTitle className="text-2xl font-bold bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
-                      Choose Your Challenge
-                    </CardTitle>
-                    <p className="text-sm text-white/60 mt-1">
-                      Select your preferred learning path
-                    </p>
-                  </CardHeader>
-                  <CardContent className="space-y-4 pt-0">
-                    <motion.div 
-                      whileHover={{ scale: 1.02 }} 
-                      whileTap={{ scale: 0.98 }}
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      <Button
-                        onClick={() => handleModeSelect("topic-difficulty")}
-                        className="w-full h-16 rounded-xl bg-gradient-to-r from-purple-600/30 to-pink-600/30 border border-white/10 hover:from-purple-600/40 hover:to-pink-600/40 text-left justify-start p-4 group relative overflow-hidden"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-10 transition-opacity"></div>
-                        <Target className="mr-4 w-6 h-6 text-green-400 flex-shrink-0" />
-                        <div className="flex flex-col items-start">
-                          <span className="font-semibold">Practice Mode</span>
-                          <span className="text-xs text-white/60 mt-1">
-                            Choose topics & difficulty
-                          </span>
-                        </div>
-                        <ChevronRight className="ml-auto w-5 h-5 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition-all" />
-                      </Button>
-                    </motion.div>
-
-                    <motion.div 
-                      whileHover={{ scale: 1.02 }} 
-                      whileTap={{ scale: 0.98 }}
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.3 }}
-                    >
-                      <Button
-                        onClick={() => handleModeSelect("test")}
-                        className="w-full h-16 rounded-xl bg-gradient-to-r from-purple-600/30 to-pink-600/30 border border-white/10 hover:from-purple-600/40 hover:to-pink-600/40 text-left justify-start p-4 group relative overflow-hidden"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-10 transition-opacity"></div>
-                        <Trophy className="mr-4 w-6 h-6 text-pink-400 flex-shrink-0" />
-                        <div className="flex flex-col items-start">
-                          <span className="font-semibold">Test Mode</span>
-                          <span className="text-xs text-white/60 mt-1">
-                            Timed coding challenges
-                          </span>
-                        </div>
-                        <ChevronRight className="ml-auto w-5 h-5 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition-all" />
-                      </Button>
-                    </motion.div>
-                  </CardContent>
-                </Card>
               </motion.div>
             )}
           </AnimatePresence>

@@ -1196,5 +1196,1343 @@
       }
     ],
     "hint": "Sort both arrays and use two pointers"
+  },
+  {
+    "id": 54,
+    "title": "Ancient Treasure Sum Finder",
+    "topic": "Backtracking",
+    "difficulty": "Medium",
+    "description": "As an archaeologist exploring a pharaoh's tomb, you discover ancient tablets with numbers inscribed on them. Find all possible sums that can be formed by selecting subsets of these numbers. This could reveal hidden combinations to unlock secret chambers.",
+    "constraints": [
+      "1 <= N <= 15",
+      "0 <= arr[i] <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "arr = [2, 3]",
+        "output": "[0, 2, 3, 5]",
+        "explanation": "Subset sums: []→0, [2]→2, [3]→3, [2,3]→5"
+      }
+    ],
+    "hint": "Use recursion to generate all subsets"
+  },
+  {
+    "id": 55,
+    "title": "Duplicate Artifact Subset Finder",
+    "topic": "Backtracking",
+    "difficulty": "Medium",
+    "description": "While cataloging a museum's collection, you encounter duplicate artifacts with identical markings. Find all unique subsets of these artifacts, handling duplicates appropriately to create an accurate inventory.",
+    "constraints": [
+      "1 <= nums.length <= 10",
+      "-10 <= nums[i] <= 10"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,2,2]",
+        "output": "[[],[1],[1,2],[1,2,2],[2],[2,2]]",
+        "explanation": "All unique subsets including handling duplicates"
+      }
+    ],
+    "hint": "Sort first and skip duplicates during recursion"
+  },
+  {
+    "id": 56,
+    "title": "Ritual Offering Combiner",
+    "topic": "Backtracking",
+    "difficulty": "Medium",
+    "description": "As a high priest preparing for a ceremony, you need to combine offerings that sum to a specific sacred number. Each offering can be used multiple times. Find all unique combinations that achieve the target sum.",
+    "constraints": [
+      "1 <= candidates.length <= 30",
+      "2 <= target <= 500",
+      "1 <= candidates[i] <= 200"
+    ],
+    "examples": [
+      {
+        "input": "candidates = [2,3,6,7], target = 7",
+        "output": "[[2,2,3],[7]]",
+        "explanation": "2+2+3=7 and 7=7"
+      }
+    ],
+    "hint": "Use backtracking with index and remaining target"
+  },
+  {
+    "id": 57,
+    "title": "Unique Offering Combiner",
+    "topic": "Backtracking",
+    "difficulty": "Medium",
+    "description": "Prepare for an exclusive ceremony where each offering can be used only once. Find all unique combinations that sum to the sacred target number, handling duplicate offerings appropriately.",
+    "constraints": [
+      "1 <= candidates.length <= 100",
+      "1 <= target <= 30",
+      "1 <= candidates[i] <= 50"
+    ],
+    "examples": [
+      {
+        "input": "candidates = [10,1,2,7,6,1,5], target = 8",
+        "output": "[[1,1,6],[1,2,5],[1,7],[2,6]]",
+        "explanation": "All unique combinations summing to 8"
+      }
+    ],
+    "hint": "Sort and skip duplicates when same as previous"
+  },
+  {
+    "id": 58,
+    "title": "Sacred Text Partitionor",
+    "topic": "Backtracking",
+    "difficulty": "Medium",
+    "description": "As a scribe transcribing sacred texts, partition ancient scriptures such that every segment is a palindrome. This preserves the spiritual harmony of the text in accordance with temple traditions.",
+    "constraints": [
+      "1 <= s.length <= 16",
+      "s contains only lowercase English letters"
+    ],
+    "examples": [
+      {
+        "input": "s = \"aab\"",
+        "output": "[[\"a\",\"a\",\"b\"],[\"aa\",\"b\"]]",
+        "explanation": "All possible palindrome partitions"
+      }
+    ],
+    "hint": "Use backtracking with palindrome checking"
+  },
+  {
+    "id": 59,
+    "title": "Ceremonial Sequence Finder",
+    "topic": "Backtracking",
+    "difficulty": "Hard",
+    "description": "As the master of ceremonies, determine the k-th permutation sequence of sacred symbols for an important ritual. The order of symbols must follow ancient traditions.",
+    "constraints": [
+      "1 <= n <= 9",
+      "1 <= k <= n!"
+    ],
+    "examples": [
+      {
+        "input": "n = 3, k = 3",
+        "output": "\"213\"",
+        "explanation": "Permutations in order: 123, 132, 213, 231, 312, 321"
+      }
+    ],
+    "hint": "Use factorial number system to determine positions"
+  },
+  {
+    "id": 60,
+    "title": "Sac Symbol Arrangement Generator",
+    "topic": "Backtracking",
+    "difficulty": "Medium",
+    "description": "Generate all possible arrangements of sacred symbols for meditation rituals. Each arrangement represents a different spiritual path for enlightenment.",
+    "constraints": [
+      "1 <= nums.length <= 6",
+      "-10 <= nums[i] <= 10"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,2,3]",
+        "output": "[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]",
+        "explanation": "All permutations of the array"
+      }
+    ],
+    "hint": "Use backtracking with swapping technique"
+  },
+  {
+    "id": 61,
+    "title": "Royal Court Arranger",
+    "topic": "Backtracking",
+    "difficulty": "Hard",
+    "description": "As the royal architect, arrange N queens on a N×N chessboard such that no two queens threaten each other. This represents the optimal court arrangement for maximum diplomatic efficiency.",
+    "constraints": [
+      "1 <= n <= 9"
+    ],
+    "examples": [
+      {
+        "input": "n = 4",
+        "output": "[[\".Q..\",\"...Q\",\"Q...\",\"..Q.\"],[\"..Q.\",\"Q...\",\"...Q\",\".Q..\"]]",
+        "explanation": "Two distinct solutions for 4 queens"
+      }
+    ],
+    "hint": "Use backtracking with column, diagonal and anti-diagonal checks"
+  },
+  {
+    "id": 62,
+    "title": "Ancient Number Grid Solver",
+    "topic": "Backtracking",
+    "difficulty": "Hard",
+    "description": "Solve a sacred number grid puzzle found in an ancient temple. Fill the 9×9 grid with digits 1-9 such that each row, column, and 3×3 subgrid contains all digits without repetition.",
+    "constraints": [
+      "board.length == 9",
+      "board[i].length == 9",
+      "board[i][j] is a digit or '.'",
+      "Input is guaranteed to be solvable"
+    ],
+    "examples": [
+      {
+        "input": "Partially filled sudoku board",
+        "output": "Completely filled valid sudoku",
+        "explanation": "All rows, columns and 3×3 boxes contain 1-9 exactly once"
+      }
+    ],
+    "hint": "Use backtracking with efficient candidate checking"
+  },
+  {
+    "id": 63,
+    "title": "Kingdom Region Colorer",
+    "topic": "Backtracking",
+    "difficulty": "Medium",
+    "description": "As a cartographer mapping the kingdom's regions, color adjacent regions with different colors using at most M colors. This creates visually distinct territories for royal administration.",
+    "constraints": [
+      "N <= 20",
+      "M <= 10"
+    ],
+    "examples": [
+      {
+        "input": "Graph with 4 nodes, M = 3",
+        "output": "true",
+        "explanation": "The graph can be colored with 3 colors"
+      }
+    ],
+    "hint": "Try colors for each node and check validity with neighbors"
+  },
+  {
+    "id": 64,
+    "title": "Temple Maze Navigator",
+    "topic": "Backtracking",
+    "difficulty": "Medium",
+    "description": "Navigate through an ancient temple maze to find the path to the sacred chamber. The maze contains obstacles (1s) and open paths (0s), starting from (0,0) to (N-1,N-1).",
+    "constraints": [
+      "n == maze.length == maze[i].length",
+      "2 <= n <= 5",
+      "maze[i][j] is 0 or 1"
+    ],
+    "examples": [
+      {
+        "input": "maze = [[1,0,0,0],[1,1,0,1],[1,1,0,0],[0,1,1,1]]",
+        "output": "[\"DDRDRR\",\"DRDDRR\"]",
+        "explanation": "Two paths from start to end: Down,Down,Right,Down,Right,Right and Down,Right,Down,Down,Right,Right"
+      }
+    ],
+    "hint": "Use DFS with backtracking, moving in all 4 directions"
+  },
+  {
+    "id": 65,
+    "title": "Ancient Dictionary Word Breaker",
+    "topic": "Backtracking",
+    "difficulty": "Hard",
+    "description": "Break a sacred inscription into valid words from an ancient dictionary. Find all possible ways to segment the text into space-separated sequences of dictionary words.",
+    "constraints": [
+      "1 <= s.length <= 15",
+      "1 <= wordDict.length <= 100",
+      "1 <= wordDict[i].length <= 10"
+    ],
+    "examples": [
+      {
+        "input": "s = \"catsanddog\", wordDict = [\"cat\",\"cats\",\"and\",\"sand\",\"dog\"]",
+        "output": "[\"cats and dog\",\"cat sand dog\"]",
+        "explanation": "Two ways to break the sentence"
+      }
+    ],
+    "hint": "Use backtracking with memoization"
+  },
+  {
+    "id": 66,
+    "title": "Sacred Root Calculator",
+    "topic": "Binary Search",
+    "difficulty": "Medium",
+    "description": "Calculate the N-th root of a sacred number using ancient mathematical techniques. Find the precise value to unlock hidden chambers in the pyramid.",
+    "constraints": [
+      "1 <= N <= 10",
+      "1 <= M <= 10^9",
+      "Error tolerance: 1e-6"
+    ],
+    "examples": [
+      {
+        "input": "N = 3, M = 27",
+        "output": "3.000000",
+        "explanation": "Cube root of 27 is 3"
+      }
+    ],
+    "hint": "Use binary search on possible root values"
+  },
+  {
+    "id": 67,
+    "title": "Tablet Value Median Finder",
+    "topic": "Binary Search",
+    "difficulty": "Hard",
+    "description": "Find the median value of numbers inscribed on ancient stone tablets arranged in a matrix. Each row is sorted, helping priests identify the central sacred value.",
+    "constraints": [
+      "1 <= R, C <= 150",
+      "1 <= matrix[i][j] <= 2000"
+    ],
+    "examples": [
+      {
+        "input": "matrix = [[1,3,5],[2,6,9],[3,6,9]]",
+        "output": "5",
+        "explanation": "Sorted elements: [1,2,3,3,5,6,6,9,9], median = 5"
+      }
+    ],
+    "hint": "Use binary search on the median value"
+  },
+  {
+    "id": 68,
+    "title": "Lone Artifact Finder",
+    "topic": "Binary Search",
+    "difficulty": "Medium",
+    "description": "In a sorted collection of ancient artifacts where all appear twice except one, find the unique artifact using binary search techniques favored by temple scholars.",
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "0 <= nums[i] <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,1,2,3,3,4,4,8,8]",
+        "output": "2",
+        "explanation": "2 appears only once, all others appear twice"
+      }
+    ],
+    "hint": "Use binary search on even indices"
+  },
+  {
+    "id": 69,
+    "title": "Rotated Scroll Searcher",
+    "topic": "Binary Search",
+    "difficulty": "Medium",
+    "description": "Search for a sacred symbol in a rotated scroll where the symbols were rearranged during an ancient ceremony. Find the pivot point and then the target symbol.",
+    "constraints": [
+      "1 <= nums.length <= 5000",
+      "-10^4 <= nums[i] <= 10^4",
+      "All values are unique"
+    ],
+    "examples": [
+      {
+        "input": "nums = [4,5,6,7,0,1,2], target = 0",
+        "output": "4",
+        "explanation": "Target 0 found at index 4"
+      }
+    ],
+    "hint": "Find pivot first, then search in the appropriate half"
+  },
+  {
+    "id": 70,
+    "title": "Dual Scroll Median Finder",
+    "topic": "Binary Search",
+    "difficulty": "Hard",
+    "description": "Find the median of two sorted sacred scrolls containing important numerical records. This combined median represents the central value of ancient historical data.",
+    "constraints": [
+      "nums1.length == m",
+      "nums2.length == n",
+      "0 <= m, n <= 1000",
+      "1 <= m + n <= 2000"
+    ],
+    "examples": [
+      {
+        "input": "nums1 = [1,3], nums2 = [2]",
+        "output": "2.0",
+        "explanation": "Merged array = [1,2,3], median = 2"
+      }
+    ],
+    "hint": "Use binary search on the smaller array"
+  },
+  {
+    "id": 71,
+    "title": "Dual Scroll Element Finder",
+    "topic": "Binary Search",
+    "difficulty": "Hard",
+    "description": "Find the k-th smallest element in two sorted sacred scrolls containing temple records. This helps priests locate specific historical entries efficiently.",
+    "constraints": [
+      "1 <= m, n <= 10^5",
+      "1 <= k <= m + n"
+    ],
+    "examples": [
+      {
+        "input": "nums1 = [1,3,5], nums2 = [2,4,6], k = 4",
+        "output": "4",
+        "explanation": "Merged sorted: [1,2,3,4,5,6], 4th element is 4"
+      }
+    ],
+    "hint": "Use binary search to partition both arrays"
+  },
+  {
+    "id": 72,
+    "title": "Scroll Page Allocator",
+    "topic": "Binary Search",
+    "difficulty": "Hard",
+    "description": "Allocate ancient scroll pages to scribes for transcription, minimizing the maximum pages any scribe copies. This optimizes the sacred text reproduction process.",
+    "constraints": [
+      "1 <= N <= 10^5",
+      "1 <= A[i] <= 10^6",
+      "1 <= M <= N"
+    ],
+    "examples": [
+      {
+        "input": "pages = [12,34,67,90], scribes = 2",
+        "output": "113",
+        "explanation": "Scribe 1: [12,34,67] = 113, Scribe 2: [90] = 90, max = 113"
+      }
+    ],
+    "hint": "Use binary search on possible maximum page limits"
+  },
+  {
+    "id": 73,
+    "title": "Stable Cow Arranger",
+    "topic": "Binary Search",
+    "difficulty": "Medium",
+    "description": "Arrange aggressive cows in temple stables to maximize the minimum distance between them. This prevents conflicts during sacred ceremonies.",
+    "constraints": [
+      "2 <= N <= 10^5",
+      "2 <= C <= N",
+      "0 <= stalls[i] <= 10^9"
+    ],
+    "examples": [
+      {
+        "input": "stalls = [1,2,4,8,9], cows = 3",
+        "output": "3",
+        "explanation": "Cows at positions 1, 4, 8 with min distance 3"
+      }
+    ],
+    "hint": "Use binary search on possible minimum distances"
+  },
+  {
+    "id": 74,
+    "title": "Sacred Priority Queue",
+    "topic": "Heap",
+    "difficulty": "Medium",
+    "description": "Implement a max heap structure to manage temple priorities according to ancient traditions. This data structure helps in ritual scheduling and resource allocation.",
+    "constraints": [
+      "1 <= capacity <= 10^3",
+      "1 <= operations <= 10^3"
+    ],
+    "examples": [
+      {
+        "input": "Insert: [5,3,8,1], ExtractMax: []",
+        "output": "[8,5,3,1]",
+        "explanation": "Max heap structure maintains max element at root"
+      }
+    ],
+    "hint": "Use array representation with index calculations"
+  },
+  {
+    "id": 75,
+    "title": "K-th Sacred Element Finder",
+    "topic": "Heap",
+    "difficulty": "Medium",
+    "description": "Find the K-th largest element in a collection of sacred artifacts. This helps identify important items for ceremonial use according to their spiritual significance.",
+    "constraints": [
+      "1 <= k <= nums.length <= 10^4",
+      "-10^4 <= nums[i] <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [3,2,1,5,6,4], k = 2",
+        "output": "5",
+        "explanation": "2nd largest element is 5"
+      }
+    ],
+    "hint": "Use min-heap of size k"
+  },
+  {
+    "id": 76,
+    "title": "Royal Sum Combiner",
+    "topic": "Heap",
+    "difficulty": "Medium",
+    "description": "Find the maximum sum combinations from two arrays of royal offerings, selecting one from each array. This helps create optimal offering pairs for maximum spiritual benefit.",
+    "constraints": [
+      "1 <= N <= 10^3",
+      "1 <= K <= min(10^3, N*N)",
+      "1 <= A[i], B[i] <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "A = [1,2,3], B = [4,5,6], K = 3",
+        "output": "[9,8,8]",
+        "explanation": "Max sums: 3+6=9, 3+5=8, 2+6=8"
+      }
+    ],
+    "hint": "Use max-heap with visited set to avoid duplicates"
+  },
+  {
+    "id": 77,
+    "title": "Streaming Oracle",
+    "topic": "Heap",
+    "difficulty": "Hard",
+    "description": "Design a data structure that continuously receives sacred numbers and can instantly find the median. This helps priests maintain balance in ongoing rituals.",
+    "constraints": [
+      "1 <= operations <= 10^4",
+      "-10^5 <= num <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "Add: [1,2,3], FindMedian: []",
+        "output": "2.0",
+        "explanation": "After adding 1,2,3, median is 2"
+      }
+    ],
+    "hint": "Use two heaps: max-heap for left half, min-heap for right half"
+  },
+  {
+    "id": 78,
+    "title": "Multi-Scroll Merger",
+    "topic": "Heap",
+    "difficulty": "Hard",
+    "description": "Merge K sorted sacred scrolls into a single sorted scroll. This combines historical records from different temple archives into a unified chronology.",
+    "constraints": [
+      "0 <= K <= 10^3",
+      "0 <= total elements <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "scrolls = [[1,3,5],[2,4,6],[0,7,8]]",
+        "output": "[0,1,2,3,4,5,6,7,8]",
+        "explanation": "All scrolls merged in sorted order"
+      }
+    ],
+    "hint": "Use min-heap to store the front elements of each array"
+  },
+  {
+    "id": 79,
+    "title": "Frequency Oracle",
+    "topic": "Heap",
+    "difficulty": "Medium",
+    "description": "Find the K most frequent sacred symbols in ancient texts. This helps priests identify the most spiritually significant symbols for ceremonial focus.",
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "1 <= k <= number of unique elements",
+      "-10^4 <= nums[i] <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,1,1,2,2,3], k = 2",
+        "output": "[1,2]",
+        "explanation": "1 appears 3 times, 2 appears 2 times (top 2 most frequent)"
+      }
+    ],
+    "hint": "Use frequency map followed by min-heap of size k"
+  },
+  {
+    "id": 80,
+    "title": "Sacred Scroll Stack Builder",
+    "topic": "Stack",
+    "difficulty": "Easy",
+    "description": "As a temple archivist, implement a stack data structure using arrays to store sacred scrolls. This Last-In-First-Out system helps preserve the order of ancient rituals where the most recent scroll must be accessed first.",
+    "constraints": [
+      "1 <= operations <= 100",
+      "0 <= values <= 100"
+    ],
+    "examples": [
+      {
+        "input": "Push: [5,3,7], Pop: []",
+        "output": "[7,3,5]",
+        "explanation": "Scrolls are retrieved in reverse order of storage"
+      }
+    ],
+    "hint": "Maintain a pointer to track the top element"
+  },
+  {
+    "id": 81,
+    "title": "Ritual Queue Implementer",
+    "topic": "Queue",
+    "difficulty": "Easy",
+    "description": "Implement a queue using arrays to manage pilgrims waiting for sacred ceremonies. This First-In-First- system ensures fair access to temple rituals according to arrival time.",
+    "constraints": [
+      "1 <= operations <= 100",
+      "0 <= values <= 100"
+    ],
+    "examples": [
+      {
+        "input": "Enqueue: [5,3,7], Dequeue: []",
+        "output": "[5,3,7]",
+        "explanation": "Pilgrims are served in the order they arrived"
+      }
+    ],
+    "hint": "Use two pointers for front and rear of queue"
+  },
+  {
+    "id": 82,
+    "title": "Stack from Ritual Queue",
+    "topic": "Stack, Queue",
+    "difficulty": "Medium",
+    "description": "Create a stack data structure using only a single queue to store sacred artifacts. This clever arrangement helps temple scribes maximize limited storage space while maintaining ritual access patterns.",
+    "constraints": [
+      "1 <= operations <= 100",
+      "0 <= values <= 100"
+    ],
+    "examples": [
+      {
+        "input": "Push: [5,3,7], Pop: []",
+        "output": "7",
+        "explanation": "Last artifact added (7) is first to be removed"
+      }
+    ],
+    "hint": "For each push, rotate the queue to maintain stack order"
+  },
+  {
+    "id": 83,
+    "title": "Queue from Sacred Stacks",
+    "topic": "Queue, Stack",
+    "difficulty": "Medium",
+    "description": "Implement a queue using two stacks to manage temple offerings. This O(1) amortized method efficiently processes offerings while maintaining the sacred first-come-first-served principle.",
+    "constraints": [
+      "1 <= operations <= 100",
+      "0 <= values <= 100"
+    ],
+    "examples": [
+      {
+        "input": "Enqueue: [5,3,7], Dequeue: []",
+        "output": "5",
+        "explanation": "First offering (5) is first to be processed"
+      }
+    ],
+    "hint": "Use two stacks: one for input, one for output"
+  },
+  {
+    "id": 84,
+    "title": "Sacred Symbol Balance Checker",
+    "topic": "Stack",
+    "difficulty": "Easy",
+    "description": "Verify that ancient ceremonial symbols are properly balanced in temple inscriptions. Check for balanced parentheses, brackets, and braces to ensure ritual correctness.",
+    "constraints": [
+      "1 <= s.length <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "s = \"({[[]]})\"",
+        "output": "true",
+        "explanation": "All symbols are properly matched and balanced"
+      }
+    ],
+    "hint": "Use stack to track opening symbols"
+  },
+  {
+    "id": 85,
+    "title": "Next Greater Artifact Finder",
+    "topic": "Stack",
+    "difficulty": "Medium",
+    "description": "For each artifact in a temple collection, find the next greater artifact to its right. This helps priests identify ascending spiritual value patterns in ancient collections.",
+    "constraints": [
+      "1 <= n <= 10^5",
+      "0 <= arr[i] <= 10^9"
+    ],
+    "examples": [
+      {
+        "input": "arr = [4,5,2,10,8]",
+        "output": "[5,10,10,-1,-1]",
+        "explanation": "Next greater elements for each position"
+      }
+    ],
+    "hint": "Use monotonic decreasing stack"
+  },
+  {
+    "id": 86,
+    "title": "Ritual Stack Sorter",
+    "topic": "Stack",
+    "difficulty": "Medium",
+    "description": "Sort a stack of sacred scrolls using only stack operations. This helps temple librarians organize historical records in ascending order of spiritual significance.",
+    "constraints": [
+      "1 <= n <= 100"
+    ],
+    "examples": [
+      {
+        "input": "stack = [5,2,7,1,9]",
+        "output": "[1,2,5,7,9]",
+        "explanation": "Scrolls sorted in ascending order"
+      }
+    ],
+    "hint": "Use temporary stack to maintain sorted order"
+  },
+  {
+    "id": 87,
+    "title": "Next Smaller Artifact Finder",
+    "topic": "Stack",
+    "difficulty": "Medium",
+    "description": "For each artifact in a temple collection, find the next smaller artifact to its right. This helps identify descending spiritual value patterns in ancient collections.",
+    "constraints": [
+      "1 <= n <= 10^5",
+      "0 <= arr[i] <= 10^9"
+    ],
+    "examples": [
+      {
+        "input": "arr = [4,5,2,10,8]",
+        "output": "[2,2,-1,8,-1]",
+        "explanation": "Next smaller elements for each position"
+      }
+    ],
+    "hint": "Use monotonic increasing stack"
+  },
+  {
+    "id": 88,
+    "title": "Temple Cache Manager (LRU)",
+    "topic": "Design, Hash Table, Linked List",
+    "difficulty": "Hard",
+    "description": "Implement an LRU (Least Recently Used) cache for temple artifacts. This system prioritizes recently used sacred items while evicting least recently used ones when capacity is reached.",
+    "constraints": [
+      "1 <= capacity <= 3000",
+      "0 <= key <= 10^4",
+      "0 <= value <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "Capacity=2, put(1,1), put(2,2), get(1), put(3,3), get(2)",
+        "output": "[1,-1]",
+        "explanation": "Key 2 was evicted as it was least recently used"
+      }
+    ],
+    "hint": "Use hash map with doubly linked list"
+  },
+  {
+    "id": 89,
+    "title": "Sacred Cache Manager (LFU)",
+    "topic": "Design, Hash Table, Linked List",
+    "difficulty": "Hard",
+    "description": "Implement an LFU (Least Frequently Used) cache for temple rituals. This system prioritizes frequently used ceremonial items while evicting least frequently used ones when capacity is reached.",
+    "constraints": [
+      "1 <= capacity <= 10^4",
+      "0 <= key <= 10^5",
+      "0 <= value <= 10^9"
+    ],
+    "examples": [
+      {
+        "input": "Capacity=2, put(1,1), put(2,2), get(1), put(3,3), get(2)",
+        "output": "[1,-1]",
+        "explanation": "Key 2 was evicted as it was least frequently used"
+      }
+    ],
+    "hint": "Use multiple doubly linked lists by frequency"
+  },
+  {
+    "id": 90,
+    "title": "Temple Pillar Area Calculator",
+    "topic": "Stack",
+    "difficulty": "Hard",
+    "description": "Find the largest rectangular area under a histogram of temple pillar heights. This helps architects determine the optimal layout for sacred structures.",
+    "constraints": [
+      "1 <= heights.length <= 10^5",
+      "0 <= heights[i] <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "heights = [2,1,5,6,2,3]",
+        "output": "10",
+        "explanation": "Largest rectangle between pillars 5 and 6 (area = 5×2 = 10)"
+      }
+    ],
+    "hint": "Use monotonic increasing stack"
+  },
+  {
+    "id": 91,
+    "title": "Sacred Window Maximum Finder",
+    "topic": "Queue, Deque",
+    "difficulty": "Hard",
+    "description": "Find the maximum element in every sliding window of sacred procession observations. This helps priests identify peak spiritual energy during ceremonies.",
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "1 <= k <= nums.length"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,3,-1,-3,5,3,6,7], k = 3",
+        "output": "[3,3,5,5,6,7]",
+        "explanation": "Maximums of each sliding window of size 3"
+      }
+    ],
+    "hint": "Use deque to maintain candidates in decreasing order"
+  },
+  {
+    "id": 92,
+    "title": "Minimum Value Stack",
+    "topic": "Stack, Design",
+    "difficulty": "Medium",
+    "description": "Design a stack that supports push, pop, top, and retrieving the minimum element in constant time. This helps temple accountants track both current and minimum values of sacred offerings.",
+    "constraints": [
+      "1 <= operations <= 10^4",
+      "0 <= values <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "Push: [5,3,7], GetMin: []",
+        "output": "3",
+        "explanation": "Minimum value in stack is 3"
+      }
+    ],
+    "hint": "Use two stacks or store pairs (value, current_min)"
+  },
+  {
+    "id": 93,
+    "title": "Rotten Offering Spreader",
+    "topic": "BFS, Matrix",
+    "difficulty": "Medium",
+    "description": "Simulate the spread of rotten offerings in a temple storage grid. Calculate the minimum time required for all fresh offerings to become rotten using BFS, or return -1 if impossible.",
+    "constraints": [
+      "1 <= m, n <= 10",
+      "0 <= grid[i][j] <= 1"
+    ],
+    "examples": [
+      {
+        "input": "grid = [[2,1,1],[1,1,0],[0,1,1]]",
+        "output": "4",
+        "explanation": "It takes 4 time units for all to rot"
+      }
+    ],
+    "hint": "Use multi-source BFS starting from all rotten offerings"
+  },
+  {
+    "id": 94,
+    "title": "Ritual Stock Span Calculator",
+    "topic": "Stack",
+    "difficulty": "Medium",
+    "description": "Calculate the span of temple stock prices where span is the number of consecutive days before the current day when the price was less than or equal to current price. This helps predict ritual offering trends.",
+    "constraints": [
+      "1 <= n <= 10^5",
+      "0 <= price <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "prices = [100,80,60,70,60,75,85]",
+        "output": "[1,1,1,2,1,4,6]",
+        "explanation": "Span for each day showing consecutive lower or equal prices"
+      }
+    ],
+    "hint": "Use stack to store indices of previous higher prices"
+  },
+  {
+    "id": 95,
+    "title": "Window Minimum Maximizer",
+    "topic": "Stack, Queue",
+    "difficulty": "Hard",
+    "description": "Find the maximum of the minimums of every window size in a sacred number sequence. This helps priests determine the optimal window size for ritual observations.",
+    "constraints": [
+      "1 <= n <= 10^5",
+      "0 <= arr[i] <= 10^9"
+    ],
+    "examples": [
+      {
+        "input": "arr = [10,20,30,50,10,70,30]",
+        "output": "[70,30,20,10,10,10,10]",
+        "explanation": "Maximum of minimums for each window size"
+      }
+    ],
+    "hint": "Use stack to find next smaller elements and compute ranges"
+  },
+  {
+    "id": 96,
+    "title": "Temple Celebrity Identifier",
+    "topic": "Stack, Two Pointers",
+    "difficulty": "Medium",
+    "description": "Identify the temple celebrity who knows no one but everyone knows them. Given a 2D matrix representing knowing relationships, find the celebrity in O(n) time.",
+    "constraints": [
+      "1 <= n <= 100"
+    ],
+    "examples": [
+      {
+        "input": "matrix = [[0,0,1,0],[0,0,1,0],[0,0,0,0],[0,0,1,0]]",
+        "output": "2",
+        "explanation": "Person 2 is known by all but knows no one"
+      }
+    ],
+    "hint": "Use two pointers or stack to eliminate non-celebrities"
+  },
+  {
+    "id": 97,
+    "title": "Sacred Text Reverser",
+    "topic": "String, Two Pointers",
+    "difficulty": "Medium",
+    "description": "Reverse the words in a sacred text while preserving whitespace and initial word order. This helps decode ancient prophecies written in reverse word sequences.",
+    "constraints": [
+      "1 <= s.length <= 10^4",
+      "s contains English letters, digits, and spaces"
+    ],
+    "examples": [
+      {
+        "input": "s = \"the sky is blue\"",
+        "output": "\"blue is sky the\"",
+        "explanation": "Words reversed while maintaining order"
+      }
+    ],
+    "hint": "Reverse entire string then reverse each word"
+  },
+  {
+    "id": 98,
+    "title": "Longest Sacred Palindrome Finder",
+    "topic": "String, Dynamic Programming",
+    "difficulty": "Medium",
+    "description": "Find the longest palindromic substring in ancient ceremonial texts. Palindromes hold special spiritual significance in temple traditions.",
+    "constraints": [
+      "1 <= s.length <= 1000",
+      "s consists of English letters only"
+    ],
+    "examples": [
+      {
+        "input": "s = \"babad\"",
+        "output": "\"bab\" or \"aba\"",
+        "explanation": "Both are valid longest palindromic substrings"
+      }
+    ],
+    "hint": "Expand around center or use dynamic programming"
+  },
+  {
+    "id": 99,
+    "title": "Roman Numeral Converter",
+    "topic": "String, Hash Table",
+    "difficulty": "Easy",
+    "description": "Convert between Roman numerals and integers for temple historical records. This helps decipher ancient dates and quantities recorded in Roman numeral system.",
+    "constraints": [
+      "1 <= roman.length <= 15",
+      "1 <= integer <= 3999"
+    ],
+    "examples": [
+      {
+        "input": "roman = \"MCMXCIV\"",
+        "output": "1994",
+        "explanation": "M=1000, CM=900, XC=90, IV=4"
+      }
+    ],
+    "hint": "Process from right to left, subtracting when smaller value precedes larger"
+  },
+  {
+    "id": 100,
+    "title": "Sacred Number String Converter",
+    "topic": "String",
+    "difficulty": "Medium",
+    "description": "Implement ATOI to convert sacred text to numbers and STRSTR to find substrings in ceremonial texts. These functions help automate temple record processing.",
+    "constraints": [
+      "0 <= s.length <= 200",
+      "s consists of English letters and digits"
+    ],
+    "examples": [
+      {
+        "input": "s = \" -42\"",
+        "output": "-42",
+        "explanation": "Convert string to integer ignoring leading whitespace"
+      }
+    ],
+    "hint": "Handle edge cases: whitespace, signs, overflow"
+  },
+  {
+    "id": 101,
+    "title": "Common Temple Prefix Finder",
+    "topic": "String",
+    "difficulty": "Easy",
+    "description": "Find the longest common prefix among an array of sacred texts. This helps identify shared beginnings of ritual chants and prayers.",
+    "constraints": [
+      "1 <= strs.length <= 200",
+      "0 <= strs[i].length <= 200"
+    ],
+    "examples": [
+      {
+        "input": "strs = [\"flower\",\"flow\",\"flight\"]",
+        "output": "\"fl\"",
+        "explanation": "Common prefix among all strings is \"fl\""
+      }
+    ],
+    "hint": "Compare character by character vertically"
+  },
+  {
+    "id": 102,
+    "title": "Sacred Text Pattern Matcher",
+    "topic": "String, Rolling Hash",
+    "difficulty": "Medium",
+    "description": "Implement the Rabin-Karp algorithm to find patterns in ancient scriptures. This efficient string matching helps locate specific ritual sequences in voluminous sacred texts.",
+    "constraints": [
+      "1 <= text.length, pattern.length <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "text = \"ABABDABACDABABCABAB\", pattern = \"ABABCABAB\"",
+        "output": "[10]",
+        "explanation": "Pattern found starting at index 10"
+      }
+    ],
+    "hint": "Use rolling hash to compare pattern with text substrings"
+  },
+  {
+    "id": 103,
+    "title": "Z-Function for Sacred Texts",
+    "topic": "String",
+    "difficulty": "Hard",
+    "description": "Implement the Z-function to find all occurrences of a pattern in sacred texts. This advanced string algorithm helps priests quickly locate ritual sequences.",
+    "constraints": [
+      "1 <= text.length <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "text = \"aaabaab\"",
+        "output": "[0,2,1,0,2,1,0]",
+        "explanation": "Z-array values for the string"
+      }
+    ],
+    "hint": "Maintain interval [L,R] with maximum prefix matching"
+  },
+  {
+    "id": 104,
+    "title": "Knuth-Morris-Pratt Ritual Matcher",
+    "topic": "String",
+    "difficulty": "Hard",
+    "description": "Implement the KMP algorithm to efficiently find patterns in sacred texts using the LPS (Longest Prefix Suffix) array. This helps quickly locate ritual sequences for ceremonial preparation.",
+    "constraints": [
+      "1 <= text.length, pattern.length <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "pattern = \"ABABCABAB\"",
+        "output": "[0,0,1,2,0,1,2,3,4]",
+        "explanation": "LPS array for the pattern"
+      }
+    ],
+    "hint": "Build LPS array then use it for efficient matching"
+  },
+  {
+    "id": 105,
+    "title": "Palindrome Creation Helper",
+    "topic": "String",
+    "difficulty": "Medium",
+    "description": "Find the minimum characters needed to be inserted at the beginning of a sacred text to make it palindromic. This helps restore damaged ancient texts to their original palindromic form.",
+    "constraints": [
+      "1 <= s.length <= 10^3"
+    ],
+    "examples": [
+      {
+        "input": "s = \"abc\"",
+        "output": "2",
+        "explanation": "Need to add \"cb\" at beginning to make \"cbabc\""
+      }
+    ],
+    "hint": "Find the longest palindromic prefix"
+  },
+  {
+    "id": 106,
+    "title": "Sacred Anagram Checker",
+    "topic": "String, Hash Table",
+    "difficulty": "Easy",
+    "description": "Check if two sacred texts are anagrams of each other (contain the same characters in different orders). This verifies whether ritual chants are valid rearrangements of approved texts.",
+    "constraints": [
+      "1 <= s.length, t.length <= 5 * 10^4"
+    ],
+    "examples": [
+      {
+        "input": "s = \"anagram\", t = \"nagaram\"",
+        "output": "true",
+        "explanation": "Both contain same characters with same frequencies"
+      }
+    ],
+    "hint": "Use frequency array or sort both strings"
+  },
+  {
+    "id": 107,
+    "title": "Ritual Chant Generator",
+    "topic": "String",
+    "difficulty": "Medium",
+    "description": "Generate the nth term of the Count and Say sequence used in temple chanting rituals. Each term describes the count of digits in the previous term.",
+    "constraints": [
+      "1 <= n <= 30"
+    ],
+    "examples": [
+      {
+        "input": "n = 4",
+        "output": "\"1211\"",
+        "explanation": "Sequence: 1, 11, 21, 1211, ..."
+      }
+    ],
+    "hint": "Iteratively build each term from previous one"
+  },
+  {
+    "id": 108,
+    "title": "Sacred Version Comparator",
+    "topic": "String",
+    "difficulty": "Medium",
+    "description": "Compare version numbers of ancient temple software used to manage ritual systems. This determines which version is newer for ceremonial updates.",
+    "constraints": [
+      "1 <= version1.length, version2.length <= 500"
+    ],
+    "examples": [
+      {
+        "input": "version1 = \"1.01\", version2 = \"1.001\"",
+        "output": "0",
+        "explanation": "Both versions are equal ignoring leading zeros"
+      }
+    ],
+    "hint": "Split by dots and compare each revision numerically"
+  },
+  {
+    "id": 109,
+    "title": "Sacred Artifact Product Maximizer",
+    "topic": "Dynamic Programming",
+    "difficulty": "Medium",
+    "description": "As a temple merchant, find the contiguous subarray of sacred artifacts that yields the maximum product. This helps maximize the spiritual value of offerings during ceremonial trades.",
+    "constraints": [
+      "1 <= nums.length <= 2 * 10^4",
+      "-10 <= nums[i] <= 10"
+    ],
+    "examples": [
+      {
+        "input": "nums = [2,3,-2,4]",
+        "output": "6",
+        "explanation": "Subarray [2,3] has the largest product 6"
+      }
+    ],
+    "hint": "Track both maximum and minimum products at each position"
+  },
+  {
+    "id": 110,
+    "title": "Ritual Sequence Lengthener",
+    "topic": "Dynamic Programming",
+    "difficulty": "Medium",
+    "description": "Find the longest increasing subsequence of sacred ritual steps. This helps priests preserve the optimal order of ceremonial actions for maximum spiritual efficacy.",
+    "constraints": [
+      "1 <= nums.length <= 2500",
+      "-10^4 <= nums[i] <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [10,9,2,5,3,7,101,18]",
+        "output": "4",
+        "explanation": "Longest increasing subsequence is [2,3,7,101] of length 4"
+      }
+    ],
+    "hint": "Use DP with binary search for O(n log n) solution"
+  },
+  {
+    "id": 111,
+    "title": "Ancient Text Comparer",
+    "topic": "Dynamic Programming",
+    "difficulty": "Medium",
+    "description": "Find the longest common subsequence between two sacred texts from different temple archives. This reveals shared spiritual wisdom across historical traditions.",
+    "constraints": [
+      "1 <= text1.length, text2.length <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "text1 = \"abcde\", text2 = \"ace\"",
+        "output": "3",
+        "explanation": "Longest common subsequence is \"ace\" of length 3"
+      }
+    ],
+    "hint": "Use 2D DP table where dp[i][j] represents LCS of first i and j characters"
+  },
+  {
+    "id": 112,
+    "title": "Ceremonial Knapsack Packer",
+    "topic": "Dynamic Programming",
+    "difficulty": "Medium",
+    "description": "Solve the 0-1 knapsack problem for sacred artifacts with given weights and values. Maximize spiritual value without exceeding the ceremonial altar's weight capacity.",
+    "constraints": [
+      "1 <= N <= 1000",
+      "1 <= W <= 1000",
+      "1 <= wt[i], val[i] <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "W = 4, wt = [1,2,3], val = [10,15,40]",
+        "output": "55",
+        "explanation": "Take items 1 and 3: value 10 + 40 = 55, weight 1 + 3 = 4"
+      }
+    ],
+    "hint": "Use DP table where dp[i][w] represents max value with first i items and capacity w"
+  },
+  {
+    "id": 113,
+    "title": "Sacred Text Editor",
+    "topic": "Dynamic Programming",
+    "difficulty": "Medium",
+    "description": "Find the minimum edit distance between two sacred texts (number of insertions, deletions, or substitutions required to make them identical). This helps scribes correct errors in ancient manuscripts.",
+    "constraints": [
+      "0 <= word1.length, word2.length <= 500"
+    ],
+    "examples": [
+      {
+        "input": "word1 = \"horse\", word2 = \"ros\"",
+        "output": "3",
+        "explanation": "horse -> rorse -> rose -> ros (3 operations)"
+      }
+    ],
+    "hint": "Use DP where dp[i][j] represents edit distance between first i and j characters"
+  },
+  {
+    "id": 114,
+    "title": "Increasing Offering Value Maximizer",
+    "topic": "Dynamic Programming",
+    "difficulty": "Medium",
+    "description": "Find the maximum sum increasing subsequence of ceremonial offerings. This helps priests select the most valuable sequence of offerings while maintaining ascending spiritual value.",
+    "constraints": [
+      "1 <= nums.length <= 1000",
+      "1 <= nums[i] <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,101,2,3,100,4,5]",
+        "output": "106",
+        "explanation": "Maximum sum increasing subsequence is [1,2,3,100] with sum 106"
+      }
+    ],
+    "hint": "Modify LIS DP to track sum instead of length"
+  },
+  {
+    "id": 115,
+    "title": "Ritual Matrix Multiplier",
+    "topic": "Dynamic Programming",
+    "difficulty": "Hard",
+    "description": "Find the most efficient way to multiply ceremonial matrices in the correct order. This minimizes the computational effort required for complex temple calculations.",
+    "constraints": [
+      "2 <= N <= 100",
+      "1 <= dimensions[i] <= 100"
+    ],
+    "examples": [
+      {
+        "input": "dims = [40,20,30,10,30]",
+        "output": "26000",
+        "explanation": "Optimal parenthesization: (A(BC))D with 26000 multiplications"
+      }
+    ],
+    "hint": "Use DP where dp[i][j] represents min operations to multiply matrices from i to j"
+  },
+  {
+    "id": 116,
+    "title": "Temple Pathfinder",
+    "topic": "Dynamic Programming",
+    "difficulty": "Medium",
+    "description": "Find the minimum sum path through a matrix of sacred numbers from top-left to bottom-right. This helps pilgrims find the most spiritually efficient path through temple grounds.",
+    "constraints": [
+      "m == grid.length, n == grid[i].length",
+      "1 <= m, n <= 200",
+      "0 <= grid[i][j] <= 100"
+    ],
+    "examples": [
+      {
+        "input": "grid = [[1,3,1],[1,5,1],[4,2,1]]",
+        "output": "7",
+        "explanation": "Path 1→3→1→1→1 has minimum sum 7"
+      }
+    ],
+    "hint": "Use DP where dp[i][j] represents min sum to reach cell (i,j)"
+  },
+  {
+    "id": 117,
+    "title": "Ceremonial Coin Changer",
+    "topic": "Dynamic Programming",
+    "difficulty": "Medium",
+    "description": "Find the number of ways to make change for a sacred amount using temple coins of different denominations. This helps priests prepare exact ceremonial offerings.",
+    "constraints": [
+      "1 <= amount <= 5000",
+      "1 <= coins.length <= 300",
+      "1 <= coins[i] <= 5000"
+    ],
+    "examples": [
+      {
+        "input": "amount = 5, coins = [1,2,5]",
+        "output": "4",
+        "explanation": "Ways: 5=5, 5=2+2+1, 5=2+1+1+1, 5=1+1+1+1+1"
+      }
+    ],
+    "hint": "Use DP where dp[i] represents ways to make amount i"
+  },
+  {
+    "id": 118,
+    "title": "Sacred Subset Sum Finder",
+    "topic": "Dynamic Programming",
+    "difficulty": "Medium",
+    "description": "Determine if there exists a subset of sacred numbers that sums to a target value. This helps identify combinations of offerings that match specific ceremonial requirements.",
+    "constraints": [
+      "1 <= N <= 100",
+      "1 <= sum <= 1000",
+      "0 <= arr[i] <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "arr = [3,34,4,12,5,2], sum = 9",
+        "output": "true",
+        "explanation": "Subset [4,5] sums to 9"
+      }
+    ],
+    "hint": "Use DP where dp[i][j] represents if sum j can be achieved with first i elements"
+  },
+  {
+    "id": 119,
+    "title": "Ritual Rod Cutter",
+    "topic": "Dynamic Programming",
+    "difficulty": "Medium",
+    "description": "Find the maximum value obtainable by cutting a sacred rod of length n into pieces with given values. This helps optimize the use of ceremonial materials.",
+    "constraints": [
+      "1 <= n <= 1000",
+      "1 <= price[i] <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "n = 8, price = [1,5,8,9,10,17,17,20]",
+        "output": "22",
+        "explanation": "Cut into lengths 2 and 6: value 5 + 17 = 22"
+      }
+    ],
+    "hint": "Use DP where dp[i] represents max value for rod of length i"
+  },
+  {
+    "id": 120,
+    "title": "Sacred Egg Dropper",
+    "topic": "Dynamic Programming",
+    "difficulty": "Hard",
+    "description": "Find the minimum number of attempts needed to determine the highest floor from which a sacred egg can be dropped without breaking. This preserves fragile ceremonial objects.",
+    "constraints": [
+      "1 <= k <= 100 (eggs)",
+      "1 <= n <= 10000 (floors)"
+    ],
+    "examples": [
+      {
+        "input": "k = 2, n = 10",
+        "output": "4",
+        "explanation": "Minimum 4 attempts needed to find critical floor with 2 eggs and 10 floors"
+      }
+    ],
+    "hint": "Use DP where dp[i][j] represents min attempts with i eggs and j floors"
+  },
+  {
+    "id": 121,
+    "title": "Ceremonial Text Breaker",
+    "topic": "Dynamic Programming",
+    "difficulty": "Medium",
+    "description": "Determine if a sacred text can be segmented into space-separated words from a temple dictionary. This helps validate the structure of ritual incantations.",
+    "constraints": [
+      "1 <= s.length <= 300",
+      "1 <= wordDict.length <= 1000",
+      "1 <= wordDict[i].length <= 20"
+    ],
+    "examples": [
+      {
+        "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+        "output": "true",
+        "explanation": "Text can be segmented as \"leet code\""
+      }
+    ],
+    "hint": "Use DP where dp[i] represents if first i characters can be segmented"
+  },
+  {
+    "id": 122,
+    "title": "Palindrome Partition Optimizer",
+    "topic": "Dynamic Programming",
+    "difficulty": "Hard",
+    "description": "Find the minimum cuts needed to partition a sacred text such that every substring is a palindrome. This optimizes the preparation of ritual texts for ceremonial chanting.",
+    "constraints": [
+      "1 <= s.length <= 2000"
+    ],
+    "examples": [
+      {
+        "input": "s = \"aab\"",
+        "output": "1",
+        "explanation": "Partition into [\"aa\",\"b\"] with 1 cut"
+      }
+    ],
+    "hint": "Use DP with palindrome precomputation"
+  },
+  {
+    "id": 123,
+    "title": "Ritual Job Scheduler",
+    "topic": "Dynamic Programming, Binary Search",
+    "difficulty": "Hard",
+    "description": "Schedule ceremonial jobs with start time, end time, and profit to maximize total spiritual gain. This helps priests optimize temple activities for maximum benefit.",
+    "constraints": [
+      "1 <= startTime.length == endTime.length == profit.length <= 5 * 10^4",
+      "1 <= startTime[i] < endTime[i] <= 10^9",
+      "1 <= profit[i] <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "startTime = [1,2,3,3], endTime = [3,4,5,6], profit = [50,10,40,70]",
+        "output": "120",
+        "explanation": "Take jobs 1 and 4: profit 50 + 70 = 120"
+      }
+    ],
+    "hint": "Sort by end time and use DP with binary search to find compatible jobs"
   }
 ]

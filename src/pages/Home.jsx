@@ -8,7 +8,7 @@ import CodeEditor, { DEFAULT_TEMPLATES } from '../components/CodeEditor';
 import FeedbackPanel from '../components/FeedbackPanel';
 import questionsData from '../data/questions.json';
 import useLocalStorage from '../hooks/useLocalStorage';
-import PracticeOptions from './PracticeOptions';
+// import PracticeOptions from './PracticeOptions';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 
@@ -23,8 +23,20 @@ const Home = () => {
   const navigate = useNavigate();
   
   const [currentMode, setCurrentMode] = useState(location.state?.mode || null);
-  const [showPracticeOptions, setShowPracticeOptions] = useState(currentMode === null);
+  // const [showPracticeOptions, setShowPracticeOptions] = useState(currentMode === null);
   const [currentQuestion, setCurrentQuestion] = useState(null);
+  // Load question by ID if passed from navigation (e.g., from ChooseSection)
+  useEffect(() => {
+    if (location.state && location.state.questionId) {
+      const q = questions.find(q => q.id === location.state.questionId);
+      if (q) {
+        setCurrentQuestion(q);
+        setPreviousQuestionId(q.id);
+        setActivePanel('question');
+      }
+    }
+    // eslint-disable-next-line
+  }, [location.state, questions]);
   const [previousQuestionId, setPreviousQuestionId] = useState(null);
   
   // Add language state and code management
@@ -78,7 +90,7 @@ const Home = () => {
 
   const handleModeSelect = (mode) => {
     setCurrentMode(mode);
-    setShowPracticeOptions(false);
+  // setShowPracticeOptions(false);
     setSelectedTopic('');
     setSelectedDifficulty('');
     setCurrentQuestion(null);
@@ -160,7 +172,11 @@ const Home = () => {
     }
   };
 
+  // Only show back button if not coming from ChooseSection
+  const cameFromChooseSection = Boolean(location.state && location.state.questionId);
+
   const handleBackToSelection = () => {
+    if (cameFromChooseSection) return; // Do nothing if from ChooseSection
     setCurrentQuestion(null);
     setCodeByLang(DEFAULT_TEMPLATES);
     setUserCode(DEFAULT_TEMPLATES[language]);
@@ -208,9 +224,7 @@ const Home = () => {
     </div>
   );
 
-  if (showPracticeOptions) {
-    return <PracticeOptions onSelectMode={handleModeSelect} />;
-  }
+
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -266,12 +280,14 @@ const Home = () => {
           <div className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
             {currentQuestion ? (
               <div className="flex items-center space-x-3 flex-1 min-w-0">
-                <button
-                  onClick={handleBackToSelection}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
-                >
-                  <ChevronLeft className="h-5 w-5 text-gray-600" />
-                </button>
+                {!cameFromChooseSection && (
+                  <button
+                    onClick={handleBackToSelection}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
+                  >
+                    <ChevronLeft className="h-5 w-5 text-gray-600" />
+                  </button>
+                )}
                 <div className="min-w-0 flex-1">
                   <h1 className="text-lg font-semibold text-gray-900 truncate">
                     {currentQuestion.title}
@@ -379,13 +395,15 @@ const Home = () => {
                   {/* Question Panel */}
                   <div className="w-1/2 border-r border-gray-200 bg-white">
                     <div className="flex items-center gap-3 px-6 pt-6 pb-2">
-                      <button
-                        className="px-4 py-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white font-semibold rounded-lg shadow-md hover:from-blue-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200"
-                        onClick={handleBackToSelection}
-                      >
-                        <ChevronLeft className="h-4 w-4 mr-1 inline" />
-                        Back
-                      </button>
+                      {!cameFromChooseSection && (
+                        <button
+                          className="px-4 py-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white font-semibold rounded-lg shadow-md hover:from-blue-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200"
+                          onClick={handleBackToSelection}
+                        >
+                          <ChevronLeft className="h-4 w-4 mr-1 inline" />
+                          Back
+                        </button>
+                      )}
                       <div className="flex-1 min-w-0">
                         <span className="text-xl font-bold text-gray-900 truncate block">
                           {currentQuestion.title}
@@ -522,7 +540,7 @@ const Home = () => {
                         className="flex-1 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-blue-600 disabled:hover:to-purple-600 transition-all duration-200"
                       >
                         <Zap className="h-5 w-5 mr-2" />
-                        Generate Question
+                        Find Question
                       </Button>
                       {selectedTopic && currentMode === 'topic-difficulty' && !selectedDifficulty && (
                         <div className="text-center sm:text-left">
