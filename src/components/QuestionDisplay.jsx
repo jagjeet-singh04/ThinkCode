@@ -58,30 +58,36 @@ const QuestionDisplay = ({ question, hideTitle }) => {
   const topicList = question.topic.split(',').map(t => t.trim());
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="h-full overflow-y-auto custom-scrollbar bg-background"
-    >
-      <div className="p-6 space-y-6">
-        {/* Question Header */}
-        <div className="space-y-2">
-          {!hideTitle && (
-            <h1 className="text-2xl font-bold text-foreground mb-2">
-              {question.title}
-            </h1>
-          )}
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant={getDifficultyVariant(question.difficulty)}>
-              {question.difficulty}
-            </Badge>
-            {topicList.map((topic, idx) => (
-              <Badge key={topic + idx} variant="outline">
-                {topic}
-              </Badge>
-            ))}
-          </div>
-        </div>
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.4 }}
+  // 🔑 remove overflow-hidden
+  className="h-full flex flex-col bg-background"
+>
+  {/* Scrollable Content Wrapper */}
+  <div 
+    className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6"
+    // 🔑 Add padding bottom so last card is fully visible
+    style={{ paddingBottom: "6rem" }}
+  >
+    {/* Question Header */}
+    <div className="space-y-2">
+      {!hideTitle && (
+        <h1 className="text-2xl font-bold text-foreground mb-2">
+          {question.title}
+        </h1>
+      )}
+      <div className="flex flex-wrap items-center gap-2">
+        <Badge variant={getDifficultyVariant(question.difficulty)}>
+          {question.difficulty}
+        </Badge>
+        {topicList.map((topic, idx) => (
+          <Badge key={topic + idx} variant="outline">
+            {topic}
+          </Badge>
+        ))}
+      </div>
+    </div>
 
         {/* Problem Description */}
         <Card>
@@ -152,8 +158,8 @@ const QuestionDisplay = ({ question, hideTitle }) => {
           </CardContent>
         </Card>
 
-        {/* Constraints */}
-        <Card>
+        {/* Constraints - Fixed to ensure full visibility */}
+        <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2 text-lg">
               <List className="w-5 h-5" />

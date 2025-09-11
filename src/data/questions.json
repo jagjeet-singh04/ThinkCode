@@ -705,7 +705,7 @@
   },
   {
     "id": 29,
-    "title": "Longest Unique Substring Finder",
+    "title": "Ancient Text Pattern Analyzer",
     "topic": "Hash Table, String, Sliding Window",
     "difficulty": "Medium",
     "description": "As a linguist studying ancient texts, you want to find the longest substring without repeating characters. Given a string s, find the length of the longest substring without repeating characters. This helps identify unique patterns in ancient languages that could reveal hidden meanings or grammatical structures.",
@@ -730,6 +730,471 @@
         "explanation": "The answer is \"wke\", with the length of 3."
       }
     ],
-    "hint": "Original: Longest Substring without repeat"
+    "hint": "Use a sliding window approach with a hash set to track characters"
+  },
+  {
+    "id": 30,
+    "title": "Network Packet Reversal System",
+    "topic": "Linked List",
+    "difficulty": "Easy",
+    "description": "As a network engineer, you're designing a packet reassembly system where data packets arrive in reverse order. Reverse a singly linked list to reconstruct the original data stream. Given the head of a linked list, reverse it and return the new head.",
+    "constraints": [
+      "Number of nodes in the list is in the range [0, 5000]",
+      "-5000 <= Node.val <= 5000"
+    ],
+    "examples": [
+      {
+        "input": "head = [1,2,3,4,5]",
+        "output": "[5,4,3,2,1]",
+        "explanation": "The reversed list shows packets in correct order"
+      }
+    ],
+    "hint": "Use three pointers: previous, current, and next"
+  },
+  {
+    "id": 31,
+    "title": "Data Stream Middle Monitor",
+    "topic": "Linked List",
+    "difficulty": "Easy",
+    "description": "As a data analyst monitoring real-time streams, you need to find the middle element of a linked list. If there are two middle nodes, return the second one. This helps in balancing data processing loads.",
+    "constraints": [
+      "1 <= Number of nodes <= 100",
+      "1 <= Node.val <= 100"
+    ],
+    "examples": [
+      {
+        "input": "head = [1,2,3,4,5]",
+        "output": "[3,4,5]",
+        "explanation": "Middle node is 3"
+      }
+    ],
+    "hint": "Use slow and fast pointer technique"
+  },
+  {
+    "id": 32,
+    "title": "Sorted Data Merger",
+    "topic": "Linked List",
+    "difficulty": "Easy",
+    "description": "As a database administrator, you need to merge two sorted linked lists from different tables. Return a new sorted list by splicing together the nodes of the first two lists, preserving order.",
+    "constraints": [
+      "Number of nodes in both lists is in range [0, 50]",
+      "-100 <= Node.val <= 100",
+      "Both lists are sorted in non-decreasing order"
+    ],
+    "examples": [
+      {
+        "input": "list1 = [1,2,4], list2 = [1,3,4]",
+        "output": "[1,1,2,3,4,4]",
+        "explanation": "Merged while maintaining sorted order"
+      }
+    ],
+    "hint": "Use dummy node to handle edge cases"
+  },
+  {
+    "id": 33,
+    "title": "Network Node Remover",
+    "topic": "Linked List",
+    "difficulty": "Medium",
+    "description": "As a security engineer, you need to remove the nth node from the end of a network node chain. This helps isolate compromised nodes while maintaining chain integrity.",
+    "constraints": [
+      "1 <= Number of nodes <= 30",
+      "1 <= n <= Number of nodes"
+    ],
+    "examples": [
+      {
+        "input": "head = [1,2,3,4,5], n = 2",
+        "output": "[1,2,3,5]",
+        "explanation": "Second node from end (value 4) is removed"
+      }
+    ],
+    "hint": "Use two pointers with n node gap"
+  },
+  {
+    "id": 34,
+    "title": "Encrypted Number Adder",
+    "topic": "Linked List",
+    "difficulty": "Medium",
+    "description": "As a cryptographer, you're working with numbers stored as reversed linked lists. Add two numbers where each digit is stored in a node (reverse order) and return the sum as a linked list.",
+    "constraints": [
+      "Number of nodes in each list is in range [1, 100]",
+      "0 <= Node.val <= 9",
+      "Numbers don't contain leading zeros"
+    ],
+    "examples": [
+      {
+        "input": "l1 = [2,4,3], l2 = [5,6,4]",
+        "output": "[7,0,8]",
+        "explanation": "342 + 465 = 807"
+      }
+    ],
+    "hint": "Handle carry-over and different list lengths"
+  },
+  {
+    "id": 35,
+    "title": "Secure Node Deletion",
+    "topic": "Linked List",
+    "difficulty": "Medium",
+    "description": "As a system architect, you need to delete a node from a linked list given only access to that node. Implement an O(1) solution that preserves data integrity without accessing previous nodes.",
+    "constraints": [
+      "Number of nodes in list >= 2",
+      "Node.val is unique",
+      "Given node is not the tail node"
+    ],
+    "examples": [
+      {
+        "input": "node = 3 from [1,2,3,4]",
+        "output": "[1,2,4]",
+        "explanation": "Node 3 is replaced with node 4's value"
+      }
+    ],
+    "hint": "Copy next node's value and skip next node"
+  },
+  {
+    "id": 36,
+    "title": "Network Intersection Locator",
+    "topic": "Linked List",
+    "difficulty": "Easy",
+    "description": "As a network investigator, find where two linked lists intersect in a Y-shaped configuration. This helps identify shared infrastructure nodes between two networks.",
+    "constraints": [
+      "Number of nodes in lists are in range [1, 1000]",
+      "Node values are unique",
+      "No cycles in either list"
+    ],
+    "examples": [
+      {
+        "input": "listA = [1,2,3,4], listB = [7,8,3,4]",
+        "output": "Node with value 3",
+        "explanation": "Lists intersect at node with value 3"
+      }
+    ],
+    "hint": "Traverse both lists to find common node"
+  },
+  {
+    "id": 37,
+    "title": "Data Cycle Detector",
+    "topic": "Linked List",
+    "difficulty": "Medium",
+    "description": "As a data quality engineer, detect if a linked list has a cycle where some node points to a previous node. This helps identify infinite loops in data processing pipelines.",
+    "constraints": [
+      "Number of nodes in range [0, 1000]",
+      "Node values are unique"
+    ],
+    "examples": [
+      {
+        "input": "head = [3,2,0,-4] with pos=1",
+        "output": "true",
+        "explanation": "Tail connects to second node"
+      }
+    ],
+    "hint": "Use Floyd's cycle detection algorithm"
+  },
+  {
+    "id": 38,
+    "title": "Batch Data Reverser",
+    "topic": "Linked List",
+    "difficulty": "Medium",
+    "description": "As a data processor, reverse nodes in k-group batches in a linked list. If nodes aren't divisible by k, leave them as-is. This helps in batch processing optimization.",
+    "constraints": [
+      "Number of nodes in range [0, 1000]",
+      "1 <= k <= number of nodes"
+    ],
+    "examples": [
+      {
+        "input": "head = [1,2,3,4,5], k = 3",
+        "output": "[3,2,1,4,5]",
+        "explanation": "First 3 nodes reversed, rest unchanged"
+      }
+    ],
+    "hint": "Use recursion or iterative group reversal"
+  },
+  {
+    "id": 39,
+    "title": "Data Palindrome Validator",
+    "topic": "Linked List",
+    "difficulty": "Easy",
+    "description": "As a data integrity specialist, check if a linked list is a palindrome when read forward and backward. This verifies data symmetry in storage systems.",
+    "constraints": [
+      "Number of nodes in range [1, 1000]",
+      "0 <= Node.val <= 9"
+    ],
+    "examples": [
+      {
+        "input": "head = [1,2,2,1]",
+        "output": "true",
+        "explanation": "List reads same forwards and backwards"
+      }
+    ],
+    "hint": "Find middle, reverse second half, and compare"
+  },
+  {
+    "id": 40,
+    "title": "Cycle Origin Finder",
+    "topic": "Linked List",
+    "difficulty": "Medium",
+    "description": "As a system diagnostician, find the starting node of a cycle in a linked list. This helps pinpoint the exact location of infinite loops in processing systems.",
+    "constraints": [
+      "Number of nodes in range [1, 1000]",
+      "Node values are unique"
+    ],
+    "examples": [
+      {
+        "input": "head = [3,2,0,-4] with pos=1",
+        "output": "Node with value 2",
+        "explanation": "Cycle starts at second node"
+      }
+    ],
+    "hint": "Use Floyd's algorithm after cycle detection"
+  },
+  {
+    "id": 41,
+    "title": "Multi-level Data Flattener",
+    "topic": "Linked List",
+    "difficulty": "Hard",
+    "description": "As a data architect, flatten a multilevel doubly linked list where nodes may have child pointers. Convert the hierarchy into a single-level list while maintaining order.",
+    "constraints": [
+      "Number of nodes <= 1000",
+      "1 <= Node.val <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "head = [1,2,3,4,5,6] with children at 3 and 5",
+        "output": "[1,2,3,7,8,9,4,5,6]",
+        "explanation": "Children are inserted after their parent nodes"
+      }
+    ],
+    "hint": "Use depth-first search with stack"
+  },
+  {
+    "id": 42,
+    "title": "Data Rotator",
+    "topic": "Linked List",
+    "difficulty": "Medium",
+    "description": "As a data storage optimizer, rotate a linked list to the right by k places. This helps in balancing data distribution across storage nodes.",
+    "constraints": [
+      "Number of nodes in range [0, 500]",
+      "0 <= k <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "head = [1,2,3,4,5], k = 2",
+        "output": "[4,5,1,2,3]",
+        "explanation": "List rotated right by 2 places"
+      }
+    ],
+    "hint": "Connect tail to head and find new tail"
+  },
+  {
+    "id": 43,
+    "title": "Secure List Cloner",
+    "topic": "Linked List",
+    "difficulty": "Medium",
+    "description": "As a security specialist, create a deep copy of a linked list with random pointers. This helps create secure backups while maintaining all node relationships.",
+    "constraints": [
+      "Number of nodes in range [0, 1000]",
+      "Node values are unique"
+    ],
+    "examples": [
+      {
+        "input": "head = [[7,null],[13,0],[11,4],[10,2],[1,0]]",
+        "output": "Deep copy with same structure",
+        "explanation": "New list with identical relationships"
+      }
+    ],
+    "hint": "Use hash map to store old node -> new node mapping"
+  },
+  {
+    "id": 44,
+    "title": "Ancient Number Triangulator",
+    "topic": "Array, Two Pointers",
+    "difficulty": "Medium",
+    "description": "As an archaeologist, find all unique triplets in ancient number tablets that sum to zero. This helps decode numerical patterns in ancient accounting systems.",
+    "constraints": [
+      "3 <= nums.length <= 1000",
+      "-1000 <= nums[i] <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "nums = [-1,0,1,2,-1,-4]",
+        "output": "[[-1,-1,2],[-1,0,1]]",
+        "explanation": "Unique triplets that sum to zero"
+      }
+    ],
+    "hint": "Sort array and use two pointers"
+  },
+  {
+    "id": 45,
+    "title": "Rainwater Harvesting Calculator",
+    "topic": "Array, Two Pointers",
+    "difficulty": "Hard",
+    "description": "As a water resource engineer, calculate how much rainwater can be trapped between ancient temple structures given their heights. This helps in historical water management analysis.",
+    "constraints": [
+      "n == height.length",
+      "1 <= n <= 2 * 10^4",
+      "0 <= height[i] <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "height = [0,1,0,2,1,0,1,3,2,1,2,1]",
+        "output": "6",
+        "explanation": "6 units of rainwater can be trapped"
+      }
+    ],
+    "hint": "Use two pointers or precompute left/right max arrays"
+  },
+  {
+    "id": 46,
+    "title": "Temple Scroll Duplicate Remover",
+    "topic": "Array",
+    "difficulty": "Easy",
+    "description": "As a scribe, remove duplicates from sorted temple scrolls in-place while maintaining order. Return the number of unique entries.",
+    "constraints": [
+      "1 <= nums.length <= 3 * 10^4",
+      "-100 <= nums[i] <= 100",
+      "nums is sorted in non-decreasing order"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,1,2,2,3,4,4,5]",
+        "output": "5",
+        "explanation": "5 unique numbers: [1,2,3,4,5]"
+      }
+    ],
+    "hint": "Use two pointers - reader and writer"
+  },
+  {
+    "id": 47,
+    "title": "Signal Fire Counter",
+    "topic": "Array",
+    "difficulty": "Easy",
+    "description": "As a watchtower guard, count the maximum consecutive signal fires (1s) in a binary array. This helps determine communication range between ancient outposts.",
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "nums[i] is either 0 or 1"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,1,0,1,1,1,0,1,1]",
+        "output": "3",
+        "explanation": "Maximum consecutive 1s is 3"
+      }
+    ],
+    "hint": "Maintain running count and max count"
+  },
+  {
+    "id": 48,
+    "title": "Ritual Scheduling Optimizer",
+    "topic": "Greedy",
+    "difficulty": "Easy",
+    "description": "As a temple coordinator, schedule the maximum number of rituals in one room without overlapping. Each ritual has start and end times. This maximizes spiritual efficiency.",
+    "constraints": [
+      "1 <= N <= 10^5",
+      "1 <= start[i] < end[i] <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "N=6, start[]=[1,3,0,5,8,5], end[]=[2,4,6,7,9,9]",
+        "output": "4",
+        "explanation": "Maximum 4 non-overlapping rituals can be scheduled"
+      }
+    ],
+    "hint": "Sort by end times and select non-conflicting rituals"
+  },
+  {
+    "id": 49,
+    "title": "Chariot Platform Allocator",
+    "topic": "Greedy",
+    "difficulty": "Medium",
+    "description": "As a chariot master, find the minimum number of platforms required for a railway station so no chariot waits. Given arrival and departure times, calculate platform needs.",
+    "constraints": [
+      "1 <= n <= 50000",
+      "0 <= arr[i] <= dep[i] <= 2359"
+    ],
+    "examples": [
+      {
+        "input": "arr[]=[900,940,950,1100,1500,1800], dep[]=[910,1200,1120,1130,1900,2000]",
+        "output": "3",
+        "explanation": "Minimum 3 platforms needed"
+      }
+    ],
+    "hint": "Sort both arrays and use two pointers"
+  },
+  {
+    "id": 50,
+    "title": "Artifact Profit Maximizer",
+    "topic": "Greedy",
+    "difficulty": "Medium",
+    "description": "As a museum curator, schedule artifact jobs with deadlines and profits to maximize total profit. Each job takes one unit of time and has a deadline.",
+    "constraints": [
+      "1 <= N <= 1000",
+      "1 <= Deadline <= 100",
+      "1 <= Profit <= 500"
+    ],
+    "examples": [
+      {
+        "input": "Jobs = [(1,4,20),(2,1,10),(3,1,40),(4,1,30)]",
+        "output": "60",
+        "explanation": "Jobs 1 and 3 give maximum profit"
+      }
+    ],
+    "hint": "Sort by profit and assign to latest available slot"
+  },
+  {
+    "id": 51,
+    "title": "Expedition Pack Optimizer",
+    "topic": "Greedy",
+    "difficulty": "Medium",
+    "description": "As an expedition planner, maximize value of items in a knapsack with fractional allowed items. This helps optimize supplies for long journeys.",
+    "constraints": [
+      "1 <= N <= 1000",
+      "1 <= W <= 1000",
+      "1 <= value[i], weight[i] <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "W=50, value[]=[60,100,120], weight[]=[10,20,30]",
+        "output": "240.0",
+        "explanation": "Take full items of 10 and 20, fraction of 30"
+      }
+    ],
+    "hint": "Sort by value/weight ratio in descending order"
+  },
+  {
+    "id": 52,
+    "title": "Ancient Coin Counter",
+    "topic": "Greedy",
+    "difficulty": "Easy",
+    "description": "As a merchant, find the minimum number of ancient coins needed to make exact change. This optimizes currency transactions in historical markets.",
+    "constraints": [
+      "1 <= amount <= 10^4",
+      "1 <= coins.length <= 12",
+      "0 <= coins[i] <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "coins = [1,2,5], amount = 11",
+        "output": "3",
+        "explanation": "11 = 5 + 5 + 1"
+      }
+    ],
+    "hint": "Use greedy with largest denominations first"
+  },
+  {
+    "id": 53,
+    "title": "Cookie Distributor",
+    "topic": "Greedy",
+    "difficulty": "Easy",
+    "description": "As a temple cook, assign cookies to children with greed factors. Each child gets one cookie that satisfies their greed. Maximize number of content children.",
+    "constraints": [
+      "1 <= children, cookies <= 10^4",
+      "0 <= greed[i], size[i] <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "greed = [1,2,3], cookies = [1,1]",
+        "output": "1",
+        "explanation": "Only one child can be satisfied"
+      }
+    ],
+    "hint": "Sort both arrays and use two pointers"
   }
 ]
