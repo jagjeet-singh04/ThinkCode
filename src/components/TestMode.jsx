@@ -455,9 +455,9 @@ const TestMode = ({ questions, onTestComplete }) => {
             </div>
 
             {/* Main Content */}
-            <div className="flex-1 flex overflow-hidden">
+            <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
                 {/* Question Display */}
-                <div className={`${mobileView === 'question' ? 'block' : 'hidden'} md:block md:w-1/2 border-r border-border overflow-hidden`}>
+                <div className={`${mobileView === 'question' ? 'block' : 'hidden'} md:flex md:flex-col md:w-1/2 border-r border-border overflow-hidden`}>
                     <div className="h-full overflow-y-auto custom-scrollbar p-4 sm:p-6 space-y-4 sm:space-y-6">
                         {/* Question Header */}
                         <div className="space-y-3">
@@ -512,80 +512,76 @@ const TestMode = ({ questions, onTestComplete }) => {
                 </div>
 
                 {/* Code Editor + FeedbackPanel */}
-                <div className={`${mobileView === 'editor' ? 'block' : 'hidden'} md:block md:w-1/2 flex flex-col h-full`}>
-                    <div className="flex-1">
+                {/* Desktop: always show code editor; Mobile: show if mobileView === 'editor' */}
+                <div className={`md:flex md:flex-col md:w-1/2 h-full ${mobileView === 'editor' ? 'flex' : 'hidden'} md:flex flex-col !flex`}>
+                    <div className="flex-1 flex flex-col">
                         <CodeEditor
                             code={userAnswers[currentQuestion.id] || ''}
                             onCodeChange={handleCodeChange}
                             language={currentLanguage}
                             setLanguage={handleLanguageChange}
-                            isMobile={true}
                         />
-                    </div>
-                    
-                    {/* UPDATED: Single Submit Button + Feedback Display */}
-                    <div className="border-t">
-                        {/* Submit Button Section */}
-                        <div className="flex justify-between items-center p-3 sm:p-4 border-b">
-                            <div className="flex items-center space-x-2">
-                                {feedbacks[currentQuestion.id] && (
-                                    <Badge variant={feedbacks[currentQuestion.id].accepted ? 'success' : 'destructive'} className="text-xs">
-                                        {feedbacks[currentQuestion.id].accepted ? 'Accepted' : 'Rejected'}
-                                        {feedbacks[currentQuestion.id].score != null ? `: ${feedbacks[currentQuestion.id].score} pts` : ''}
-                                    </Badge>
-                                )}
+                        {/* Submit Button + Feedback always visible below editor */}
+                        <div className="border-t">
+                            <div className="flex justify-between items-center p-3 sm:p-4 border-b">
+                                <div className="flex items-center space-x-2">
+                                    {feedbacks[currentQuestion.id] && (
+                                        <Badge variant={feedbacks[currentQuestion.id].accepted ? 'success' : 'destructive'} className="text-xs">
+                                            {feedbacks[currentQuestion.id].accepted ? 'Accepted' : 'Rejected'}
+                                            {feedbacks[currentQuestion.id].score != null ? `: ${feedbacks[currentQuestion.id].score} pts` : ''}
+                                        </Badge>
+                                    )}
+                                </div>
+                                <Button
+                                    onClick={handleSubmitSolution}
+                                    disabled={submitting || !(userAnswers[currentQuestion.id] && userAnswers[currentQuestion.id].trim())}
+                                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-xs sm:text-sm py-1 h-8 sm:h-9"
+                                >
+                                    {submitting ? (
+                                        <>
+                                            <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 animate-spin" />
+                                            Analyzing...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Send className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                                            Submit
+                                        </>
+                                    )}
+                                </Button>
                             </div>
-                            <Button
-                                onClick={handleSubmitSolution}
-                                disabled={submitting || !(userAnswers[currentQuestion.id] && userAnswers[currentQuestion.id].trim())}
-                                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-xs sm:text-sm py-1 h-8 sm:h-9"
-                            >
-                                {submitting ? (
-                                    <>
-                                        <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 animate-spin" />
-                                        Analyzing...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Send className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                                        Submit
-                                    </>
-                                )}
-                            </Button>
-                        </div>
-
-                        {/* Feedback Display Section */}
-                        {feedbacks[currentQuestion.id] && (
-                            <div className="h-32 sm:h-48 overflow-y-auto custom-scrollbar p-3 sm:p-4 bg-muted/20">
-                                {feedbacks[currentQuestion.id].structured && (
-                                    <div className="mb-3 sm:mb-4 space-y-2 sm:space-y-3">
-                                        <div className="flex flex-wrap gap-2 text-xs">
-                                            {feedbacks[currentQuestion.id].structured.time_complexity && (
-                                                <Badge variant="outline" className="text-xs">Time: {feedbacks[currentQuestion.id].structured.time_complexity}</Badge>
-                                            )}
-                                            {feedbacks[currentQuestion.id].structured.space_complexity && (
-                                                <Badge variant="outline" className="text-xs">Space: {feedbacks[currentQuestion.id].structured.space_complexity}</Badge>
+                            {feedbacks[currentQuestion.id] && (
+                                <div className="h-32 sm:h-48 overflow-y-auto custom-scrollbar p-3 sm:p-4 bg-muted/20">
+                                    {feedbacks[currentQuestion.id].structured && (
+                                        <div className="mb-3 sm:mb-4 space-y-2 sm:space-y-3">
+                                            <div className="flex flex-wrap gap-2 text-xs">
+                                                {feedbacks[currentQuestion.id].structured.time_complexity && (
+                                                    <Badge variant="outline" className="text-xs">Time: {feedbacks[currentQuestion.id].structured.time_complexity}</Badge>
+                                                )}
+                                                {feedbacks[currentQuestion.id].structured.space_complexity && (
+                                                    <Badge variant="outline" className="text-xs">Space: {feedbacks[currentQuestion.id].structured.space_complexity}</Badge>
+                                                )}
+                                            </div>
+                                            {Array.isArray(feedbacks[currentQuestion.id].structured.errors) && feedbacks[currentQuestion.id].structured.errors.length > 0 && (
+                                                <div className="bg-red-50 border border-red-200 rounded-md p-2 text-xs text-red-700 max-h-20 sm:max-h-28 overflow-auto">
+                                                    <strong className="block mb-1">Issues Detected:</strong>
+                                                    <ul className="list-disc pl-4 space-y-0.5">
+                                                        {feedbacks[currentQuestion.id].structured.errors.map((e, i) => (
+                                                            <li key={i}>{e.line != null ? `L${e.line}: ` : ''}{e.message} ({e.severity})</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
                                             )}
                                         </div>
-                                        {Array.isArray(feedbacks[currentQuestion.id].structured.errors) && feedbacks[currentQuestion.id].structured.errors.length > 0 && (
-                                            <div className="bg-red-50 border border-red-200 rounded-md p-2 text-xs text-red-700 max-h-20 sm:max-h-28 overflow-auto">
-                                                <strong className="block mb-1">Issues Detected:</strong>
-                                                <ul className="list-disc pl-4 space-y-0.5">
-                                                    {feedbacks[currentQuestion.id].structured.errors.map((e, i) => (
-                                                        <li key={i}>{e.line != null ? `L${e.line}: ` : ''}{e.message} ({e.severity})</li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        )}
+                                    )}
+                                    <div className="prose prose-sm max-w-none">
+                                        <pre className="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed bg-background p-3 sm:p-4 rounded-lg border overflow-x-auto">
+                                            {feedbacks[currentQuestion.id].feedback}
+                                        </pre>
                                     </div>
-                                )}
-                                <div className="prose prose-sm max-w-none">
-                                    <pre className="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed bg-background p-3 sm:p-4 rounded-lg border overflow-x-auto">
-                                        {feedbacks[currentQuestion.id].feedback}
-                                    </pre>
                                 </div>
-                            </div>
-                        )}
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
