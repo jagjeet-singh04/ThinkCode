@@ -9,30 +9,24 @@ const TestSession = () => {
   const [testQuestions, setTestQuestions] = useState([]);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [testHistory, setTestHistory] = useLocalStorage('testHistory', []);
+  const [numQuestions, setNumQuestions] = useState(null);
+  const [showPrompt, setShowPrompt] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Select 5 random questions for the test
+    if (numQuestions == null) return;
+    // Select numQuestions random questions for the test
     const selectedQuestions = [];
     const questionPool = [...questions];
-    
-    for (let i = 0; i < Math.min(5, questionPool.length); i++) {
+    for (let i = 0; i < Math.min(numQuestions, questionPool.length); i++) {
       const randomIndex = Math.floor(Math.random() * questionPool.length);
       selectedQuestions.push(questionPool[randomIndex]);
       questionPool.splice(randomIndex, 1);
     }
-    
     setTestQuestions(selectedQuestions);
-    
-    // Calculate total time based on difficulties
-    const totalTime = selectedQuestions.reduce((total, q) => {
-      if (q.difficulty === 'Easy') return total + 30 * 60;
-      if (q.difficulty === 'Medium') return total + 45 * 60;
-      return total + 60 * 60;
-    }, 0);
-    
+    // 30 min per question
+    const totalTime = selectedQuestions.length * 30 * 60;
     setTimeRemaining(totalTime);
-    
     // Set up timer
     const timer = setInterval(() => {
       setTimeRemaining(prev => {
@@ -44,9 +38,8 @@ const TestSession = () => {
         return prev - 1;
       });
     }, 1000);
-    
     return () => clearInterval(timer);
-  }, []);
+  }, [numQuestions]);
 
   const handleTestComplete = (score, total) => {
     const newTest = {
@@ -60,6 +53,26 @@ const TestSession = () => {
   navigate(-1);
   };
 
+  if (showPrompt) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-background">
+        <div className="bg-white rounded-xl shadow-lg p-8 max-w-xs w-full">
+          <h2 className="text-xl font-bold mb-4 text-center">How many questions for your test?</h2>
+          <div className="flex flex-col gap-3">
+            {[1,2,3,4,5].map(n => (
+              <button
+                key={n}
+                className="py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
+                onClick={() => { setNumQuestions(n); setShowPrompt(false); }}
+              >
+                {n} Question{n > 1 ? 's' : ''}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (testQuestions.length === 0) {
     return <div className="p-6">Loading test questions...</div>;
   }

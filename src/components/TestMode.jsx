@@ -408,7 +408,7 @@ const TestMode = ({ questions, onTestComplete }) => {
             <Card className="rounded-none border-b hidden md:block">
                 <CardContent className="py-4">
                     <div className="flex items-center justify-between">
-                        <div className="flex space-x-2 overflow-x-auto">
+                        <div className="flex space-x-2 overflow-x-auto overflow-y-hidden" style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(0,0,0,0.1) transparent' }}>
                             {questions.map((q, index) => (
                                 <motion.button
                                     key={q.id}
@@ -660,12 +660,12 @@ const TestMode = ({ questions, onTestComplete }) => {
 
             {/* Results Modal */}
             {showResults && (
-                <div className="fixed inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4">
+                <div className="fixed inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4 overflow-hidden">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.85, y: 50 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ type: "spring", duration: 0.5, bounce: 0.3 }}
-                        className="bg-white dark:bg-gray-900 rounded-xl sm:rounded-2xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 w-full max-w-4xl max-h-[95vh] overflow-auto"
+                        className="bg-white dark:bg-gray-900 rounded-xl sm:rounded-2xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 w-full max-w-4xl max-h-[95vh] flex flex-col overflow-hidden"
                     >
                         {/* Header with gradient background */}
                         <div className="bg-gradient-to-r from-emerald-500 via-blue-500 to-purple-600 p-4 sm:p-6 text-white">
@@ -678,12 +678,16 @@ const TestMode = ({ questions, onTestComplete }) => {
                                 >
                                     🎉
                                 </motion.div>
-                                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">Test Results</h2>
-                                <p className="text-blue-100 text-xs sm:text-sm">Great job completing the test!</p>
+                                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">
+                                    Test Results
+                                </h2>
+                                <p className="text-blue-100 text-xs sm:text-sm">
+                                    Great job completing the test!
+                                </p>
                             </div>
                         </div>
 
-                        <div className="p-4 sm:p-6 overflow-y-auto max-h-[calc(95vh-120px)]">
+                        <div className="p-4 sm:p-6 overflow-y-auto max-h-[calc(95vh-120px)] flex-1">
                             {/* Total Score Card */}
                             <motion.div 
                                 initial={{ opacity: 0, y: 20 }}
