@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import User from '../../../server/models/User';
+import User from '../models/User';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
