@@ -1,23 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import questionsData from '../data/questions.json';
 import QuestionStatus from '../components/QuestionStatus';
 import { Badge } from '../components/ui/Badge';
+import { RefreshCw } from 'lucide-react';
 
 const ChooseSection = () => {
   const { user, login } = useAuth();
-  // Fetch latest profile on mount to ensure status is up-to-date
-  useEffect(() => {
+  const location = useLocation();
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchUserProfile = useCallback(async () => {
     if (user?.email) {
-      fetch(`/api/auth/profile?email=${encodeURIComponent(user.email)}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.user) login(data.user);
-        });
+      setRefreshing(true);
+      try {
+        const res = await fetch(`/api/auth/profile?email=${encodeURIComponent(user.email)}`);
+        const data = await res.json();
+        if (data.user) login(data.user);
+      } catch (error) {
+        console.error('Failed to fetch user profile:', error);
+      } finally {
+        setRefreshing(false);
+      }
     }
-    // eslint-disable-next-line
-  }, []);
+  }, [user?.email, login]);
+
+  // Fetch latest profile on mount and when location changes
+  useEffect(() => {
+    fetchUserProfile();
+  }, [fetchUserProfile, location.key]);
   const [selectedTopic, setSelectedTopic] = useState('');
   const [selectedDifficulty, setSelectedDifficulty] = useState('');
 
@@ -44,7 +56,17 @@ const ChooseSection = () => {
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-center">Choose Your Question</h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold">Choose Your Question</h1>
+          <button
+            onClick={fetchUserProfile}
+            disabled={refreshing}
+            className="flex items-center gap-2 px-3 py-2 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 disabled:opacity-50"
+          >
+            <RefreshCw size={16} className={refreshing ? 'animate-spin' : ''} />
+            Refresh Status
+          </button>
+        </div>
         {/* Topics Filter */}
         <div className="mb-4 flex flex-wrap gap-2 justify-center">
           <span className="font-semibold text-sm mr-2">Topics:</span>
