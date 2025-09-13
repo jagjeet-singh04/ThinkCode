@@ -9,6 +9,7 @@ import './styles/index.css';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
 import { AuthProvider } from './context/AuthContext';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/test" element={<TestSession />} />
             <Route path="/auth/login" element={<Login />} />
             <Route path="/auth/signup" element={<Signup />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>
       </Router>
