@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "../components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/Card";
 import { Code, Zap, Target, Trophy, ChevronRight, Sparkles, X } from "lucide-react";
+import Topbar from "../components/Topbar";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -47,14 +48,19 @@ const LandingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#0f172a] text-white">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#0f172a] text-white flex flex-col">
       {/* Decorative background elements */}
-      <div className="absolute -top-40 -right-40 w-96 h-96 bg-purple-500/20 rounded-full blur-[120px] animate-pulse" />
-      <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-pink-500/20 rounded-full blur-[120px] animate-pulse" />
-      
+      <div className="absolute -top-40 -right-40 w-72 h-72 md:w-96 md:h-96 bg-purple-500/20 rounded-full blur-[120px] animate-pulse" />
+      <div className="absolute -bottom-40 -left-40 w-72 h-72 md:w-96 md:h-96 bg-pink-500/20 rounded-full blur-[120px] animate-pulse" />
+
+      {/* Topbar for auth/profile navigation */}
+      <div className="sticky top-0 left-0 w-full z-30">
+        <Topbar />
+      </div>
+
       {/* Animated floating particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(15)].map((_, i) => (
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(10)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-2 h-2 bg-purple-400 rounded-full opacity-30"
@@ -75,7 +81,7 @@ const LandingPage = () => {
         ))}
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 py-16 flex flex-col items-center min-h-screen">
+  <main className="relative z-10 flex-1 w-full flex flex-col items-center justify-center px-2 sm:px-6 py-10 md:py-16">
         {/* Logo + Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -172,7 +178,8 @@ const LandingPage = () => {
         >
           © {new Date().getFullYear()} ThinkCode · Crafted with 💜 for coders
         </motion.footer>
-      </div>
+
+      </main>
     </div>
   );
 };
