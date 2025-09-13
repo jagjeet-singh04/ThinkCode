@@ -146,6 +146,8 @@ const FeedbackPanel = ({ question, userCode, onSubmissionResult, initialAccepted
                   login(profileData.user);
                 }
               }
+              // Dispatch event to trigger context refresh everywhere
+              window.dispatchEvent(new CustomEvent('profileUpdated'));
             }
           } catch (error) {
             console.error('Error updating progress:', error);
