@@ -1,3 +1,8 @@
+// Global error handler for better debugging on Vercel
+app.use((err, req, res, next) => {
+  console.error('Express error:', err);
+  res.status(500).json({ error: 'Internal Server Error', details: err.message });
+});
 
 import express from 'express';
 import mongoose from 'mongoose';
