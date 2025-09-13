@@ -4,13 +4,13 @@ import { useAuth } from '../context/useAuth';
 
 const QuestionStatus = ({ questionId }) => {
   const { user } = useAuth();
-  
   if (!user || !user.solvedQuestions) return null;
-  
+  // Robust matching: compare as strings and trim
   const solvedQuestion = user.solvedQuestions.find(
-    q => q.questionId === questionId
+    q => String(q.questionId).trim() === String(questionId).trim()
   );
-  
+  // Debug log for troubleshooting type mismatches
+  console.log("Checking status for", questionId, "against", user.solvedQuestions.map(q => q.questionId));
   if (!solvedQuestion) return null;
   
   const getStatusIcon = () => {
