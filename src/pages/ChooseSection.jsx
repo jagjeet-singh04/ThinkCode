@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/useAuth';
 import { useNavigate } from 'react-router-dom';
 import questionsData from '../data/questions.json';
@@ -6,7 +6,18 @@ import QuestionStatus from '../components/QuestionStatus';
 import { Badge } from '../components/ui/Badge';
 
 const ChooseSection = () => {
-  const { user } = useAuth(); // Ensure re-render on user update
+  const { user, login } = useAuth();
+  // Fetch latest profile on mount to ensure status is up-to-date
+  useEffect(() => {
+    if (user?.email) {
+      fetch(`/api/auth/profile?email=${encodeURIComponent(user.email)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.user) login(data.user);
+        });
+    }
+    // eslint-disable-next-line
+  }, []);
   const [selectedTopic, setSelectedTopic] = useState('');
   const [selectedDifficulty, setSelectedDifficulty] = useState('');
 
