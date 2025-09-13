@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../context/useAuth";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "../components/ui/Button";
@@ -7,9 +8,16 @@ import { Code, Zap, Target, Trophy, ChevronRight, Sparkles, X } from "lucide-rea
 import Topbar from "../components/Topbar";
 
 const LandingPage = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [showModeSelect, setShowModeSelect] = useState(false);
 
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!user) {
+      navigate("/auth/login");
+    }
+  }, [user, navigate]);
   const handleStart = () => {
     navigate('/choose-path');
   };
