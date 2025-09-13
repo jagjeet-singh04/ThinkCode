@@ -36,7 +36,7 @@ export default async function handler(req, res) {
     }
     
     try {
-      const user = await User.findOne({ email }, { password: 0 }).populate('solvedQuestions');
+  const user = await User.findOne({ email }, { password: 0 });
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
