@@ -23,16 +23,29 @@ async function connectDB() {
 
 export default async function handler(req, res) {
   await connectDB();
+  const { email } = req.query;
+  if (!email) {
+    return res.status(400).json({ message: "Email is required" });
+  }
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
   if (req.method === "GET") {
-    const { email } = req.query;
-    if (!email) {
-      return res.status(400).json({ message: "Email is required" });
+    // Return solved questions for the user
+    return res.status(200).json({ solvedQuestions: user.solvedQuestions || [] });
+  } else if (req.method === "POST") {
+    // Add a question to solvedQuestions
+    const { questionId } = req.body;
+    if (!questionId) {
+      return res.status(400).json({ message: "Question ID is required" });
     }
-    const user = await User.findOne({ email }, { password: 0 });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    if (!user.solvedQuestions.includes(questionId)) {
+      user.solvedQuestions.push(questionId);
+      await user.save();
     }
-    return res.status(200).json({ user });
+    return res.status(200).json({ message: "Question marked as solved", solvedQuestions: user.solvedQuestions });
   } else {
     res.status(405).json({ message: "Method not allowed" });
   }
