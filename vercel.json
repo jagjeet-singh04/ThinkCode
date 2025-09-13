@@ -1,9 +1,5 @@
 {
   "version": 2,
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/server/index.js" },
-    { "src": "/(.*)", "dest": "/dist/index.html" }
-  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/dist/index.html" }
   ]
