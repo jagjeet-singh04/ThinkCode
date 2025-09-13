@@ -14,28 +14,28 @@ const QuestionStatus = ({ questionId }) => {
   if (!solvedQuestion) return null;
   
   const getStatusIcon = () => {
-    switch (solvedQuestion.status) {
-      case 'solved':
-        return <CheckCircle className="w-5 h-5 text-green-500" />;
-      case 'partially-solved':
-        return <AlertCircle className="w-5 h-5 text-yellow-500" />;
-      case 'unsolved':
-        return <XCircle className="w-5 h-5 text-red-500" />;
-      default:
-        return null;
+    if (solvedQuestion.status === 'solved' || solvedQuestion.score === 100) {
+      return <CheckCircle className="w-5 h-5 text-green-500" />;
+    } else if (
+      solvedQuestion.status === 'partially-solved' ||
+      (solvedQuestion.score > 0 && solvedQuestion.score < 100)
+    ) {
+      return <AlertCircle className="w-5 h-5 text-yellow-500" />;
+    } else {
+      return <XCircle className="w-5 h-5 text-red-500" />;
     }
   };
-  
+
   const getStatusText = () => {
-    switch (solvedQuestion.status) {
-      case 'solved':
-        return 'Solved';
-      case 'partially-solved':
-        return `Partially Solved (${solvedQuestion.score}%)`;
-      case 'unsolved':
-        return 'Unsolved';
-      default:
-        return '';
+    if (solvedQuestion.status === 'solved' || solvedQuestion.score === 100) {
+      return 'Solved';
+    } else if (
+      solvedQuestion.status === 'partially-solved' ||
+      (solvedQuestion.score > 0 && solvedQuestion.score < 100)
+    ) {
+      return `Partially Solved (${solvedQuestion.score}%)`;
+    } else {
+      return 'Unsolved';
     }
   };
   
