@@ -26,7 +26,7 @@ const HintSection = ({ hint }) => {
   );
 };
 
-const QuestionDisplay = ({ question, hideTitle }) => {
+const QuestionDisplay = ({ question, hideTitle, solvedQuestions = [], partialScores = {} }) => {
   if (!question) {
     return (
       <div className="h-full flex items-center justify-center bg-muted/20">
@@ -56,6 +56,8 @@ const QuestionDisplay = ({ question, hideTitle }) => {
 
   // Always show topics and difficulty badges, even if hideTitle is true
   const topicList = question.topic.split(',').map(t => t.trim());
+  const isSolved = solvedQuestions.includes(question.id);
+  const isPartial = partialScores[question.id] && partialScores[question.id] < 100;
   return (
     <motion.div
   initial={{ opacity: 0, y: 20 }}
@@ -73,8 +75,23 @@ const QuestionDisplay = ({ question, hideTitle }) => {
     {/* Question Header */}
     <div className="space-y-2">
       {!hideTitle && (
-        <h1 className="text-2xl font-bold text-foreground mb-2">
+        <h1 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-3">
           {question.title}
+          {isSolved && (
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-green-100 text-green-800 text-xs font-semibold ml-2 animate-pulse">
+              Solved
+            </span>
+          )}
+          {isPartial && !isSolved && (
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-800 text-xs font-semibold ml-2 animate-pulse">
+              Partially Solved
+            </span>
+          )}
+          {!isSolved && !isPartial && (
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-200 text-gray-700 text-xs font-semibold ml-2">
+              Unsolved
+            </span>
+          )}
         </h1>
       )}
       <div className="flex flex-wrap items-center gap-2">
@@ -86,6 +103,21 @@ const QuestionDisplay = ({ question, hideTitle }) => {
             {topic}
           </Badge>
         ))}
+        {isSolved && hideTitle && (
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-green-100 text-green-800 text-xs font-semibold ml-2 animate-pulse">
+            Solved
+          </span>
+        )}
+        {isPartial && hideTitle && !isSolved && (
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-800 text-xs font-semibold ml-2 animate-pulse">
+            Partially Solved
+          </span>
+        )}
+        {!isSolved && !isPartial && hideTitle && (
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-200 text-gray-700 text-xs font-semibold ml-2">
+            Unsolved
+          </span>
+        )}
       </div>
     </div>
 

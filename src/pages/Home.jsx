@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, Menu, X, Code, Play, Settings, BookOpen, Zap } from 'lucide-react';
 import Sidebar from '../components/Sidebar';
 import QuestionDisplay from '../components/QuestionDisplay';
+import AllQuestionsList from '../components/AllQuestionsList';
 import CodeEditor, { DEFAULT_TEMPLATES } from '../components/CodeEditor';
 import FeedbackPanel from '../components/FeedbackPanel';
 import questionsData from '../data/questions.json';
@@ -48,6 +49,8 @@ const Home = () => {
   const [userCode, setUserCode] = useState(DEFAULT_TEMPLATES.javascript);
   
   const [solvedQuestions, setSolvedQuestions] = useState([]);
+  // For demo: partialScores can be fetched from backend if implemented
+  const [partialScores, setPartialScores] = useState({});
 
   // Fetch solved questions from backend for logged-in user
   useEffect(() => {
@@ -367,6 +370,8 @@ const Home = () => {
                           question={currentQuestion} 
                           hideTitle={isMobileView}
                           className="h-full"
+                          solvedQuestions={solvedQuestions}
+                          partialScores={partialScores}
                         />
                       </motion.div>
                     )}
@@ -436,7 +441,7 @@ const Home = () => {
                         </Badge>
                       </div>
                     </div>
-                    <QuestionDisplay question={currentQuestion} hideTitle />
+                    <QuestionDisplay question={currentQuestion} hideTitle solvedQuestions={solvedQuestions} partialScores={partialScores} />
                   </div>
                   
                   {/* Code Editor Panel */}
@@ -587,8 +592,12 @@ const Home = () => {
               </div>
             )}
           </div>
+          {/* All Questions Section */}
+          <AllQuestionsList questions={questions} solvedQuestions={solvedQuestions} partialScores={partialScores} />
         )}
       </div>
+      {/* All Questions Section */}
+      <AllQuestionsList questions={questions} solvedQuestions={solvedQuestions} partialScores={partialScores} />
     </div>
   );
 };
