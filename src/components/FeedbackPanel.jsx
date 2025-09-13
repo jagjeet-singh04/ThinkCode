@@ -12,7 +12,7 @@ const FeedbackPanel = ({ question, userCode, onSubmissionResult, initialAccepted
   const [isLoading, setIsLoading] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState(initialAccepted !== null ? (initialAccepted ? 'success' : 'error') : null);
   const [structured, setStructured] = useState(initialStructured || null);
-  const { user } = useAuth();
+  const { user, login } = useAuth();
   // Initialize with props if available
   useEffect(() => {
     if (initialStructured) {
@@ -112,7 +112,6 @@ const FeedbackPanel = ({ question, userCode, onSubmissionResult, initialAccepted
 
         if (user && question) {
           const score = parsed.data.score || 0;
-          
           try {
             const response = await fetch('/api/auth/updateProgress', {
               method: 'POST',
@@ -125,9 +124,17 @@ const FeedbackPanel = ({ question, userCode, onSubmissionResult, initialAccepted
                 score: score
               }),
             });
-            
             if (!response.ok) {
               console.error('Failed to update progress');
+            } else {
+              // Fetch latest profile and update user context
+              const profileRes = await fetch(`/api/auth/profile?email=${encodeURIComponent(user.email)}`);
+              if (profileRes.ok) {
+                const profileData = await profileRes.json();
+                if (profileData.user) {
+                  login(profileData.user);
+                }
+              }
             }
           } catch (error) {
             console.error('Error updating progress:', error);
