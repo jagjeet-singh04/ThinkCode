@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useAuth } from '../context/useAuth';
 import { useNavigate } from 'react-router-dom';
 import questionsData from '../data/questions.json';
 import QuestionStatus from '../components/QuestionStatus';
 import { Badge } from '../components/ui/Badge';
 
 const ChooseSection = () => {
+  const { user } = useAuth(); // Ensure re-render on user update
   const [selectedTopic, setSelectedTopic] = useState('');
   const [selectedDifficulty, setSelectedDifficulty] = useState('');
 
