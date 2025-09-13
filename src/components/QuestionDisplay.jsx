@@ -4,6 +4,8 @@ import { Badge } from './ui/Badge';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 import { FileText, List, Lightbulb } from 'lucide-react';
 
+import QuestionStatus from './QuestionStatus';
+
 // HintSection component (must be top-level)
 const HintSection = ({ hint }) => {
   const [show, setShow] = useState(false);
@@ -26,7 +28,7 @@ const HintSection = ({ hint }) => {
   );
 };
 
-const QuestionDisplay = ({ question, hideTitle, solvedQuestions = [], partialScores = {} }) => {
+const QuestionDisplay = ({ question, hideTitle }) => {
   if (!question) {
     return (
       <div className="h-full flex items-center justify-center bg-muted/20">
@@ -56,70 +58,40 @@ const QuestionDisplay = ({ question, hideTitle, solvedQuestions = [], partialSco
 
   // Always show topics and difficulty badges, even if hideTitle is true
   const topicList = question.topic.split(',').map(t => t.trim());
-  const isSolved = solvedQuestions.includes(question.id);
-  const isPartial = partialScores[question.id] && partialScores[question.id] < 100;
   return (
     <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.4 }}
-  // 🔑 remove overflow-hidden
-  className="h-full flex flex-col bg-background"
->
-  {/* Scrollable Content Wrapper */}
-  <div 
-    className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6"
-    // 🔑 Add padding bottom so last card is fully visible
-    style={{ paddingBottom: "6rem" }}
-  >
-    {/* Question Header */}
-    <div className="space-y-2">
-      {!hideTitle && (
-        <h1 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-3">
-          {question.title}
-          {isSolved && (
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-green-100 text-green-800 text-xs font-semibold ml-2 animate-pulse">
-              Solved
-            </span>
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="h-full flex flex-col bg-background"
+    >
+      {/* Scrollable Content Wrapper */}
+      <div 
+        className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6"
+        style={{ paddingBottom: "6rem" }}
+      >
+        {/* Question Header */}
+        <div className="space-y-2">
+          {!hideTitle && (
+            <div className="flex items-center justify-between">
+              <h1 className="text-2xl font-bold text-foreground mb-2">
+                {question.title}
+              </h1>
+              {/* Add QuestionStatus component */}
+              <QuestionStatus questionId={question.id} />
+            </div>
           )}
-          {isPartial && !isSolved && (
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-800 text-xs font-semibold ml-2 animate-pulse">
-              Partially Solved
-            </span>
-          )}
-          {!isSolved && !isPartial && (
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-200 text-gray-700 text-xs font-semibold ml-2">
-              Unsolved
-            </span>
-          )}
-        </h1>
-      )}
-      <div className="flex flex-wrap items-center gap-2">
-        <Badge variant={getDifficultyVariant(question.difficulty)}>
-          {question.difficulty}
-        </Badge>
-        {topicList.map((topic, idx) => (
-          <Badge key={topic + idx} variant="outline">
-            {topic}
-          </Badge>
-        ))}
-        {isSolved && hideTitle && (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-green-100 text-green-800 text-xs font-semibold ml-2 animate-pulse">
-            Solved
-          </span>
-        )}
-        {isPartial && hideTitle && !isSolved && (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-800 text-xs font-semibold ml-2 animate-pulse">
-            Partially Solved
-          </span>
-        )}
-        {!isSolved && !isPartial && hideTitle && (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-200 text-gray-700 text-xs font-semibold ml-2">
-            Unsolved
-          </span>
-        )}
-      </div>
-    </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant={getDifficultyVariant(question.difficulty)}>
+              {question.difficulty}
+            </Badge>
+            {topicList.map((topic, idx) => (
+              <Badge key={topic + idx} variant="outline">
+                {topic}
+              </Badge>
+            ))}
+          </div>
+        </div>
 
         {/* Problem Description */}
         <Card>

@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, Menu, X, Code, Play, Settings, BookOpen, Zap } from 'lucide-react';
 import Sidebar from '../components/Sidebar';
 import QuestionDisplay from '../components/QuestionDisplay';
-import AllQuestionsList from '../components/AllQuestionsList';
 import CodeEditor, { DEFAULT_TEMPLATES } from '../components/CodeEditor';
 import FeedbackPanel from '../components/FeedbackPanel';
 import questionsData from '../data/questions.json';
@@ -13,10 +12,7 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 
-import { useAuth } from '../context/useAuth';
-
 const Home = () => {
-  const { user } = useAuth();
   const [questions] = useState(questionsData);
   const [selectedTopic, setSelectedTopic] = useState('');
   const [selectedDifficulty, setSelectedDifficulty] = useState('');
@@ -48,27 +44,7 @@ const Home = () => {
   const [codeByLang, setCodeByLang] = useState(DEFAULT_TEMPLATES);
   const [userCode, setUserCode] = useState(DEFAULT_TEMPLATES.javascript);
   
-  const [solvedQuestions, setSolvedQuestions] = useState([]);
-  // For demo: partialScores can be fetched from backend if implemented
-  const [partialScores, setPartialScores] = useState({});
-
-  // Fetch solved questions from backend for logged-in user
-  useEffect(() => {
-    const fetchSolved = async () => {
-      if (user?.email) {
-        try {
-          const res = await fetch(`/api/auth/solved?email=${encodeURIComponent(user.email)}`);
-          const data = await res.json();
-          if (Array.isArray(data.solvedQuestions)) {
-            setSolvedQuestions(data.solvedQuestions);
-          }
-        } catch (e) {
-          // fallback: do nothing
-        }
-      }
-    };
-    fetchSolved();
-  }, [user]);
+  const [solvedQuestions, setSolvedQuestions] = useLocalStorage('solvedQuestions', []);
 
   // Support multi-topic questions: split by comma and trim
   const allTopics = questions.flatMap(q => q.topic.split(',').map(t => t.trim()));
@@ -370,8 +346,6 @@ const Home = () => {
                           question={currentQuestion} 
                           hideTitle={isMobileView}
                           className="h-full"
-                          solvedQuestions={solvedQuestions}
-                          partialScores={partialScores}
                         />
                       </motion.div>
                     )}
@@ -441,7 +415,7 @@ const Home = () => {
                         </Badge>
                       </div>
                     </div>
-                    <QuestionDisplay question={currentQuestion} hideTitle solvedQuestions={solvedQuestions} partialScores={partialScores} />
+                    <QuestionDisplay question={currentQuestion} hideTitle />
                   </div>
                   
                   {/* Code Editor Panel */}
@@ -499,36 +473,25 @@ const Home = () => {
                         Select Topic
                       </div>
                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                        {topics.map((topic) => {
-                          // Find all questions for this topic
-                          const topicQuestions = questions.filter(q => q.topic.split(',').map(t => t.trim().toLowerCase()).includes(topic.toLowerCase()));
-                          // Count how many are solved
-                          const solvedCount = topicQuestions.filter(q => solvedQuestions.includes(q.id)).length;
-                          return (
-                            <motion.div
-                              key={topic}
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
+                        {topics.map((topic) => (
+                          <motion.div
+                            key={topic}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            <Badge
+                              variant={selectedTopic === topic ? 'default' : 'secondary'}
+                              className={`w-full px-4 py-3 rounded-xl cursor-pointer text-sm font-medium transition-all duration-200 ${
+                                selectedTopic === topic
+                                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 shadow-lg transform'
+                                  : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:shadow-md border border-gray-200'
+                              }`}
+                              onClick={() => handleTopicSelect(topic)}
                             >
-                              <Badge
-                                variant={selectedTopic === topic ? 'default' : 'secondary'}
-                                className={`w-full px-4 py-3 rounded-xl cursor-pointer text-sm font-medium transition-all duration-200 ${
-                                  selectedTopic === topic
-                                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 shadow-lg transform'
-                                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:shadow-md border border-gray-200'
-                                } flex items-center justify-between`}
-                                onClick={() => handleTopicSelect(topic)}
-                              >
-                                <span>{topic}</span>
-                                {user && (
-                                  <span className={`ml-2 text-xs px-2 py-0.5 rounded-full ${solvedCount === topicQuestions.length && topicQuestions.length > 0 ? 'bg-green-100 text-green-700' : solvedCount > 0 ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-200 text-gray-500'}`}>
-                                    {solvedCount}/{topicQuestions.length}
-                                  </span>
-                                )}
-                              </Badge>
-                            </motion.div>
-                          );
-                        })}
+                              {topic}
+                            </Badge>
+                          </motion.div>
+                        ))}
                       </div>
                     </div>
 
@@ -592,12 +555,8 @@ const Home = () => {
               </div>
             )}
           </div>
-          {/* All Questions Section */}
-          <AllQuestionsList questions={questions} solvedQuestions={solvedQuestions} partialScores={partialScores} />
         )}
       </div>
-      {/* All Questions Section */}
-      <AllQuestionsList questions={questions} solvedQuestions={solvedQuestions} partialScores={partialScores} />
     </div>
   );
 };

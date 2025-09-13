@@ -5,13 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 import { Badge } from './ui/Badge';
 import { Send, CheckCircle, XCircle, Clock, Zap } from 'lucide-react';
 import { evaluateCodeWithGemini } from '../Services/geminiApi';
+import { useAuth } from '../context/useAuth';
 
 const FeedbackPanel = ({ question, userCode, onSubmissionResult, initialAccepted, initialStructured, initialFeedback }) => {
   const [feedback, setFeedback] = useState(initialFeedback || '');
   const [isLoading, setIsLoading] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState(initialAccepted !== null ? (initialAccepted ? 'success' : 'error') : null);
   const [structured, setStructured] = useState(initialStructured || null);
-
+  const { user } = useAuth();
   // Initialize with props if available
   useEffect(() => {
     if (initialStructured) {
@@ -108,6 +109,32 @@ const FeedbackPanel = ({ question, userCode, onSubmissionResult, initialAccepted
         
         setSubmissionStatus(accepted ? 'success' : 'error');
         onSubmissionResult(accepted);
+
+        if (user && question) {
+          const score = parsed.data.score || 0;
+          
+          try {
+            const response = await fetch('/api/auth/updateProgress', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                email: user.email,
+                questionId: question.id,
+                score: score
+              }),
+            });
+            
+            if (!response.ok) {
+              console.error('Failed to update progress');
+            }
+          } catch (error) {
+            console.error('Error updating progress:', error);
+          }
+        }
+
+
       } else {
         // If JSON parsing fails completely, fallback to text analysis
         setStructured(null);

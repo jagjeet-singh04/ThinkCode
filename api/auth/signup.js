@@ -8,7 +8,6 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
-  solvedQuestions: { type: [Number], default: [] },
 });
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
@@ -34,7 +33,7 @@ export default async function handler(req, res) {
       return res.status(409).json({ message: "User already exists" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-  const user = new User({ fullName, email, password: hashedPassword, solvedQuestions: [] });
+    const user = new User({ fullName, email, password: hashedPassword });
     await user.save();
     return res.status(201).json({ message: "User created successfully" });
   } else {

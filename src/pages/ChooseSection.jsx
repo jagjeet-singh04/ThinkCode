@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import questionsData from '../data/questions.json';
+import QuestionStatus from '../components/QuestionStatus';
 import { Badge } from '../components/ui/Badge';
 
 const ChooseSection = () => {
@@ -72,6 +73,7 @@ const ChooseSection = () => {
                 <th className="px-4 py-2 text-left">Question Name</th>
                 <th className="px-4 py-2 text-left">Difficulty</th>
                 <th className="px-4 py-2 text-left">Topics</th>
+                <th className="px-4 py-2 text-left">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -93,6 +95,9 @@ const ChooseSection = () => {
                     {q.topic.split(',').map(t => (
                       <Badge key={t} variant="outline" className="mr-1 mb-1">{t.trim()}</Badge>
                     ))}
+                  </td>
+                  <td className="px-4 py-2">
+                    <QuestionStatus questionId={q.id} />
                   </td>
                 </tr>
               ))}

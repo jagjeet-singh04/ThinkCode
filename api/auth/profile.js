@@ -7,7 +7,6 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
-  solvedQuestions: { type: [Number], default: [] },
 });
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
@@ -20,19 +19,26 @@ async function connectDB() {
     });
   }
 }
-
 export default async function handler(req, res) {
   await connectDB();
-  if (req.method === "GET") {
+  
+  if (req.method === 'GET') {
     const { email } = req.query;
     if (!email) {
       return res.status(400).json({ message: "Email is required" });
     }
-    const user = await User.findOne({ email }, { password: 0 });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    
+    try {
+      const user = await User.findOne({ email }, { password: 0 }).populate('solvedQuestions');
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      return res.status(200).json({ user });
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      return res.status(500).json({ message: "Internal server error" });
     }
-    return res.status(200).json({ user });
   } else {
     res.status(405).json({ message: "Method not allowed" });
   }
