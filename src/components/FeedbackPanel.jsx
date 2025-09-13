@@ -112,6 +112,9 @@ const FeedbackPanel = ({ question, userCode, onSubmissionResult, initialAccepted
 
         if (user && question) {
           const score = parsed.data.score || 0;
+          let status = 'unsolved';
+          if (score === 100) status = 'solved';
+          else if (score > 0) status = 'partially-solved';
           try {
             const response = await fetch('/api/auth/updateProgress', {
               method: 'POST',
@@ -124,10 +127,18 @@ const FeedbackPanel = ({ question, userCode, onSubmissionResult, initialAccepted
                 score: score
               }),
             });
-            if (!response.ok) {
-              console.error('Failed to update progress');
-            } else {
-              // Fetch latest profile and update user context
+
+            // Optimistic update: update context immediately
+            login({
+              ...user,
+              solvedQuestions: [
+                ...(user.solvedQuestions?.filter(q => q.questionId !== question.id) || []),
+                { questionId: question.id, score, status, solvedAt: new Date() }
+              ]
+            });
+
+            // Optionally, re-fetch profile as before
+            if (response.ok) {
               const profileRes = await fetch(`/api/auth/profile?email=${encodeURIComponent(user.email)}`);
               if (profileRes.ok) {
                 const profileData = await profileRes.json();
