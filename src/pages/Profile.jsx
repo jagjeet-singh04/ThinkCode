@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/useAuth";
+import { User } from "lucide-react";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -27,16 +28,26 @@ const Profile = () => {
   if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-xl shadow-md p-8 mt-10">
-      <h2 className="text-2xl font-bold mb-4 text-purple-700">Profile</h2>
-      <div className="mb-2">
-        <span className="font-semibold">Full Name:</span> {profile.fullName}
-      </div>
-      <div className="mb-2">
-        <span className="font-semibold">Email:</span> {profile.email}
-      </div>
-      <div className="mb-2">
-        <span className="font-semibold">Joined:</span> {new Date(profile.createdAt).toLocaleDateString()}
+    <div className="flex justify-center items-center min-h-[60vh] px-2">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 sm:p-10 mt-8 sm:mt-16 flex flex-col items-center border border-purple-100">
+        <div className="bg-gradient-to-tr from-purple-400 to-pink-400 p-4 rounded-full shadow-lg mb-4">
+          <User className="w-12 h-12 text-white" />
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-extrabold mb-2 text-purple-700 text-center">Profile</h2>
+        <div className="w-full flex flex-col gap-3 mt-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full">
+            <span className="font-semibold text-gray-700">Full Name:</span>
+            <span className="text-gray-900 text-lg font-medium mt-1 sm:mt-0 break-all">{profile.fullName}</span>
+          </div>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full">
+            <span className="font-semibold text-gray-700">Email:</span>
+            <span className="text-gray-900 text-lg font-medium mt-1 sm:mt-0 break-all">{profile.email}</span>
+          </div>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full">
+            <span className="font-semibold text-gray-700">Joined:</span>
+            <span className="text-gray-900 text-lg font-medium mt-1 sm:mt-0">{new Date(profile.createdAt).toLocaleDateString()}</span>
+          </div>
+        </div>
       </div>
     </div>
   );
