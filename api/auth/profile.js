@@ -2,11 +2,18 @@ import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
+
 const UserSchema = new mongoose.Schema({
   fullName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
+  solvedQuestions: [{
+    questionId: String,
+    score: Number,
+    status: String, // 'solved', 'partially-solved', 'unsolved'
+    solvedAt: { type: Date, default: Date.now }
+  }]
 });
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
