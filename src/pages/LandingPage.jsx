@@ -91,37 +91,37 @@ const LandingPage = () => {
     {
       name: "Bhavesh",
       username: "@Bhavesh",
-      body: "I've never seen anything like this before. It's amazing. I love it.",
+      body: "I've never seen anything like this before.",
       img: "https://avatar.vercel.sh/jack",
     },
     {
       name: "Kislay",
       username: "@Kislay",
-      body: "I don't know what to say. I'm speechless. This is amazing.",
+      body: "I don't know what to say.",
       img: "https://avatar.vercel.sh/jill",
     },
     {
       name: "Ank",
       username: "@Ank",
-      body: "I'm at a loss for words. This is amazing. I love it.",
+      body: "I'm at a loss for words.",
       img: "https://avatar.vercel.sh/john",
     },
     {
       name: "Anurag",
       username: "@Anurag",
-      body: "I'm at a loss for words. This is amazing. I love it.",
+      body: "This is amazing. I love it.",
       img: "https://avatar.vercel.sh/jane",
     },
     {
       name: "Himansu",
       username: "@Himansu",
-      body: "I'm at a loss for words. This is amazing. I love it.",
+      body: "Truly Wonderful this platform is.",
       img: "https://avatar.vercel.sh/jenny",
     },
     {
       name: "Aashutosh",
       username: "@Aashutosh",
-      body: "I'm at a loss for words. This is amazing. I love it.",
+      body: "I am completely blown away.",
       img: "https://avatar.vercel.sh/james",
     },
   ];
