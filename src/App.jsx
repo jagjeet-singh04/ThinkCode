@@ -10,6 +10,10 @@ import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
 import { AuthProvider } from './context/AuthContext';
 import Profile from './pages/Profile';
+import Learn from './pages/Learn';
+import Community from './pages/Community';
+import Settings from './pages/Settings';
+import Support from './pages/Support';
 
 function App() {
   return (
@@ -25,6 +29,10 @@ function App() {
             <Route path="/auth/login" element={<Login />} />
             <Route path="/auth/signup" element={<Signup />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/learn" element={<Learn />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/support" element={<Support />} />
           </Routes>
         </div>
       </Router>
