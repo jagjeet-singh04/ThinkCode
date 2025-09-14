@@ -19,6 +19,20 @@ import Pricing from './pages/Pricing';
 import CaseStudies from './pages/CaseStudies';
 import API from './pages/API';
 import Features from './pages/Features';
+import Documentation from './pages/Documentation';
+import Tutorials from './pages/Tutorials';
+import Blog from './pages/Blog';
+import Webinars from './pages/Webinars';
+import AboutUs from './pages/AboutUs';
+import Careers from './pages/Careers';
+import Contact from './pages/Contact';
+import Press from './pages/Press';
+import Partners from './pages/Partners';
+import HelpCenter from './pages/HelpCenter';
+import Status from './pages/Status';
+import Faqs from './pages/Faqs';
+import EmailSupport from './pages/EmailSupport';
+import LiveChat from './pages/LiveChat';
 
 function App() {
   return (
@@ -37,12 +51,25 @@ function App() {
             <Route path="/learn" element={<Learn />} />
             <Route path="/community" element={<Community />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/support" element={<Support />} />
+            <Route path="/support" element={<HelpCenter />} />
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/case-studies" element={<CaseStudies />} />
             <Route path="/api" element={<API />} />
             <Route path="/features" element={<Features />} />
+            <Route path="/documentation" element={<Documentation />} />
+            <Route path="/tutorials" element={<Tutorials />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/webinars" element={<Webinars />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/press" element={<Press />} />
+            <Route path="/partners" element={<Partners />} />
+            <Route path="/status" element={<Status />} />
+            <Route path="/faqs" element={<Faqs />} />
+            <Route path="/email-support" element={<EmailSupport />} />
+            <Route path="/live-chat" element={<LiveChat />} />
           </Routes>
         </div>
       </Router>

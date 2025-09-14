@@ -12,6 +12,10 @@ import {
   BarChart3, Heart, Calculator, Brain, MessageSquare
 } from "lucide-react";
 import Topbar from "../components/Topbar";
+import { Meteors } from "../components/magicui/meteors"; // <-- Add this import
+import { CardStack } from "../components/ui/card-stack"; // <-- Add this import
+import { EvervaultCard } from "../components/ui/evervault-card";
+import { SiPython, SiJavascript, SiOpenjdk, SiCplusplus } from "react-icons/si"; // Add this import
 
 const LandingPage = () => {
   const { user } = useAuth();
@@ -85,38 +89,38 @@ const LandingPage = () => {
   // Marquee reviews for the effect
   const reviews = [
     {
-      name: "Jack",
-      username: "@jack",
+      name: "Bhavesh",
+      username: "@Bhavesh",
       body: "I've never seen anything like this before. It's amazing. I love it.",
       img: "https://avatar.vercel.sh/jack",
     },
     {
-      name: "Jill",
-      username: "@jill",
+      name: "Kislay",
+      username: "@Kislay",
       body: "I don't know what to say. I'm speechless. This is amazing.",
       img: "https://avatar.vercel.sh/jill",
     },
     {
-      name: "John",
-      username: "@john",
+      name: "Ank",
+      username: "@Ank",
       body: "I'm at a loss for words. This is amazing. I love it.",
       img: "https://avatar.vercel.sh/john",
     },
     {
-      name: "Jane",
-      username: "@jane",
+      name: "Anurag",
+      username: "@Anurag",
       body: "I'm at a loss for words. This is amazing. I love it.",
       img: "https://avatar.vercel.sh/jane",
     },
     {
-      name: "Jenny",
-      username: "@jenny",
+      name: "Himansu",
+      username: "@Himansu",
       body: "I'm at a loss for words. This is amazing. I love it.",
       img: "https://avatar.vercel.sh/jenny",
     },
     {
-      name: "James",
-      username: "@james",
+      name: "Aashutosh",
+      username: "@Aashutosh",
       body: "I'm at a loss for words. This is amazing. I love it.",
       img: "https://avatar.vercel.sh/james",
     },
@@ -140,10 +144,10 @@ const LandingPage = () => {
   );
 
   const codingLanguages = [
-    { name: "Python", icon: "🐍" },
-    { name: "JavaScript", icon: "📜" },
-    { name: "Java", icon: "☕" },
-    { name: "C++", icon: "⚡" },
+    { name: "Python", icon: <SiPython className="text-[#3776AB] w-12 h-12" /> },
+    { name: "JavaScript", icon: <SiJavascript className="text-[#F7DF1E] w-12 h-12" /> },
+    { name: "Java", icon: <SiOpenjdk className="text-[#007396] w-12 h-12" /> },
+    { name: "C++", icon: <SiCplusplus className="text-[#00599C] w-12 h-12" /> },
   ];
 
   const footerSections = [
@@ -159,49 +163,87 @@ const LandingPage = () => {
     {
       title: "Resources",
       links: [
-        { name: "Documentation", href: "#" },
-        { name: "Tutorials", href: "#" },
-        { name: "Blog", href: "#" },
+        { name: "Documentation", href: "/documentation" },
+        { name: "Tutorials", href: "/tutorials" },
+        { name: "Blog", href: "/blog" },
         { name: "Community", href: "/community" },
-        { name: "Webinars", href: "#" },
+        { name: "Webinars", href: "/webinars" },
       ],
     },
     {
       title: "Company",
       links: [
-        { name: "About Us", href: "#" },
-        { name: "Careers", href: "#" },
-        { name: "Contact", href: "#" },
-        { name: "Press", href: "#" },
-        { name: "Partners", href: "#" },
+        { name: "About Us", href: "/about-us" },
+        { name: "Careers", href: "/careers" },
+        { name: "Contact", href: "/contact" },
+        { name: "Press", href: "/press" },
+        { name: "Partners", href: "/partners" },
       ],
     },
     {
       title: "Support",
       links: [
         { name: "Help Center", href: "/support" },
-        { name: "Status", href: "#" },
-        { name: "FAQs", href: "#" },
-        { name: "Email Support", href: "mailto:support@thinkcode.com" },
-        { name: "Live Chat", href: "#" },
+        { name: "Status", href: "/status" },
+        { name: "FAQs", href: "/faqs" },
+        { name: "Email Support", href: "/email-support" },
+        { name: "Live Chat", href: "/live-chat" },
       ],
+    },
+  ];
+
+  const cardStackItems = [
+    {
+      id: 1,
+      content: "“ThinkCode helped me land my dream job at a top tech company!”",
+      name: "Bhavesh",
+      designation: "Software Engineer, Google",
+    },
+    {
+      id: 2,
+      content: "“The AI feedback is next-level. I improved so much in just weeks.”",
+      name: "Kislay",
+      designation: "SDE, Amazon",
+    },
+    {
+      id: 3,
+      content: "“The best coding interview prep platform. Highly recommended!”",
+      name: "Ank",
+      designation: "Backend Developer, Microsoft",
+    },
+    {
+      id: 4,
+      content: "“Loved the analytics and progress tracking features!”",
+      name: "Anurag",
+      designation: "Full Stack Dev, Meta",
+    },
+    {
+      id: 5,
+      content: "“The community and resources are super helpful.”",
+      name: "Himansu",
+      designation: "Student, IIT",
     },
   ];
 
   return (
   <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#0d1117] via-[#161b22] to-[#0d1117] text-[#c9d1d9] flex flex-col">
+      {/* Meteors background effect */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Meteors />
+      </div>
+
       {/* Animated background elements */}
-      <div className="absolute -top-40 -right-40 w-60 h-60 sm:w-72 sm:h-72 md:w-96 md:h-96 bg-purple-500/20 rounded-full blur-[120px] animate-pulse" />
-      <div className="absolute -bottom-40 -left-40 w-60 h-60 sm:w-72 sm:h-72 md:w-96 md:h-96 bg-pink-500/20 rounded-full blur-[120px] animate-pulse" />
-      <div className="absolute top-1/4 left-1/4 w-40 h-40 sm:w-52 sm:h-52 bg-blue-500/15 rounded-full blur-[90px] animate-pulse delay-1000" />
+      <div className="absolute -top-40 -right-40 w-60 h-60 sm:w-72 sm:h-72 md:w-96 md:h-96 bg-purple-500/20 rounded-full blur-[120px] animate-pulse z-0" />
+      <div className="absolute -bottom-40 -left-40 w-60 h-60 sm:w-72 sm:h-72 md:w-96 md:h-96 bg-pink-500/20 rounded-full blur-[120px] animate-pulse z-0" />
+      <div className="absolute top-1/4 left-1/4 w-40 h-40 sm:w-52 sm:h-52 bg-blue-500/15 rounded-full blur-[90px] animate-pulse delay-1000 z-0" />
 
       {/* Animated grid pattern */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-10 z-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
       </div>
 
       {/* Animated floating particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
@@ -327,71 +369,81 @@ const LandingPage = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Why Choose ThinkCode?</h2>
             <p className="text-white/70 max-w-2xl mx-auto">Our platform offers everything you need to ace your next technical interview</p>
           </motion.div>
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 w-full px-1 sm:px-0">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 w-full px-1 sm:px-0">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
-                whileHover={{ y: -6 }}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1, type: "spring", stiffness: 200 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+                whileHover={{
+                  scale: 1.04,
+                  boxShadow: "0 8px 32px 0 rgba(128,0,255,0.12)",
+                }}
+                className="relative group bg-gradient-to-br from-[#1a1333] via-[#181c2f] to-[#1a1333] border border-purple-900/30 rounded-2xl overflow-hidden shadow-lg transition-all duration-200 min-h-[240px] flex flex-col justify-center items-center p-6"
               >
-                <Card className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:border-purple-400/40 transition-all duration-300 h-full min-h-[220px] flex flex-col justify-center">
-                  <CardContent className="p-5 sm:p-6 text-center flex flex-col items-center">
-                    <motion.div 
-                      className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-3 sm:mb-4 bg-white/10 rounded-xl flex items-center justify-center"
-                      whileHover={{ rotate: 10, scale: 1.1 }}
-                    >
-                      {feature.icon}
-                    </motion.div>
-                    <h3 className="font-semibold text-base sm:text-lg mb-1 sm:mb-2">{feature.title}</h3>
-                    <p className="text-xs sm:text-sm text-white/70">{feature.description}</p>
-                  </CardContent>
-                </Card>
+                {/* Icon */}
+                <div className="relative z-10 w-14 h-14 flex items-center justify-center mb-4 bg-white/10 rounded-xl shadow-lg">
+                  {feature.icon}
+                </div>
+                {/* Title */}
+                <h3 className="relative z-10 font-semibold text-lg mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  {feature.title}
+                </h3>
+                {/* Description */}
+                <p className="relative z-10 text-sm text-white/80 text-center">{feature.description}</p>
               </motion.div>
             ))}
           </div>
         </section>
 
-        {/* Languages Section */}
+        {/* Supported Languages Section */}
         <section className="w-full max-w-6xl mb-16 md:mb-24">
           <motion.div 
             className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Supported Languages</h2>
             <p className="text-white/70 max-w-2xl mx-auto">Practice in your preferred programming language</p>
           </motion.div>
 
           <motion.div 
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
           >
             {codingLanguages.map((language, index) => (
               <motion.div
                 key={index}
-                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 text-center flex flex-col items-center justify-center"
-                whileHover={{ y: -5, scale: 1.05 }}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+                whileHover={{
+                  scale: 1.04,
+                  boxShadow: "0 8px 32px 0 rgba(128,0,255,0.10)",
+                }}
+                className="relative group bg-gradient-to-br from-[#23272f] via-[#181c2f] to-[#23272f] border border-white/10 rounded-2xl p-8 flex flex-col items-center justify-center shadow-xl overflow-hidden"
               >
-                <span className="text-2xl mb-2">{language.icon}</span>
-                <span className="text-sm font-medium">{language.name}</span>
+                {/* Icon */}
+                <div className="relative z-10 mb-4">
+                  {language.icon}
+                </div>
+                <span className="relative z-10 text-lg font-semibold text-white mb-1">{language.name}</span>
+                {/* Animated underline on hover */}
+                <span className="relative z-10 block h-1 w-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mt-2 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
               </motion.div>
             ))}
           </motion.div>
@@ -451,8 +503,9 @@ const LandingPage = () => {
       {/* Footer */}
       <footer className="relative z-10 bg-black/20 backdrop-blur-xl border-t border-white/10 pt-12 pb-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
-            <div className="lg:col-span-2">
+          {/* First row: Product, Resources, Company */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 md:mb-24">
+            <div className="lg:col-span-1">
               <motion.div 
                 className="flex items-center mb-4"
                 initial={{ opacity: 0, y: 20 }}
@@ -487,7 +540,8 @@ const LandingPage = () => {
               </motion.div>
             </div>
 
-            {footerSections.map((section, index) => (
+            {/* Only Product, Resources, Company */}
+            {footerSections.slice(0, 3).map((section, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -513,6 +567,61 @@ const LandingPage = () => {
                 </ul>
               </motion.div>
             ))}
+          </div>
+
+          {/* Second row: Support and CardStack */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 items-start">
+            {/* Support */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="md:col-span-1 flex justify-start mb-8 md:mb-0"
+            >
+              <div>
+                <h3 className="font-semibold mb-4 text-lg">{footerSections[3].title}</h3>
+                <ul className="space-y-3">
+                  {footerSections[3].links.map((link, linkIndex) => (
+                    <li key={linkIndex}>
+                      {link.href.startsWith("/") ? (
+                        <Link
+                          to={link.href}
+                          className="text-white/70 hover:text-white text-sm transition"
+                        >
+                          {link.name}
+                        </Link>
+                      ) : (
+                        <a
+                          href={link.href}
+                          className="text-white/70 hover:text-white text-sm transition"
+                          target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+                          rel="noopener noreferrer"
+                        >
+                          {link.name}
+                        </a>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+
+            {/* CardStack centered in the middle column */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="md:col-span-1 flex justify-center"
+            >
+              <div className="w-full max-w-xs sm:max-w-sm mx-auto">
+                <CardStack items={cardStackItems} offset={16} scaleFactor={0.07} />
+              </div>
+            </motion.div>
+
+            {/* Empty column for spacing on desktop */}
+            <div className="hidden md:block md:col-span-1" />
           </div>
 
           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center">

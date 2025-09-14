@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Card } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
 import { List, Target, Trophy, ChevronRight, Code, Zap, Users, BookOpen, Clock, Shield, Mail, Twitter, Github, Linkedin, Heart } from "lucide-react";
@@ -43,19 +43,42 @@ const ChoosePath = () => {
   const footerSections = [
     {
       title: "Product",
-      links: ["Features", "Testimonials", "Pricing", "Case Studies", "API"],
+      links: [
+        { name: "Testimonials", href: "/testimonials" },
+        { name: "Pricing", href: "/pricing" },
+        { name: "Case Studies", href: "/case-studies" },
+        { name: "API", href: "/api" },
+      ],
     },
     {
       title: "Resources",
-      links: ["Documentation", "Tutorials", "Blog", "Community", "Webinars"],
+      links: [
+        { name: "Documentation", href: "/documentation" },
+        { name: "Tutorials", href: "/tutorials" },
+        { name: "Blog", href: "/blog" },
+        { name: "Community", href: "/community" },
+        { name: "Webinars", href: "/webinars" },
+      ],
     },
     {
       title: "Company",
-      links: ["About Us", "Careers", "Contact", "Press", "Partners"],
+      links: [
+        { name: "About Us", href: "/about-us" },
+        { name: "Careers", href: "/careers" },
+        { name: "Contact", href: "/contact" },
+        { name: "Press", href: "/press" },
+        { name: "Partners", href: "/partners" },
+      ],
     },
     {
       title: "Support",
-      links: ["Help Center", "Status", "FAQs", "Email Support", "Live Chat"],
+      links: [
+        { name: "Help Center", href: "/support" },
+        { name: "Status", href: "/status" },
+        { name: "FAQs", href: "/faqs" },
+        { name: "Email Support", href: "/email-support" },
+        { name: "Live Chat", href: "/live-chat" },
+      ],
     },
   ];
 
@@ -250,7 +273,12 @@ const ChoosePath = () => {
                 <ul className="space-y-3">
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
-                      <a href="#" className="text-white/70 hover:text-white text-sm transition">{link}</a>
+                      <Link
+                        to={link.href}
+                        className="text-white/70 hover:text-white text-sm transition"
+                      >
+                        {link.name}
+                      </Link>
                     </li>
                   ))}
                 </ul>
