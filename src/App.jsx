@@ -14,6 +14,11 @@ import Learn from './pages/Learn';
 import Community from './pages/Community';
 import Settings from './pages/Settings';
 import Support from './pages/Support';
+import Testimonials from './pages/Testimonials';
+import Pricing from './pages/Pricing';
+import CaseStudies from './pages/CaseStudies';
+import API from './pages/API';
+import Features from './pages/Features';
 
 function App() {
   return (
@@ -33,6 +38,11 @@ function App() {
             <Route path="/community" element={<Community />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/support" element={<Support />} />
+            <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/case-studies" element={<CaseStudies />} />
+            <Route path="/api" element={<API />} />
+            <Route path="/features" element={<Features />} />
           </Routes>
         </div>
       </Router>

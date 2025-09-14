@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Marquee } from "../components/magicui/marquee";
 import { Button } from "../components/ui/Button";
@@ -149,19 +149,42 @@ const LandingPage = () => {
   const footerSections = [
     {
       title: "Product",
-      links: ["Features", "Testimonials", "Pricing", "Case Studies", "API"],
+      links: [
+        { name: "Testimonials", href: "/testimonials" },
+        { name: "Pricing", href: "/pricing" },
+        { name: "Case Studies", href: "/case-studies" },
+        { name: "API", href: "/api" },
+      ],
     },
     {
       title: "Resources",
-      links: ["Documentation", "Tutorials", "Blog", "Community", "Webinars"],
+      links: [
+        { name: "Documentation", href: "#" },
+        { name: "Tutorials", href: "#" },
+        { name: "Blog", href: "#" },
+        { name: "Community", href: "/community" },
+        { name: "Webinars", href: "#" },
+      ],
     },
     {
       title: "Company",
-      links: ["About Us", "Careers", "Contact", "Press", "Partners"],
+      links: [
+        { name: "About Us", href: "#" },
+        { name: "Careers", href: "#" },
+        { name: "Contact", href: "#" },
+        { name: "Press", href: "#" },
+        { name: "Partners", href: "#" },
+      ],
     },
     {
       title: "Support",
-      links: ["Help Center", "Status", "FAQs", "Email Support", "Live Chat"],
+      links: [
+        { name: "Help Center", href: "/support" },
+        { name: "Status", href: "#" },
+        { name: "FAQs", href: "#" },
+        { name: "Email Support", href: "mailto:support@thinkcode.com" },
+        { name: "Live Chat", href: "#" },
+      ],
     },
   ];
 
@@ -476,7 +499,15 @@ const LandingPage = () => {
                 <ul className="space-y-3">
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
-                      <a href="#" className="text-white/70 hover:text-white text-sm transition">{link}</a>
+                      {link.href.startsWith('/') ? (
+                        <Link to={link.href} className="text-white/70 hover:text-white text-sm transition">
+                          {link.name}
+                        </Link>
+                      ) : (
+                        <a href={link.href} className="text-white/70 hover:text-white text-sm transition" target={link.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener noreferrer">
+                          {link.name}
+                        </a>
+                      )}
                     </li>
                   ))}
                 </ul>
